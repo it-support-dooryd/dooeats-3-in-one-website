@@ -1,0 +1,1 @@
+<footer class="footer glass-effect rounded-lg p-4 mt-4"> © 2019-<?php echo date('Y');?> Dooeats. All rights reserved.</footer>
