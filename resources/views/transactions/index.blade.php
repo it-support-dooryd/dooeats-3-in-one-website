@@ -92,14 +92,7 @@
                                 <input type="hidden" id="razorpayKey">
                                 <input type="hidden" id="razorpaySecret">
                             </div>
-                            <!-- Stripe -->
-                            <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="stripe_box">
-                                <input type="radio" name="payment_method" id="stripe" value="stripe" class="custom-control-input">
-                                <label class="custom-control-label" for="stripe">{{ trans('lang.stripe') }}</label>
-                                <input type="hidden" id="isStripeSandboxEnabled">
-                                <input type="hidden" id="stripeKey">
-                                <input type="hidden" id="stripeSecret">
-                            </div>
+
                             <!-- PayPal -->
                             <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="paypal_box">
                                 <input type="radio" name="payment_method" id="paypal" value="paypal" class="custom-control-input">
@@ -129,37 +122,9 @@
                                 <input type="hidden" id="paystack_public_key">
                                 <input type="hidden" id="paystack_secret_key">
                             </div>
-                            <!-- FlutterWave -->
-                            <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="flutterWave_box">
-                                <input type="radio" name="payment_method" id="flutterwave" value="flutterwave" class="custom-control-input">
-                                <label class="custom-control-label" for="flutterwave">{{ trans('lang.flutter_wave') }}</label>
-                                <input type="hidden" id="flutterWave_isEnabled">
-                                <input type="hidden" id="flutterWave_isSandbox">
-                                <input type="hidden" id="flutterWave_encryption_key">
-                                <input type="hidden" id="flutterWave_public_key">
-                                <input type="hidden" id="flutterWave_secret_key">
-                            </div>
-                            <!-- MercadoPago -->
-                            <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="mercadopago_box">
-                                <input type="radio" name="payment_method" id="mercadopago" value="mercadopago" class="custom-control-input">
-                                <label class="custom-control-label" for="mercadopago">{{ trans('lang.mercadopago') }}</label>
-                                <input type="hidden" id="mercadopago_isEnabled">
-                                <input type="hidden" id="mercadopago_isSandbox">
-                                <input type="hidden" id="mercadopago_public_key">
-                                <input type="hidden" id="mercadopago_access_token">
-                                <input type="hidden" id="title">
-                                <input type="hidden" id="quantity">
-                                <input type="hidden" id="unit_price">
-                            </div>
-                            <!-- Xendit -->
-                            <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="xendit_box">
-                                <input type="radio" name="payment_method" id="xendit" value="xendit" class="custom-control-input">
-                                <label class="custom-control-label" for="xendit">{{ trans('lang.xendit') }}</label>
-                                <input type="hidden" id="xendit_enable">
-                                <input type="hidden" id="xendit_apiKey">
-                                <input type="hidden" id="xendit_image">
-                                <input type="hidden" id="xendit_isSandbox">
-                            </div>
+
+
+
                             <!-- Midtrans -->
                             <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="midtrans_box">
                                 <input type="radio" name="payment_method" id="midtrans" value="midtrans" class="custom-control-input">
@@ -243,7 +208,7 @@
     var payStack = database.collection('settings').doc('payStack');
     var paypalSettings = database.collection('settings').doc('paypalSettings');
     var razorpaySettings = database.collection('settings').doc('razorpaySettings');
-    var stripeSettings = database.collection('settings').doc('stripeSettings');
+
     var xendit_settings= database.collection('settings').doc('xendit_settings');    
 
     $(document).ready(async function () {
@@ -301,17 +266,7 @@
             }
         });
 
-        // Stripe Settings
-        stripeSettings.get().then(async function (stripeSettingsSnapshots) {
-            let stripeSetting = stripeSettingsSnapshots.data();
 
-            if (stripeSetting.isEnabled) {
-                $("#isStripeSandboxEnabled").val(stripeSetting.isSandboxEnabled);
-                $("#stripeKey").val(stripeSetting.clientpublishableKey);
-                $("#stripeSecret").val(stripeSetting.stripeSecret);
-                $("#stripe_box").show();
-            }
-        });
 
         // PayPal Settings
         paypalSettings.get().then(async function (paypalSettingsSnapshots) {
@@ -535,14 +490,7 @@
                 razorpayKey: $("#razorpayKey").val(),
                 razorpaySecret: $("#razorpaySecret").val()
             });
-        } else if (paymentMethod === "mercadopago") {
-            Object.assign(ajaxData, {
-                mercadopago_public_key: $("#mercadopago_public_key").val(),
-                mercadopago_access_token: $("#mercadopago_access_token").val(),
-                mercadopago_isSandbox: $("#mercadopago_isSandbox").val(),
-                mercadopago_isEnabled: $("#mercadopago_isEnabled").val()
-            });
-        } else if (paymentMethod === "stripe") {
+ else if (paymentMethod === "stripe") {
             Object.assign(ajaxData, {
                 stripeKey: $("#stripeKey").val(),
                 stripeSecret: $("#stripeSecret").val(),

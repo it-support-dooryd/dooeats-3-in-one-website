@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="FOODIE">
-<meta name="author" content="FOODIE">
+<meta name="description" content="Dooeats">
+<meta name="author" content="Dooeats">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="icon" type="image/png" href="{{asset('img/fav.png')}}">
 <title>{{trans('lang.foodie_online_food_os')}}</title>

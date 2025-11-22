@@ -9,7 +9,6 @@
   "license": "MIT",
   "require": {
     "php": "^8.1",
-    "braintree/braintree_php": "^6.7",
     "google/apiclient": "^2.16",
     "guzzlehttp/guzzle": "^7.2",
     "illuminate/support": "^10.0",
@@ -17,12 +16,7 @@
     "laravel/sanctum": "^3.3",
     "laravel/tinker": "^2.8",
     "laravel/ui": "^4.2.2",
-    "midtrans/midtrans-php": "^2.5",
-    "paytm/paytmchecksum": "^1.1",
-    "perfectmak/paystack-php": "dev-master",
-    "razorpay/razorpay": "2.*",
-    "stripe/stripe-php": "^7.116",
-    "xendit/xendit-php": "^6.0"
+    "perfectmak/paystack-php": "dev-master"
   },
   "require-dev": {
     "fakerphp/faker": "^1.9.1",

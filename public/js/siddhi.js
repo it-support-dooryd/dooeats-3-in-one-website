@@ -1,50 +1,50 @@
-(function($) {
+(function ($) {
     "use strict"; // Start of use strict
-$( document ).ready(function() {
+    $(document).ready(function () {
 
-    $(document).on("click", '.dec', function(event) { 
-        var node=$(this).next();
-        if(node.prop('type')=='text'){
+        $(document).on("click", '.dec', function (event) {
+            var node = $(this).next();
+            if (node.prop('type') == 'text') {
 
-            var tvalue=node.val();
-            if(tvalue==''){
-                tvalue=0;
-            }else{
-              tvalue=parseInt(tvalue)-1;    
-              if(tvalue>=1){
-                node.val(tvalue);
-              }else{
-                node.val(0);
-              }
+                var tvalue = node.val();
+                if (tvalue == '') {
+                    tvalue = 0;
+                } else {
+                    tvalue = parseInt(tvalue) - 1;
+                    if (tvalue >= 1) {
+                        node.val(tvalue);
+                    } else {
+                        node.val(0);
+                    }
+                }
             }
-        }
-    });
+        });
 
-    $(document).on("click", '.inc', function(event) { 
-        var node=$(this).prev();
-        if(node.prop('type')=='text'){
-            var tvalue=node.val();
-            if(tvalue==''){
-                tvalue=1;
-            }else{
-              tvalue=parseInt(tvalue)+1;    
-              if(tvalue>1){
-                node.val(tvalue);
-              }else{
-                node.val(1);
-              }
+        $(document).on("click", '.inc', function (event) {
+            var node = $(this).prev();
+            if (node.prop('type') == 'text') {
+                var tvalue = node.val();
+                if (tvalue == '') {
+                    tvalue = 1;
+                } else {
+                    tvalue = parseInt(tvalue) + 1;
+                    if (tvalue > 1) {
+                        node.val(tvalue);
+                    } else {
+                        node.val(1);
+                    }
+                }
             }
-        }
-    });
+        });
 
-    $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
 
-    $('.cat-slider').slick({
-        //   centerMode: true,
-        //   centerPadding: '30px',
-        slidesToShow: 8,
-        arrows: true,
-        responsive: [{
+        $('.cat-slider').slick({
+            //   centerMode: true,
+            //   centerPadding: '30px',
+            slidesToShow: 8,
+            arrows: true,
+            responsive: [{
                 breakpoint: 768,
                 settings: {
                     arrows: true,
@@ -62,15 +62,15 @@ $( document ).ready(function() {
                     slidesToShow: 4
                 }
             }
-        ]
-    });
+            ]
+        });
 
-    // Trending slider
+        // Trending slider
 
-    $('.trending-slider').slick({
-        slidesToShow: 3,
-        arrows: true,
-        responsive: [{
+        $('.trending-slider').slick({
+            slidesToShow: 3,
+            arrows: true,
+            responsive: [{
                 breakpoint: 768,
                 settings: {
                     arrows: false,
@@ -88,13 +88,13 @@ $( document ).ready(function() {
                     slidesToShow: 1
                 }
             }
-        ]
-    });
+            ]
+        });
 
-    $('.offers-coupons').slick({
-        slidesToShow: 3,
-        arrows: true,
-        responsive: [{
+        $('.offers-coupons').slick({
+            slidesToShow: 3,
+            arrows: true,
+            responsive: [{
                 breakpoint: 768,
                 settings: {
                     arrows: false,
@@ -112,19 +112,19 @@ $( document ).ready(function() {
                     slidesToShow: 1
                 }
             }
-        ]
-    });
-    
+            ]
+        });
 
 
-    // Most popular slider
 
-    $('.popular-slider').slick({
-        centerMode: true,
-        centerPadding: '30px',
-        slidesToShow: 1,
-        arrows: false,
-        responsive: [{
+        // Most popular slider
+
+        $('.popular-slider').slick({
+            centerMode: true,
+            centerPadding: '30px',
+            slidesToShow: 1,
+            arrows: false,
+            responsive: [{
                 breakpoint: 768,
                 settings: {
                     arrows: false,
@@ -142,25 +142,25 @@ $( document ).ready(function() {
                     slidesToShow: 1
                 }
             }
-        ]
-    });
+            ]
+        });
 
-    // siddhi Slider
-    $('.siddhi-slider').slick({
-        centerMode: false,
-        slidesToShow: 1,
-        arrows: false,
-        dots: true
-    });
+        // siddhi Slider
+        $('.siddhi-slider').slick({
+            centerMode: false,
+            slidesToShow: 1,
+            arrows: false,
+            dots: true
+        });
 
-    // siddhi-slider-map
-    $('.siddhi-slider-map').slick({
-        //   centerMode: true,
-        //   centerPadding: '30px',
-        autoplay: true,
-        slidesToShow: 5,
-        arrows: true,
-        responsive: [{
+        // siddhi-slider-map
+        $('.siddhi-slider-map').slick({
+            //   centerMode: true,
+            //   centerPadding: '30px',
+            autoplay: true,
+            slidesToShow: 5,
+            arrows: true,
+            responsive: [{
                 breakpoint: 768,
                 settings: {
                     arrows: false,
@@ -180,26 +180,26 @@ $( document ).ready(function() {
                     slidesToShow: 3
                 }
             }
-        ]
+            ]
+        });
+
+
+        var $main_nav = $('#main-nav');
+        var $toggle = $('.toggle');
+
+        var defaultOptions = {
+            disableAt: false,
+            customToggle: $toggle,
+            levelSpacing: 40,
+            navTitle: 'Dooeats',
+            levelTitles: true,
+            levelTitleAsBack: true,
+            pushContent: '#container',
+            insertClose: 2
+        };
+
+        // call our plugin
+        var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
+
     });
-
-
-    var $main_nav = $('#main-nav');
-    var $toggle = $('.toggle');
-
-    var defaultOptions = {
-        disableAt: false,
-        customToggle: $toggle,
-        levelSpacing: 40,
-        navTitle: 'Foodie',
-        levelTitles: true,
-        levelTitleAsBack: true,
-        pushContent: '#container',
-        insertClose: 2
-    };
-
-    // call our plugin
-    var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
-
-});
 })(jQuery); // End of use strict

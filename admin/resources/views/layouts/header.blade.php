@@ -34,7 +34,7 @@
                <img src="{{ asset('/images/users/user-new.png') }}" alt="user" class="profile-pic"></a>
                <div class="nav-item-user">
                 <h5 class="text-dark mb-0">{{  Auth::user()->name }}</h5>
-                <p class="mb-0">foodie@admin.com</p>
+                <p class="mb-0">dooeats@admin.com</p>
                </div>  
              </div>
             <div class="dropdown-menu dropdown-menu-right scale-up">

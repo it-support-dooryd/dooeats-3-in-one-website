@@ -26,60 +26,16 @@ class SettingsController extends Controller
         return view("settings.app.notification");
     }
 
-    public function cod()
-    {
-        return view('settings.app.cod');
-    }
 
-    public function applePay()
-    {
-        return view('settings.app.applepay');
-    }
 
-    public function stripe()
-    {
-        return view('settings.app.stripe');
-    }
+
 
     public function mobileGlobals()
     {
         return view('settings.mobile.globals');
     }
 
-    public function razorpay()
-    {
-        return view('settings.app.razorpay');
-    }
 
-    public function paytm()
-    {
-        return view('settings.app.paytm');
-    }
-
-    public function payfast()
-    {
-        return view('settings.app.payfast');
-    }
-
-    public function paypal()
-    {
-        return view('settings.app.paypal');
-    }
-
-    public function orangepay()
-    {
-        return view('settings.app.orangepay');
-    }
-
-    public function xendit()
-    {
-        return view('settings.app.xendit');
-    }
-
-    public function midtrans()
-    {
-        return view('settings.app.midtrans');
-    }
 
     public function adminCommission()
     {
@@ -91,10 +47,7 @@ class SettingsController extends Controller
         return view("settings.app.radiosConfiguration");
     }
 
-    public function wallet()
-    {
-        return view('settings.app.wallet');
-    }
+
 
     public function bookTable()
     {
@@ -107,15 +60,9 @@ class SettingsController extends Controller
         return view('settings.app.paystack');
     }
 
-    public function flutterwave()
-    {
-        return view('settings.app.flutterwave');
-    }
 
-    public function mercadopago()
-    {
-        return view('settings.app.mercadopago');
-    }
+
+
 
     public function deliveryCharge()
     {

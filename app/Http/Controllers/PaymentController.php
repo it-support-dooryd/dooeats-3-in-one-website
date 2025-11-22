@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\VendorUsers;
 use App\Models\User;
-use Razorpay\Api\Api;
+
 
 use Session;
 class PaymentController extends Controller
@@ -21,16 +21,7 @@ class PaymentController extends Controller
         
     }
 
-   /**
-     * Write code on Method
-     *
-     * @return response()
-     */
-    public function stripePaymentcallback(Request $request)
-    {
-        
-        return response()->json(array('success'=>true,'data'=>$request->all()));  
-    }
+
 
     public function takeawayOption(Request $request){
 

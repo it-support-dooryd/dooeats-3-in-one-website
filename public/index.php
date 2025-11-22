@@ -3,6 +3,11 @@
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
+// Suppress PHP 8.4 deprecation warnings to prevent header issues
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+
 define('LARAVEL_START', microtime(true));
 
 /*

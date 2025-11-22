@@ -115,7 +115,7 @@
                                                         data-key="{{ $razorpayKey }}"
                                                         data-amount="{{$amount*100}}"
                                                         data-buttontext="Pay {{ $formatted_price }}"
-                                                        data-name="{{env('APP_NAME', 'Foodie')}}"
+                                                        data-name="{{env('APP_NAME', 'Dooeats')}}"
                                                         data-description="Rozerpay"
                                                         data-image="https://www.itsolutionstuff.com/frontTheme/images/logo.png"
                                                         data-prefill.name="{{$authorName}}"
