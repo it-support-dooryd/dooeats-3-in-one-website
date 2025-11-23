@@ -64,7 +64,7 @@
         var vendorDetailsRef = database.collection('vendors');
         var uservendorDetailsRef = database.collection('users');
         var AdminCommission = database.collection('settings').doc('AdminCommission');
-        var razorpaySettings = database.collection('settings').doc('razorpaySettings');
+
         taxSetting = [];
         var reftaxSetting = database.collection('tax').where('country', '==', userCountry).where('enable', '==', true);
         reftaxSetting.get().then(async function (snapshots) {
