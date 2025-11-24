@@ -20,6 +20,9 @@ class GiftCardController extends Controller
     {
         $email = Auth::user()->email;
         $user = VendorUsers::where('email', $email)->first();
+        if (!$user) {
+            abort(404, 'Vendor user not found');
+        }
         return view('gift_card.giftcard')->with('id',$user->uuid);
     }
 

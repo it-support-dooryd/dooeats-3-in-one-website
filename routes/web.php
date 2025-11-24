@@ -326,3 +326,30 @@ Route::get('delivery-address', [App\Http\Controllers\DeliveryAddressController::
 
 Route::post('store-firebase-service', [App\Http\Controllers\HomeController::class,'storeFirebaseService'])->name('store-firebase-service');
 
+
+// Deprecated Payment Routes
+$deprecatedRoutes = [
+    'razorpaypayment',
+    'paypal/payment',
+    'stripe/payment',
+    'payfast/payment',
+    'flutterwave/payment',
+    'mercadopago/payment',
+    'xendit/payment',
+    'midtrans/payment',
+    'orangepay/payment',
+    'razorpay/callback',
+    'paypal/callback',
+    'stripe/callback',
+    'payfast/callback'
+];
+
+foreach ($deprecatedRoutes as $route) {
+    Route::any($route, function() {
+        return response()->json([
+            'message' => 'This payment route is deprecated. Please migrate to Paystack.',
+            'migration_docs' => 'https://dooeats.com/docs/migration',
+            'status' => 'deprecated'
+        ], 410)->header('X-API-Deprecated', 'true');
+    });
+}
