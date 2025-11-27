@@ -90,5 +90,82 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     updateLocationText();
+
+    // ========================================
+    // ENHANCED LOCATION SELECTOR INTERACTION
+    // ========================================
+
+    const locationPill = document.querySelector('.pill-location');
+    const locationInput = document.getElementById('user_locationnew');
+    const chevronIcon = document.querySelector('.location-dropdown-container i.feather-chevron-down');
+
+    if (locationPill && locationInput) {
+        // Make the entire pill clickable to focus the input
+        locationPill.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Remove readonly to allow editing
+            locationInput.removeAttribute('readonly');
+            locationInput.focus();
+
+            // Add active state animation
+            locationPill.style.transform = 'translateY(0)';
+
+            // Rotate chevron
+            if (chevronIcon) {
+                chevronIcon.style.transform = 'rotate(180deg)';
+            }
+
+            // Trigger autocomplete if available
+            if (typeof locationInput.click === 'function') {
+                setTimeout(() => {
+                    locationInput.click();
+                }, 100);
+            }
+        });
+
+        // Enhanced focus handling
+        locationInput.addEventListener('focus', function () {
+            locationPill.classList.add('location-active');
+
+            // Add glow effect
+            locationPill.style.boxShadow = `
+                0 8px 30px rgba(4, 120, 87, 0.35),
+                0 4px 20px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15)
+            `;
+        });
+
+        // Enhanced blur handling with smooth transition
+        locationInput.addEventListener('blur', function () {
+            setTimeout(() => {
+                locationInput.setAttribute('readonly', 'readonly');
+                locationPill.classList.remove('location-active');
+
+                // Reset styles
+                locationPill.style.transform = '';
+                locationPill.style.boxShadow = '';
+
+                // Reset chevron rotation
+                if (chevronIcon) {
+                    chevronIcon.style.transform = '';
+                }
+            }, 200);
+        });
+
+        // Add keyboard support
+        locationInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                locationInput.blur();
+            }
+        });
+
+        // Prevent form submission on Enter
+        locationInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+    }
 });
-```

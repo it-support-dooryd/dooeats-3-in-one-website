@@ -57,61 +57,54 @@
     <nav class="glass-nav">
         <div class="glass-nav-container">
             
-            <!-- Left: Logo + Location -->
-            <div class="glass-nav-left">
+            <!-- Left Group: Logo + Delivery Toggle -->
+            <div class="glass-nav-left-group">
                 <a href="{{url('/')}}" class="glass-brand">
                     <img alt="Dooeats" class="glass-logo" src="{{asset('img/logo_web.png')}}" id="logo_web">
                 </a>
                 
-                <!-- Location Button (Big & Shows Current Location) -->
-                <div class="glass-location-wrapper big-location-widget">
-                    <button class="glass-icon-btn big-location-btn" onclick="getCurrentLocation('reload')" title="Set Location">
-                        <i class="feather-map-pin"></i>
-                        <span class="glass-btn-label location-text" id="current-location-text">Select Location</span>
-                    </button>
-                    <input id="user_locationnew" type="text" class="pac-target-input glass-location-input">
-                </div>
-            </div>
-            
-            <!-- Center: Navigation Links -->
-            <div class="glass-nav-center">
-                <a href="{{url('search')}}" class="glass-nav-link">
-                    <i class="feather-search"></i>
-                    <span class="glass-link-text">Search</span>
-                </a>
-                <a href="{{url('restaurants')}}" class="glass-nav-link">
-                    <i class="feather-grid"></i>
-                    <span class="glass-link-text">Restaurants</span>
-                </a>
-            </div>
-            
-            <!-- Right: User Actions + Cart -->
-            <div class="glass-nav-right">
-                
-                <!-- Delivery/Takeaway Toggle (Big Switch) -->
-                <div class="glass-delivery-toggle big-switch-wrapper">
-                    <label class="big-switch">
+                <!-- Delivery Toggle (Moved beside logo) -->
+                 <div class="glass-delivery-toggle-wrapper">
+                    <label class="pill-switch">
                         <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
-                        <span class="big-slider round">
-                            <span class="switch-label delivery-label"><i class="feather-truck"></i> Delivery</span>
-                            <span class="switch-label takeaway-label"><i class="feather-shopping-bag"></i> Pickup</span>
+                        <span class="pill-slider">
+                            <span class="pill-label delivery-label">Delivery</span>
+                            <span class="pill-label takeaway-label">Pickup</span>
                         </span>
                     </label>
                 </div>
-                
-                <!-- Cart Button -->
+            </div>
+
+            <!-- Center Group: Location Selector -->
+            <div class="glass-nav-center-group">
+                <!-- Location Dropdown -->
+                <div class="glass-location-wrapper pill-location">
+                     <div class="location-dropdown-container">
+                        <i class="feather-map-pin"></i>
+                        <input id="user_locationnew" type="text" class="glass-location-input-visible" placeholder="Select Location" readonly>
+                        <i class="feather-chevron-down"></i>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Right Group: Search + Cart + User + Menu -->
+            <div class="glass-nav-right-group">
+                <!-- Search Icon --><button class="glass-icon-btn search-btn" onclick="window.location.href='{{url('search')}}'">
+                    <i class="feather-search"></i>
+                </button>
+
+                <!-- Cart -->
                 <a href="{{url('/checkout')}}" class="glass-icon-btn glass-cart-btn">
                     <i class="feather-shopping-cart"></i>
-                    <span class="glass-btn-label">Cart</span>
                     <span class="glass-cart-badge" id="cart-count" style="display:none;">0</span>
+                    <span class="cart-label">Cart</span>
                 </a>
-                
+
                 <!-- User Menu -->
                 @auth
                 <div class="glass-dropdown">
                     <button class="glass-cta-btn" id="userMenuButton">
                         <i class="feather-user"></i>
-                        <span>Account</span>
                     </button>
                     <div class="glass-dropdown-menu" id="userDropdownMenu">
                         <a class="glass-dropdown-item" href="{{url('profile')}}">
@@ -131,21 +124,19 @@
                         </a>
                     </div>
                 </div>
-                @else
-                <a href="{{url('login')}}" class="glass-cta-btn">
-                    <i class="feather-user"></i>
-                    <span>Sign In</span>
-                </a>
-                @endauth
                 
-                <!-- Mobile Menu Toggle -->
+                <!-- Mobile Menu Toggle (Auth Only) -->
                 <button class="glass-mobile-toggle" id="mobileMenuToggle">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
+                @else
+                <a href="{{url('login')}}" class="glass-cta-btn login-btn">
+                    <i class="feather-user"></i> <span class="login-text"></span>Sign In</span>
+                </a>
+                @endauth
             </div>
-            
         </div>
     </nav>
     <!-- Mobile Menu Modal -->
