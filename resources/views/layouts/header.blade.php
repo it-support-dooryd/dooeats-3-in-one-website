@@ -81,7 +81,7 @@
                 <div class="glass-location-wrapper pill-location">
                      <div class="location-dropdown-container">
                         <i class="feather-map-pin"></i>
-                        <input id="user_locationnew" type="text" class="glass-location-input-visible" placeholder="Select Location" readonly>
+                        <input id="user_locationnew" type="text" class="glass-location-input-visible" placeholder="Calabar, Cross River, Nigeria" value="<?php echo @$_COOKIE['address_name'] ?? 'Calabar, Cross River, Nigeria'; ?>" readonly>
                         <i class="feather-chevron-down"></i>
                      </div>
                 </div>
@@ -133,7 +133,7 @@
                 </button>
                 @else
                 <a href="{{url('login')}}" class="glass-cta-btn login-btn">
-                    <i class="feather-user"></i> <span class="login-text"></span>Sign In</span>
+                    <i class="feather-user"></i> <span class="login-text d-none d-md-inline">Sign In</span>
                 </a>
                 @endauth
             </div>

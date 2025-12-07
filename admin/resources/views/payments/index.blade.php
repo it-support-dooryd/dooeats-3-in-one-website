@@ -206,7 +206,7 @@
                     let filteredRecords = [];
                     await Promise.all(querySnapshot.docs.map(async (doc) => {
                         let childData = doc.data();
-                        childData.id = doc.id; // Ensure the document ID is included in the data first
+                        childData.id = doc.id; // Ensure the document ID is included in the data
                         var data = await remainingPrice(childData.id);
                         var total = remaining_val = paid_price_val = 0;
                         total = data.total;
@@ -262,9 +262,9 @@
                     });
                     const totalRecords = filteredRecords.length;
                     $('.total_count').text(totalRecords);
-                    let total_payments = 00;
-                    let total_paid_amounts = 00;
-                    let total_remaining_amounts = 00; 
+                    let total_payments = 0;
+                    let total_paid_amounts = 0;
+                    let total_remaining_amounts = 0; 
                     filteredRecords.forEach((childData) => {
                         if (childData && Math.abs(childData.totalAmount) != 0) {
                             total_payments += parseFloat(childData.totalAmount);
