@@ -206,6 +206,7 @@
                     let filteredRecords = [];
                     await Promise.all(querySnapshot.docs.map(async (doc) => {
                         let childData = doc.data();
+                        childData.id = doc.id; // Ensure the document ID is included in the data first
                         var data = await remainingPrice(childData.id);
                         var total = remaining_val = paid_price_val = 0;
                         total = data.total;
@@ -222,8 +223,7 @@
                             childData.total = currentCurrency + "" + parseFloat(childData.totalAmount).toFixed(decimal_degits);
                             childData.paid = currentCurrency + "" + parseFloat(childData.paidAmount).toFixed(decimal_degits);
                             childData.remaining = currentCurrency + "" + parseFloat(childData.remainingAmount).toFixed(decimal_degits);
-                        }
-                        childData.id = doc.id; // Ensure the document ID is included in the data              
+                        }              
                         if (total != 0) {
                             if (searchValue) {
                                 if (

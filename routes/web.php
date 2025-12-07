@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\AllRestaurantsController::class, 'index'])->name('home');
 
 
 
