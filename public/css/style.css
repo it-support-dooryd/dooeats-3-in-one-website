@@ -23,14 +23,14 @@
     --primary-color: #047857;
     --primary-hover: #059669;
     --secondary-color: #EF4444;
-    --bg-body: #121212;
-    --bg-card: #1E1E1E;
-    --bg-input: #2D2D2D;
-    --text-main: #FFFFFF;
-    --text-muted: #B0B0B0;
-    --border-color: #333333;
-    --glass-bg: rgba(30, 30, 30, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --bg-body: #F3F4F6;
+    --bg-card: #FFFFFF;
+    --bg-input: #E5E7EB;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --border-color: #E5E7EB;
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(0, 0, 0, 0.1);
 }
 
 /* Body */
@@ -6982,18 +6982,17 @@ a.restaurant_direction {
 .glass-nav-container {
     max-width: 100%;
     margin: 0;
-    background: rgba(30, 30, 30, 0.4);
-    /* Match "one layer" look */
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 0;
     padding: 0.5rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 }
 
