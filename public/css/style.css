@@ -6964,13 +6964,16 @@ a.restaurant_direction {
 
 /* Wrapper - creates spacing from top */
 .floating-header-wrapper {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 1000;
+    left: 0;
+    right: 0;
+    z-index: 9999;
     padding: 0;
-    background: rgba(18, 18, 18, 0.8);
-    /* Optional dark background for the bar itself if needed, or rely on glass container */
-    backdrop-filter: blur(10px);
+    background: #ffffff;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* Main Glass Nav Container */
@@ -6982,11 +6985,11 @@ a.restaurant_direction {
 .glass-nav-container {
     max-width: 100%;
     margin: 0;
-    background: rgba(255, 255, 255, 0.9);
+    background: #ffffff;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 0;
     padding: 0.5rem 1.5rem;
     display: flex;
@@ -7050,7 +7053,7 @@ a.restaurant_direction {
 }
 
 .glass-nav-link {
-    color: #000000;
+    color: #1f2937;
     font-size: 14px;
     font-weight: 500;
     padding: 0.5rem 1rem;
@@ -7063,9 +7066,8 @@ a.restaurant_direction {
 }
 
 .glass-nav-link:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #000000;
-    opacity: 0.9;
+    background: rgba(4, 120, 87, 0.1);
+    color: var(--primary-color);
 }
 
 .glass-link-icon-mobile {
@@ -7081,9 +7083,9 @@ a.restaurant_direction {
 
 /* Icon Buttons */
 .glass-icon-btn {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #000000;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1f2937;
     padding: 0.5rem 1rem;
     border-radius: 9999px;
     font-size: 14px;
@@ -7097,8 +7099,9 @@ a.restaurant_direction {
 }
 
 .glass-icon-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    color: #000000;
+    background: rgba(4, 120, 87, 0.1);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
     transform: translateY(-1px);
 }
 
@@ -7601,112 +7604,67 @@ a.restaurant_direction {
 }
 
 /* ========================================
-   PREMIUM LOCATION SELECTOR REDESIGN
+   LIGHT MODE LOCATION SELECTOR
    ======================================== */
 
 .pill-location {
-    background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(45, 45, 45, 0.95) 100%);
+    background: #ffffff;
     border-radius: 60px;
     padding: 0 24px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     height: 48px;
     width: 380px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+    border: 2px solid rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: hidden;
-    box-shadow:
-        0 4px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Gradient border effect */
-.pill-location::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 60px;
-    padding: 2px;
-    background: linear-gradient(135deg,
-            rgba(4, 120, 87, 0.3) 0%,
-            rgba(5, 150, 105, 0.3) 50%,
-            rgba(4, 120, 87, 0.3) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
-.pill-location:hover::before {
-    opacity: 1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .pill-location:hover {
-    background: linear-gradient(135deg, rgba(45, 45, 45, 0.98) 0%, rgba(60, 60, 60, 0.98) 100%);
-    transform: translateY(-2px);
+    background: #f9fafb;
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
     box-shadow:
-        0 8px 30px rgba(4, 120, 87, 0.25),
-        0 4px 20px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        0 4px 12px rgba(4, 120, 87, 0.15),
+        0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .pill-location:active {
     transform: translateY(0);
-    box-shadow:
-        0 4px 15px rgba(4, 120, 87, 0.2),
-        0 2px 10px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .location-dropdown-container {
     display: flex;
     align-items: center;
     width: 100%;
-    gap: 14px;
+    gap: 12px;
     position: relative;
     z-index: 1;
 }
 
-/* Map Pin Icon with Glow Effect */
+/* Map Pin Icon */
 .location-dropdown-container i.feather-map-pin {
     color: var(--primary-color);
     font-size: 20px;
     transition: all 0.3s ease;
-    filter: drop-shadow(0 0 8px rgba(4, 120, 87, 0.4));
-    animation: pulse-glow 3s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 8px rgba(4, 120, 87, 0.4));
-        transform: scale(1);
-    }
-
-    50% {
-        filter: drop-shadow(0 0 12px rgba(4, 120, 87, 0.6));
-        transform: scale(1.05);
-    }
+    flex-shrink: 0;
 }
 
 .pill-location:hover .location-dropdown-container i.feather-map-pin {
     color: var(--primary-hover);
-    transform: scale(1.1) rotate(5deg);
-    filter: drop-shadow(0 0 12px rgba(5, 150, 105, 0.6));
+    transform: scale(1.1);
 }
 
-/* Chevron Icon with Rotation Animation */
+/* Chevron Icon */
 .location-dropdown-container i.feather-chevron-down {
-    color: var(--text-muted);
-    font-size: 18px;
+    color: #6b7280;
+    font-size: 16px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin-left: auto;
+    flex-shrink: 0;
 }
 
 .pill-location:hover .location-dropdown-container i.feather-chevron-down {
@@ -7725,47 +7683,29 @@ a.restaurant_direction {
     flex: 1;
     font-weight: 600;
     font-size: 14px;
-    color: var(--text-main);
+    color: #1f2937;
     outline: none;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
 }
 
 .glass-location-input-visible::placeholder {
-    color: var(--text-muted);
+    color: #9ca3af;
     font-weight: 500;
-    opacity: 0.7;
+    opacity: 1;
 }
 
 .pill-location:hover .glass-location-input-visible {
-    color: #fff;
+    color: #111827;
 }
 
 .glass-location-input-visible:focus {
     cursor: text;
-}
-
-/* Shimmer Effect on Hover */
-.pill-location::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.1),
-            transparent);
-    transition: left 0.5s ease;
-}
-
-.pill-location:hover::after {
-    left: 100%;
+    color: #111827;
 }
 
 /* Responsive Design */

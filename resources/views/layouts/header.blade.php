@@ -57,27 +57,13 @@
     <nav class="glass-nav">
         <div class="glass-nav-container">
             
-            <!-- Left Group: Logo + Delivery Toggle -->
+            <!-- Left Group: Logo + Location -->
             <div class="glass-nav-left-group">
                 <a href="{{url('/')}}" class="glass-brand">
                     <img alt="Dooeats" class="glass-logo" src="{{asset('img/logo_web.png')}}" id="logo_web">
                 </a>
                 
-                <!-- Delivery Toggle (Moved beside logo) -->
-                 <div class="glass-delivery-toggle-wrapper">
-                    <label class="pill-switch">
-                        <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
-                        <span class="pill-slider">
-                            <span class="pill-label delivery-label">Delivery</span>
-                            <span class="pill-label takeaway-label">Pickup</span>
-                        </span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Center Group: Location Selector -->
-            <div class="glass-nav-center-group">
-                <!-- Location Dropdown -->
+                <!-- Location Selector (Moved before delivery toggle) -->
                 <div class="glass-location-wrapper pill-location">
                      <div class="location-dropdown-container">
                         <i class="feather-map-pin"></i>
@@ -87,8 +73,23 @@
                 </div>
             </div>
 
-            <!-- Right Group: Search + Cart + User + Menu -->
+            <!-- Center Group: Empty (location moved to left) -->
+            <div class="glass-nav-center-group">
+            </div>
+
+            <!-- Right Group: Delivery Toggle + Search + Cart + User + Menu -->
             <div class="glass-nav-right-group">
+                <!-- Delivery Toggle -->
+                 <div class="glass-delivery-toggle-wrapper">
+                    <label class="pill-switch">
+                        <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
+                        <span class="pill-slider">
+                            <span class="pill-label delivery-label">Delivery</span>
+                            <span class="pill-label takeaway-label">Pickup</span>
+                        </span>
+                    </label>
+                </div>
+
                 <!-- Search Icon --><button class="glass-icon-btn search-btn" onclick="window.location.href='{{url('search')}}'">
                     <i class="feather-search"></i>
                 </button>
