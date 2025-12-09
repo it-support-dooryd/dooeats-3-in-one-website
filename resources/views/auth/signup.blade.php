@@ -38,7 +38,7 @@
             <div class="auth-form-panel">
                 
                 <!-- Tab Switcher: Restaurant / Customer -->
-                <div class="auth-tabs">
+                <div class="auth-tabs show-tabs">
                     <a href="http://127.0.0.1:8001/register" class="auth-tab" data-tab="restaurant">
                         Restaurant Signup
                     </a>
@@ -47,22 +47,19 @@
                     </button>
                 </div>
 
-                <!-- Logo -->
+                <!-- Header -->
                 <div class="auth-header" style="text-align: center;">
-                    <div class="auth-logo">
-                        <h1 class="auth-logo-text">Dooeats</h1>
-                    </div>
                     <h1 class="auth-title">{{trans('lang.sign_up_with_us')}}</h1>
                     <p class="auth-subtitle">{{trans('lang.sign_up_to_continue')}}</p>
                 </div>
 
                 <!-- Success/Error Messages -->
-                <div id="success-message" class="hidden" style="background: #d1fae5; border: 1px solid #10b981; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <div id="success-message" class="hidden" style="background: #ecfdf5; border: 1px solid #10b981; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
                     <p style="color: #047857; margin: 0; font-size: 0.875rem;" id="success-text"></p>
                 </div>
                 
-                <div id="error-message" class="hidden" style="background: #fee2e2; border: 1px solid #dc2626; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <p style="color: #dc2626; margin: 0; font-size: 0.875rem;" id="error-text"></p>
+                <div id="error-message" class="hidden" style="background: #fef2f2; border: 1px solid #ef4444; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                    <p style="color: #ef4444; margin: 0; font-size: 0.875rem;" id="error-text"></p>
                 </div>
 
                 <!-- Signup Form -->
@@ -71,34 +68,30 @@
                     
                     <!-- First Name -->
                     <div class="form-group">
-                        <label class="form-label">{{trans('lang.first_name')}}</label>
                         <div class="form-input-wrapper">
-                            <input type="text" id="first-name" name="first_name" class="form-input" placeholder="Enter your first name" required>
+                            <input type="text" id="first-name" name="first_name" class="form-input" placeholder="First Name" required style="padding-left: 1rem;">
                         </div>
                         <div class="error-message" id="first-name-error"></div>
                     </div>
 
                     <!-- Last Name -->
                     <div class="form-group">
-                        <label class="form-label">{{trans('lang.last_name')}}</label>
                         <div class="form-input-wrapper">
-                            <input type="text" id="last-name" name="last_name" class="form-input" placeholder="Enter your last name" required>
+                            <input type="text" id="last-name" name="last_name" class="form-input" placeholder="Last Name" required style="padding-left: 1rem;">
                         </div>
                         <div class="error-message" id="last-name-error"></div>
                     </div>
 
                     <!-- Email -->
                     <div class="form-group">
-                        <label class="form-label">{{trans('lang.email_address')}}</label>
                         <div class="form-input-wrapper">
-                            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="Email Address" required>
                         </div>
                         <div class="error-message" id="email-error"></div>
                     </div>
 
                     <!-- Country Selector -->
                     <div class="form-group">
-                        <label class="form-label">Country</label>
                         <select name="country" id="country-selector" class="country-selector">
                             <?php foreach ($newcountries as $keycy => $valuecy) { ?>
                                 <option code="<?php echo $valuecy->code; ?>" value="<?php echo $keycy; ?>">
@@ -110,18 +103,16 @@
 
                     <!-- Phone Number -->
                     <div class="form-group">
-                        <label class="form-label">{{trans('lang.user_phone')}}</label>
                         <div class="form-input-wrapper">
-                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter phone number" required>
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="Phone Number" required style="padding-left: 1rem;">
                         </div>
                         <div class="error-message" id="phone-error"></div>
                     </div>
 
                     <!-- Password with Toggle -->
                     <div class="form-group">
-                        <label class="form-label">{{trans('lang.password')}}</label>
                         <div class="form-input-wrapper">
-                            <input type="password" id="password" name="password" class="form-input" placeholder="Create a password (min 8 characters)" minlength="8" required>
+                            <input type="password" id="password" name="password" class="form-input" placeholder="Password (min 8 characters)" minlength="8" required>
                             <!-- Show/Hide Password Toggle -->
                             <svg class="password-toggle" id="toggle-password" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -133,36 +124,27 @@
 
                     <!-- Referral Code (Optional) -->
                     <div class="form-group">
-                        <label class="form-label">{{trans('lang.referral_code')}} ({{trans('lang.optional')}})</label>
                         <div class="form-input-wrapper">
-                            <input type="text" id="referral-code" name="referral_code" class="form-input" placeholder="Enter referral code (optional)">
+                            <input type="text" id="referral-code" name="referral_code" class="form-input" placeholder="Referral Code (Optional)" style="padding-left: 1rem;">
                         </div>
                     </div>
 
                     <!-- Terms & Conditions Checkbox -->
-                    <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; cursor: pointer;">
-                            <input type="checkbox" id="terms" name="terms" style="width: 18px; height: 18px; cursor: pointer;" required>
-                            <span>I agree to the <a href="#" class="auth-link">Terms & Conditions</a></span>
+                    <div class="remember-me-wrapper" style="justify-content: flex-start;">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span>I agree to the <a href="#" class="auth-link" style="color: var(--secondary-color);">Terms & Conditions</a></span>
                         </label>
                         <div class="error-message" id="terms-error"></div>
                     </div>
 
                     <!-- Signup Button -->
                     <button type="submit" class="btn btn-primary" id="signup-btn">
-                        <span id="signup-btn-text">{{trans('lang.sign_up')}}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                        </svg>
+                        <span id="signup-btn-text" style="flex: 1; text-align: center;">SIGN UP</span>
                     </button>
 
-                    <!-- Divider -->
-                    <div class="divider">
-                        <span>OR</span>
-                    </div>
-
                     <!-- Social Auth Buttons -->
-                    <div class="social-auth-buttons">
+                    <div class="social-auth-buttons" style="margin-top: 1.5rem;">
                         <button type="button" class="social-btn" id="google-signup-btn">
                             <div class="social-btn-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">

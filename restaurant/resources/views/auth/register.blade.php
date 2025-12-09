@@ -47,7 +47,7 @@
             <div class="auth-form-panel">
                 
                 <!-- Tab Switcher: Restaurant / Customer -->
-                <div class="auth-tabs">
+                <div class="auth-tabs show-tabs">
                     <button class="auth-tab active" data-tab="restaurant">
                         Restaurant Signup
                     </button>
@@ -56,11 +56,8 @@
                     </a>
                 </div>
 
-                <!-- Logo -->
+                <!-- Header -->
                 <div class="auth-header" style="text-align: center;">
-                    <div class="auth-logo">
-                        <h1 class="auth-logo-text">Dooeats</h1>
-                    </div>
                     <h1 class="auth-title">{{trans('lang.sign_up_with_us')}}</h1>
                     <p class="auth-subtitle">{{trans('lang.sign_up_to_continue')}}</p>
                 </div>
@@ -165,19 +162,11 @@
 
                     <!-- Signup Button -->
                     <button type="submit" class="btn btn-primary" id="signup-btn">
-                        <span id="signup-btn-text">Create Account</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                        </svg>
+                        <span id="signup-btn-text" style="flex: 1; text-align: center;">SIGN UP</span>
                     </button>
 
-                    <!-- Divider -->
-                    <div class="divider">
-                        <span>OR</span>
-                    </div>
-
                     <!-- Social Auth Buttons -->
-                    <div class="social-auth-buttons">
+                    <div class="social-auth-buttons" style="margin-top: 1.5rem;">
                         <button type="button" class="social-btn" id="google-signup-btn">
                             <div class="social-btn-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">

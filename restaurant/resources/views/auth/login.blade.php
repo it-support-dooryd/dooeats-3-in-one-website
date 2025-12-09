@@ -47,20 +47,17 @@
             <div class="auth-form-panel">
                 
                 <!-- Tab Switcher: Restaurant / Customer -->
-                <div class="auth-tabs">
+                <div class="auth-tabs show-tabs">
                     <button class="auth-tab active" data-tab="restaurant">
                         Restaurant Login
                     </button>
-                    <a href="http://127.0.0.1:8000/login" class="auth-tab" data-tab="customer">
+                    <a href="http://127.0.0.1:8001/login" class="auth-tab" data-tab="customer">
                         Customer Login
                     </a>
                 </div>
 
-                <!-- Logo -->
+                <!-- Header -->
                 <div class="auth-header" style="text-align: center;">
-                    <div class="auth-logo">
-                        <h1 class="auth-logo-text">Dooeats</h1>
-                    </div>
                     <h1 class="auth-title">{{trans('lang.welcome_back')}}</h1>
                     <p class="auth-subtitle">{{trans('lang.restaurant_login_subtitle')}}</p>
                 </div>
@@ -80,18 +77,16 @@
                     
                     <!-- Email Input -->
                     <div class="form-group">
-                        <label class="form-label">{{ __('Email Address') }}</label>
                         <div class="form-input-wrapper">
-                            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" value="{{ old('email') }}" autocomplete="email">
+                            <input type="email" id="email" name="email" class="form-input" placeholder="vendor@dooeats.com" value="{{ old('email') }}" autocomplete="email">
                         </div>
                         <div class="error-message" id="email-error"></div>
                     </div>
 
                     <!-- Password Input with Toggle -->
                     <div class="form-group">
-                        <label class="form-label">{{ __('Password') }}</label>
                         <div class="form-input-wrapper">
-                            <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" autocomplete="current-password">
+                            <input type="password" id="password" name="password" class="form-input" placeholder="••••••••••••" autocomplete="current-password">
                             <!-- Show/Hide Password Toggle -->
                             <svg class="password-toggle" id="toggle-password" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -104,30 +99,19 @@
                     <!-- Remember Me & Forgot Password -->
                     <div class="remember-me-wrapper">
                         <label class="toggle-label">
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="remember-me">
-                                <span class="toggle-slider"></span>
-                            </div>
-                            Remember Me
+                            <input type="checkbox" id="remember-me">
+                            <span>Remember Me</span>
                         </label>
-                        <a href="{{ url('forgot-password') }}" class="auth-link" style="font-size: 0.875rem;">Forgot Password?</a>
+                        <a href="{{ url('forgot-password') }}" class="auth-link" style="font-size: 0.875rem; color: var(--secondary-color);">Forgot Password?</a>
                     </div>
 
                     <!-- Login Button -->
                     <button type="submit" class="btn btn-primary" id="login-btn">
-                        <span id="login-btn-text">{{ __('Login') }}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                        </svg>
+                        <span id="login-btn-text" style="flex: 1; text-align: center;">LOG IN</span>
                     </button>
 
-                    <!-- Divider -->
-                    <div class="divider">
-                        <span>OR</span>
-                    </div>
-
                     <!-- Social Auth Buttons -->
-                    <div class="social-auth-buttons">
+                    <div class="social-auth-buttons" style="margin-top: 1.5rem;">
                         <button type="button" class="social-btn" id="google-auth-btn">
                             <div class="social-btn-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
