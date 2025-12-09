@@ -7785,12 +7785,17 @@ a.restaurant_direction {
 
 .search-btn:hover {
     background: var(--primary-hover);
+    color: #fff;
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(4, 120, 87, 0.5);
 }
 
-.search-btn i {
+.search-btn:hover i {
     color: #fff;
+}
+
+.search-btn i {
+    color: #000000;
 }
 
 .glass-cart-btn {
@@ -8378,18 +8383,6 @@ a.restaurant_direction {
 .login-text {
     font-size: 14px;
     font-weight: 600;
-}
-
-/* Search Button - Keep Black */
-.search-btn {
-    background: #ffffff;
-    color: #1f2937;
-}
-
-.search-btn:hover {
-    background: #f3f4f6;
-    color: #1f2937;
-    border-color: rgba(0, 0, 0, 0.15);
 }
 
 /* Cart Badge */
