@@ -142,6 +142,17 @@
     </nav>
     <!-- Mobile Menu Modal -->
     <div class="glass-mobile-menu" id="mobileMenuModal">
+        <!-- Mobile Delivery Toggle -->
+        <div class="glass-delivery-mobile-wrapper" style="padding: 0.75rem;">
+            <label class="pill-switch" style="width: 100%;">
+                <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
+                <span class="pill-slider">
+                    <span class="pill-label delivery-label">Delivery</span>
+                    <span class="pill-label takeaway-label">Pickup</span>
+                </span>
+            </label>
+        </div>
+
         <a href="{{url('search')}}" class="glass-mobile-link">
             <i class="feather-search"></i> Search
         </a>
