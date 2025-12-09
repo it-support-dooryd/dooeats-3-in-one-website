@@ -1,6 +1,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
-<!-- Glassmorphic Floating Navigation Bar -->
-<header class="floating-header-wrapper">
+<!-- Minimalistic Header -->
+<header class="minimalist-header">
     <?php
     if (Session::get('takeawayOption') == 'true' || Session::get('takeawayOption') == true) {
         $takeaway_options = true;
@@ -53,132 +53,121 @@
         }
     </script>
     
-    <!-- Floating Glassmorphic Nav -->
-    <nav class="glass-nav">
-        <div class="glass-nav-container">
+    <div class="header-container">
+        <!-- Left: Logo + Location -->
+        <div class="header-left">
+            <a href="{{url('/')}}" class="header-logo">
+                <img alt="Dooeats" src="{{asset('img/logo_web.png')}}" id="logo_web">
+            </a>
             
-            <!-- Left Group: Logo + Location -->
-            <div class="glass-nav-left-group">
-                <a href="{{url('/')}}" class="glass-brand">
-                    <img alt="Dooeats" class="glass-logo" src="{{asset('img/logo_web.png')}}" id="logo_web">
-                </a>
-                
-                <!-- Location Selector (Moved before delivery toggle) -->
-                <div class="glass-location-wrapper pill-location">
-                     <div class="location-dropdown-container">
-                        <i class="feather-map-pin"></i>
-                        <input id="user_locationnew" type="text" class="glass-location-input-visible" placeholder="Calabar, Cross River, Nigeria" value="<?php echo @$_COOKIE['address_name'] ?? 'Calabar, Cross River, Nigeria'; ?>" readonly>
-                        <i class="feather-chevron-down"></i>
-                     </div>
-                </div>
-            </div>
-
-            <!-- Center Group: Empty (location moved to left) -->
-            <div class="glass-nav-center-group">
-            </div>
-
-            <!-- Right Group: Delivery Toggle + Search + Cart + User + Menu -->
-            <div class="glass-nav-right-group">
-                <!-- Delivery Toggle -->
-                 <div class="glass-delivery-toggle-wrapper">
-                    <label class="pill-switch">
-                        <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
-                        <span class="pill-slider">
-                            <span class="pill-label delivery-label">Delivery</span>
-                            <span class="pill-label takeaway-label">Pickup</span>
-                        </span>
-                    </label>
-                </div>
-
-                <!-- Search Icon --><button class="glass-icon-btn search-btn" onclick="window.location.href='{{url('search')}}'">
-                    <i class="feather-search"></i>
-                </button>
-
-                <!-- Cart -->
-                <a href="{{url('/checkout')}}" class="glass-icon-btn glass-cart-btn">
-                    <i class="feather-shopping-cart"></i>
-                    <span class="glass-cart-badge" id="cart-count" style="display:none;">0</span>
-                    <span class="cart-label">Cart</span>
-                </a>
-
-                <!-- User Menu -->
-                @auth
-                <div class="glass-dropdown">
-                    <button class="glass-cta-btn" id="userMenuButton">
-                        <i class="feather-user"></i>
-                    </button>
-                    <div class="glass-dropdown-menu" id="userDropdownMenu">
-                        <a class="glass-dropdown-item" href="{{url('profile')}}">
-                            <i class="feather-user"></i> {{trans('lang.my_account')}}
-                        </a>
-                        <a class="glass-dropdown-item" href="{{url('my-order')}}">
-                            <i class="feather-shopping-bag"></i> My Orders
-                        </a>
-                        <a class="glass-dropdown-item" href="{{ route('terms') }}">
-                            <i class="feather-file-text"></i> {{trans('lang.terms_use')}}
-                        </a>
-                        <a class="glass-dropdown-item" href="{{ route('privacy') }}">
-                            <i class="feather-shield"></i> {{trans('lang.privacy_policy')}}
-                        </a>
-                        <a class="glass-dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="feather-log-out"></i> {{trans('lang.logout')}}
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Mobile Menu Toggle (Auth Only) -->
-                <button class="glass-mobile-toggle" id="mobileMenuToggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                @else
-                <a href="{{url('login')}}" class="glass-cta-btn login-btn">
-                    <i class="feather-user"></i> <span class="login-text d-none d-md-inline">Sign In</span>
-                </a>
-                @endauth
+            <div class="header-location">
+                <i class="feather-map-pin"></i>
+                <input id="user_locationnew" type="text" class="location-input" placeholder="Calabar, Cross River, Nigeria" value="<?php echo @$_COOKIE['address_name'] ?? 'Calabar, Cross River, Nigeria'; ?>" readonly>
             </div>
         </div>
-    </nav>
-    <!-- Mobile Menu Modal -->
-    <div class="glass-mobile-menu" id="mobileMenuModal">
-        <!-- Mobile Delivery Toggle -->
-        <div class="glass-delivery-mobile-wrapper" style="padding: 0.75rem;">
-            <label class="pill-switch" style="width: 100%;">
+
+        <!-- Right: Actions -->
+        <div class="header-right">
+            <!-- Delivery/Pickup Toggle -->
+            <div class="delivery-toggle-wrapper">
+                <label class="delivery-switch">
+                    <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
+                    <span class="switch-slider">
+                        <span class="switch-label delivery-label">Delivery</span>
+                        <span class="switch-label pickup-label">Pickup</span>
+                    </span>
+                </label>
+            </div>
+
+            <!-- Search Button -->
+            <button class="header-btn search-btn" onclick="window.location.href='{{url('search')}}'">
+                <i class="feather-search"></i>
+            </button>
+
+            <!-- Cart Button -->
+            <a href="{{url('/checkout')}}" class="header-btn cart-btn">
+                <i class="feather-shopping-cart"></i>
+                <span class="cart-badge" id="cart-count" style="display:none;">0</span>
+            </a>
+
+            <!-- User Menu -->
+            @auth
+            <div class="user-dropdown">
+                <button class="header-btn user-btn" id="userMenuButton">
+                    <i class="feather-user"></i>
+                </button>
+                <div class="dropdown-menu-custom" id="userDropdownMenu">
+                    <a class="dropdown-item-custom" href="{{url('profile')}}">
+                        <i class="feather-user"></i> {{trans('lang.my_account')}}
+                    </a>
+                    <a class="dropdown-item-custom" href="{{url('my-order')}}">
+                        <i class="feather-shopping-bag"></i> My Orders
+                    </a>
+                    <a class="dropdown-item-custom" href="{{ route('terms') }}">
+                        <i class="feather-file-text"></i> {{trans('lang.terms_use')}}
+                    </a>
+                    <a class="dropdown-item-custom" href="{{ route('privacy') }}">
+                        <i class="feather-shield"></i> {{trans('lang.privacy_policy')}}
+                    </a>
+                    <a class="dropdown-item-custom" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="feather-log-out"></i> {{trans('lang.logout')}}
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            @else
+            <a href="{{url('login')}}" class="header-btn login-btn">
+                <i class="feather-user"></i>
+                <span class="login-text">Sign In</span>
+            </a>
+            @endauth
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenuModal">
+        <div class="mobile-delivery-toggle">
+            <label class="delivery-switch">
                 <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
-                <span class="pill-slider">
-                    <span class="pill-label delivery-label">Delivery</span>
-                    <span class="pill-label takeaway-label">Pickup</span>
+                <span class="switch-slider">
+                    <span class="switch-label delivery-label">Delivery</span>
+                    <span class="switch-label pickup-label">Pickup</span>
                 </span>
             </label>
         </div>
 
-        <a href="{{url('search')}}" class="glass-mobile-link">
+        <a href="{{url('search')}}" class="mobile-menu-link">
             <i class="feather-search"></i> Search
         </a>
-        <a href="{{url('restaurants')}}" class="glass-mobile-link">
+        <a href="{{url('restaurants')}}" class="mobile-menu-link">
             <i class="feather-grid"></i> Restaurants
         </a>
         
-        <div class="glass-mobile-divider"></div>
+        <div class="mobile-menu-divider"></div>
         
         @auth
-        <a href="{{url('profile')}}" class="glass-mobile-link">
+        <a href="{{url('profile')}}" class="mobile-menu-link">
             <i class="feather-user"></i> My Account
         </a>
-        <a href="{{ route('logout') }}" class="glass-mobile-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <a href="{{ route('logout') }}" class="mobile-menu-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="feather-log-out"></i> Logout
         </a>
         @else
-        <a href="{{url('login')}}" class="glass-mobile-link">
+        <a href="{{url('login')}}" class="mobile-menu-link">
             <i class="feather-log-in"></i> Sign In
         </a>
-        <a href="{{url('signup')}}" class="glass-mobile-link">
+        <a href="{{url('signup')}}" class="mobile-menu-link">
             <i class="feather-user-plus"></i> Sign Up
         </a>
         @endauth
     </div>
 </header>
 
-<!-- Glassmorphic Nav JavaScript -->
+<!-- Header JavaScript -->
 <script src="{{ asset('js/glass-nav.js') }}"></script>
