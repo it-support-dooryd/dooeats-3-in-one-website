@@ -8369,19 +8369,6 @@ a.restaurant_direction {
     font-size: 18px;
 }
 
-/* Search Button - Black */
-.search-btn {
-    background: #1f2937;
-    color: #ffffff;
-    border-color: #1f2937;
-}
-
-.search-btn:hover {
-    background: #111827;
-    border-color: #111827;
-    color: #ffffff;
-}
-
 .login-btn {
     width: auto;
     padding: 0 1.25rem;
@@ -8391,6 +8378,18 @@ a.restaurant_direction {
 .login-text {
     font-size: 14px;
     font-weight: 600;
+}
+
+/* Search Button - Keep Black */
+.search-btn {
+    background: #ffffff;
+    color: #1f2937;
+}
+
+.search-btn:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+    border-color: rgba(0, 0, 0, 0.15);
 }
 
 /* Cart Badge */
