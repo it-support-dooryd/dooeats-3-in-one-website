@@ -18,15 +18,26 @@
                             <div class="input-group">
                                 <input placeholder="Delivery Area" type="text" id="address_line1" class="form-control">
                                 <div class="input-group-append">
-                                    <button onclick="getCurrentLocationAddress1()" type="button" class="btn btn-outline-secondary"><i class="feather-map-pin"></i></button>
+                                    <button onclick="getCurrentLocationAddress1()" type="button"
+                                        class="btn btn-outline-secondary"><i class="feather-map-pin"></i></button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.landmark') }}</label><input placeholder="{{ trans('lang.footer') }}" value="" id="address_line2" type="text" class="form-control"></div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.zip_code') }}</label><input placeholder="Zip Code" id="address_zipcode" type="text" class="form-control">
+                        <div class="col-md-12 form-group"><label
+                                class="form-label">{{ trans('lang.landmark') }}</label><input
+                                placeholder="{{ trans('lang.footer') }}" value="" id="address_line2" type="text"
+                                class="form-control"></div>
+                        <div class="col-md-12 form-group"><label
+                                class="form-label">{{ trans('lang.zip_code') }}</label><input placeholder="Zip Code"
+                                id="address_zipcode" type="text" class="form-control">
                         </div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.city') }}</label><input placeholder="{{ trans('lang.city') }}" id="address_city" type="text" class="form-control"></div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.country') }}</label><input placeholder="Country" id="address_country" type="text" class="form-control">
+                        <div class="col-md-12 form-group"><label
+                                class="form-label">{{ trans('lang.city') }}</label><input
+                                placeholder="{{ trans('lang.city') }}" id="address_city" type="text"
+                                class="form-control"></div>
+                        <div class="col-md-12 form-group"><label
+                                class="form-label">{{ trans('lang.country') }}</label><input placeholder="Country"
+                                id="address_country" type="text" class="form-control">
                         </div>
                         <input type="hidden" name="address_lat" id="address_lat">
                         <input type="hidden" name="address_lng" id="address_lng">
@@ -35,8 +46,10 @@
             </div>
             <div class="modal-footer p-0 border-0">
                 <div class="col-12 m-0 p-0">
-                    <button type="button" id="close_button" class="close" data-dismiss="modal" aria-label="Close" hidden>
-                        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="saveShippingAddress()">{{ trans('lang.save_changes') }}
+                    <button type="button" id="close_button" class="close" data-dismiss="modal" aria-label="Close"
+                        hidden>
+                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                            onclick="saveShippingAddress()">{{ trans('lang.save_changes') }}
                         </button>
                 </div>
             </div>
@@ -44,9 +57,11 @@
     </div>
 </div>
 <span style="display: none;">
-    <button type="button" class="btn btn-primary" id="notification_accepted_order_by_restaurant_id" data-toggle="modal" data-target="#notification_accepted_order_by_restaurant">{{ trans('lang.large_modal') }}</button>
+    <button type="button" class="btn btn-primary" id="notification_accepted_order_by_restaurant_id" data-toggle="modal"
+        data-target="#notification_accepted_order_by_restaurant">{{ trans('lang.large_modal') }}</button>
 </span>
-<div class="modal fade" id="notification_accepted_order_by_restaurant" tabindex="-1" role="dialog" aria-labelledby="notification_accepted_order_by_restaurant" aria-hidden="true">
+<div class="modal fade" id="notification_accepted_order_by_restaurant" tabindex="-1" role="dialog"
+    aria-labelledby="notification_accepted_order_by_restaurant" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered notification-main" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,16 +74,19 @@
                 <h6><span id="restaurnat_name"></span></h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}" id="notification_accepted_order_by_restaurant_a">{{ trans('lang.go') }}</a>
+                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}"
+                        id="notification_accepted_order_by_restaurant_a">{{ trans('lang.go') }}</a>
                 </button>
             </div>
         </div>
     </div>
 </div>
 <span style="display: none;">
-    <button type="button" class="btn btn-primary" id="notification_rejected_order_by_restaurant_id" data-toggle="modal" data-target="#notification_rejected_order_by_restaurant">{{ trans('lang.large_modal') }}</button>
+    <button type="button" class="btn btn-primary" id="notification_rejected_order_by_restaurant_id" data-toggle="modal"
+        data-target="#notification_rejected_order_by_restaurant">{{ trans('lang.large_modal') }}</button>
 </span>
-<div class="modal fade" id="notification_rejected_order_by_restaurant" tabindex="-1" role="dialog" aria-labelledby="notification_accepted_order_by_restaurant" aria-hidden="true">
+<div class="modal fade" id="notification_rejected_order_by_restaurant" tabindex="-1" role="dialog"
+    aria-labelledby="notification_accepted_order_by_restaurant" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered notification-main" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -81,14 +99,16 @@
                 <h6><span id="restaurnat_name_1"></span></h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}" id="notification_rejected_order_by_restaurant_a">{{ trans('lang.go') }}</a>
+                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}"
+                        id="notification_rejected_order_by_restaurant_a">{{ trans('lang.go') }}</a>
                 </button>
             </div>
         </div>
     </div>
 </div>
 <span style="display: none;">
-    <button type="button" class="btn btn-primary" id="notification_accepted_order_id" data-toggle="modal" data-target="#notification_accepted_order">{{ trans('lang.large_modal') }}</button>
+    <button type="button" class="btn btn-primary" id="notification_accepted_order_id" data-toggle="modal"
+        data-target="#notification_accepted_order">{{ trans('lang.large_modal') }}</button>
 </span>
 <div class="modal fade" id="notification_accepted_order" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered notification-main" role="document">
@@ -103,14 +123,16 @@
                 <h6><span id="np_accept_name"></span></h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}" id="notification_accepted_a">{{ trans('lang.go') }}</a>
+                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}"
+                        id="notification_accepted_a">{{ trans('lang.go') }}</a>
                 </button>
             </div>
         </div>
     </div>
 </div>
 <span style="display: none;">
-    <button type="button" class="btn btn-primary" id="notification_order_complete_id" data-toggle="modal" data-target="#notification_order_complete">{{ trans('lang.large_modal') }}</button>
+    <button type="button" class="btn btn-primary" id="notification_order_complete_id" data-toggle="modal"
+        data-target="#notification_order_complete">{{ trans('lang.large_modal') }}</button>
 </span>
 <div class="modal fade" id="notification_order_complete" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered notification-main" role="document">
@@ -127,15 +149,18 @@
                 <h6 id="order_completed_msg"></h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}" id="">{{ trans('lang.go') }}</a></button>
+                <button type="button" class="btn btn-primary"><a href="{{ url('my_order') }}"
+                        id="">{{ trans('lang.go') }}</a></button>
             </div>
         </div>
     </div>
 </div>
 <span style="display: none;">
-    <button type="button" class="btn btn-primary" id="notification_accepted_dining_by_restaurant_id" data-toggle="modal" data-target="#notification_accepted_dining_by_restaurant">{{ trans('lang.large_modal') }}</button>
+    <button type="button" class="btn btn-primary" id="notification_accepted_dining_by_restaurant_id" data-toggle="modal"
+        data-target="#notification_accepted_dining_by_restaurant">{{ trans('lang.large_modal') }}</button>
 </span>
-<div class="modal fade" id="notification_accepted_dining_by_restaurant" tabindex="-1" role="dialog" aria-labelledby="notification_accepted_dining_by_restaurant" aria-hidden="true">
+<div class="modal fade" id="notification_accepted_dining_by_restaurant" tabindex="-1" role="dialog"
+    aria-labelledby="notification_accepted_dining_by_restaurant" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered notification-main" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -148,16 +173,19 @@
                 <h6><span id="restaurnat_name_dining"></span></h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="{{ url('my_dinein') }}" id="notification_accepted_dining_by_restaurant_a">{{ trans('lang.go') }}</a>
+                <button type="button" class="btn btn-primary"><a href="{{ url('my_dinein') }}"
+                        id="notification_accepted_dining_by_restaurant_a">{{ trans('lang.go') }}</a>
                 </button>
             </div>
         </div>
     </div>
 </div>
 <span style="display: none;">
-    <button type="button" class="btn btn-primary" id="notification_rejected_dining_by_restaurant_id" data-toggle="modal" data-target="#notification_rejected_dining_by_restaurant">{{ trans('lang.large_modal') }}</button>
+    <button type="button" class="btn btn-primary" id="notification_rejected_dining_by_restaurant_id" data-toggle="modal"
+        data-target="#notification_rejected_dining_by_restaurant">{{ trans('lang.large_modal') }}</button>
 </span>
-<div class="modal fade" id="notification_rejected_dining_by_restaurant" tabindex="-1" role="dialog" aria-labelledby="notification_rejected_dining_by_restaurant" aria-hidden="true">
+<div class="modal fade" id="notification_rejected_dining_by_restaurant" tabindex="-1" role="dialog"
+    aria-labelledby="notification_rejected_dining_by_restaurant" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered notification-main" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -171,12 +199,55 @@
                 </h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="{{ url('my_dinein') }}" id="notification_rejected_dining_by_restaurant_a">{{ trans('lang.go') }}</a>
+                <button type="button" class="btn btn-primary"><a href="{{ url('my_dinein') }}"
+                        id="notification_rejected_dining_by_restaurant_a">{{ trans('lang.go') }}</a>
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Location Bottom Sheet Modal -->
+<div class="location-bottom-sheet" id="locationBottomSheet" style="display: none;">
+    <div class="location-bottom-sheet-backdrop" onclick="closeLocationBottomSheet()"></div>
+    <div class="location-bottom-sheet-content">
+        <div class="location-bottom-sheet-header">
+            <h5 class="location-bottom-sheet-title">{{ trans('lang.search_location') }}</h5>
+            <button type="button" class="location-bottom-sheet-close" onclick="closeLocationBottomSheet()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="location-bottom-sheet-body">
+            <!-- Permission Notification -->
+            <div class="location-permission-alert">
+                <i class="feather-info mr-2"></i>
+                <span>{{ trans('lang.location_permission_message') }}</span>
+            </div>
+
+            <!-- Search Input -->
+            <div class="location-search-container">
+                <input type="text" id="location_search_input" class="location-search-input form-control"
+                    placeholder="{{ trans('lang.search_for_area') }}" autocomplete="off">
+                <div id="location_search_results" class="location-search-results"></div>
+            </div>
+
+            <!-- Current Location Button -->
+            <button type="button" class="current-location-btn btn btn-outline-primary btn-block"
+                onclick="useCurrentLocationFromBottomSheet()">
+                <i class="feather-map-pin mr-2"></i>
+                {{ trans('lang.use_current_location') }}
+            </button>
+        </div>
+
+        <div class="location-bottom-sheet-footer">
+            <button type="button" class="proceed-btn btn btn-primary btn-block" onclick="proceedWithoutLocation()">
+                {{ trans('lang.proceed') }}
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="error-container" id="error-container"></div>
 <footer class="section-footer border-top bg-dark">
     <div class="footerTemplate"></div>
@@ -205,9 +276,9 @@
 <script type="text/javascript" src="{{ asset('js/sweetalert2.js') }}"></script>
 <script type="text/javascript">
     <?php $id = null;
-    if (Auth::user()) {
-        $id = Auth::user()->getvendorId();
-    } ?>
+if (Auth::user()) {
+    $id = Auth::user()->getvendorId();
+} ?>
     var cuser_id = '<?php echo $id; ?>';
     var dine_in_enable = false;
     var place = [];
@@ -225,12 +296,12 @@
     var mapType = '';
     var type = '';
     var mapTypeDoc = database.collection('settings').doc('DriverNearBy');
-    mapTypeDoc.get().then(async function(snapshots) {
+    mapTypeDoc.get().then(async function (snapshots) {
         var mapTypeData = snapshots.data();
         mapType = mapTypeData.selectedMapType;
     })
     if (cuser_id && cuser_id.trim() !== '') {
-        database.collection('users').doc(cuser_id).onSnapshot(function(doc) {
+        database.collection('users').doc(cuser_id).onSnapshot(function (doc) {
             if (!doc.exists) {
                 console.log("User document not found, logging out...");
                 firebase.auth().signOut().then(() => {
@@ -259,7 +330,7 @@
         }, timeInSec * 1000);
     }
     async function loadGoogleMapsScript() {
-        await database.collection('settings').doc("googleMapKey").get().then(function(googleMapKeySnapshotsHeader) {
+        await database.collection('settings').doc("googleMapKey").get().then(function (googleMapKeySnapshotsHeader) {
             var placeholderImageHeaderData = googleMapKeySnapshotsHeader.data();
             googleMapKey = placeholderImageHeaderData.key;
             const script = document.createElement('script');
@@ -273,7 +344,7 @@
                 script.src = "https://unpkg.com/leaflet/dist/leaflet.js";
                 document.head.appendChild(script);
             }
-            script.onload = function() {
+            script.onload = function () {
                 if (mapType == 'google') {
                     initialize();
                 } else {
@@ -290,12 +361,12 @@
         }
         var input = document.getElementById('user_locationnew');
         autocomplete = new google.maps.places.Autocomplete(input);
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
             address_name = place.name;
             address_lat = place.geometry.location.lat();
             address_lng = place.geometry.location.lng();
-            $.each(place.address_components, function(i, address_component) {
+            $.each(place.address_components, function (i, address_component) {
                 address_name1 = '';
                 if (address_component.types[0] == "premise") {
                     if (address_name1 == '') {
@@ -341,8 +412,8 @@
         }
         // Autocomplete setup
         $('#user_locationnew').autocomplete({
-            source: function(request, response) {
-                getPlaceSuggestions(request.term).done(function(data) {
+            source: function (request, response) {
+                getPlaceSuggestions(request.term).done(function (data) {
                     response(data.map(place => ({
                         label: place.display_name,
                         lat: place.lat,
@@ -351,7 +422,7 @@
                     })));
                 });
             },
-            select: function(event, ui) {
+            select: function (event, ui) {
                 window.location.reload(true);
                 var address_name = ui.item.label;
                 var address_lat = ui.item.lat;
@@ -390,12 +461,12 @@
         var input2 = document.getElementById('address_line1');
         if (mapType == 'google') {
             autocomplete2 = new google.maps.places.Autocomplete(input2);
-            google.maps.event.addListener(autocomplete2, 'place_changed', function() {
+            google.maps.event.addListener(autocomplete2, 'place_changed', function () {
                 var place = autocomplete2.getPlace();
                 address_name = place.name;
                 address_lat = place.geometry.location.lat();
                 address_lng = place.geometry.location.lng();
-                $.each(place.address_components, function(i, address_component) {
+                $.each(place.address_components, function (i, address_component) {
                     address_name1 = '';
                     if (address_component.types[0] == "premise") {
                         if (address_name1 == '') {
@@ -431,83 +502,83 @@
         if (mapType == 'google') {
             var geocoder = new google.maps.Geocoder();
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async function(position) {
-                        var pos = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-                        var geolocation = new google.maps.LatLng(position.coords.latitude, position.coords
-                            .longitude);
-                        var circle = new google.maps.Circle({
-                            center: geolocation,
-                            radius: position.coords.accuracy
-                        });
-                        var location = new google.maps.LatLng(pos['lat'], pos[
-                            'lng']); // turn coordinates into an object
-                        geocoder.geocode({
-                            'latLng': location
-                        }, async function(results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                if (results.length > 0) {
-                                    document.getElementById('user_locationnew').value = results[
-                                        0].formatted_address;
+                navigator.geolocation.getCurrentPosition(async function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var geolocation = new google.maps.LatLng(position.coords.latitude, position.coords
+                        .longitude);
+                    var circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    var location = new google.maps.LatLng(pos['lat'], pos[
+                        'lng']); // turn coordinates into an object
+                    geocoder.geocode({
+                        'latLng': location
+                    }, async function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            if (results.length > 0) {
+                                document.getElementById('user_locationnew').value = results[
+                                    0].formatted_address;
+                                address_name1 = '';
+                                $.each(results[0].address_components, async function (i,
+                                    address_component) {
                                     address_name1 = '';
-                                    $.each(results[0].address_components, async function(i,
-                                        address_component) {
-                                        address_name1 = '';
-                                        if (address_component.types[0] ==
-                                            "premise") {
-                                            if (address_name1 == '') {
-                                                address_name1 = address_component
-                                                    .long_name;
-                                            } else {
-                                                address_name2 = address_component
-                                                    .long_name;
-                                            }
-                                        } else if (address_component.types[0] ==
-                                            "postal_code") {
-                                            address_zip = address_component
+                                    if (address_component.types[0] ==
+                                        "premise") {
+                                        if (address_name1 == '') {
+                                            address_name1 = address_component
                                                 .long_name;
-                                        } else if (address_component.types[0] ==
-                                            "locality") {
-                                            address_city = address_component
-                                                .long_name;
-                                        } else if (address_component.types[0] ==
-                                            "administrative_area_level_1") {
-                                            var address_state = address_component
-                                                .long_name;
-                                        } else if (address_component.types[0] ==
-                                            "country") {
-                                            var address_country = address_component
+                                        } else {
+                                            address_name2 = address_component
                                                 .long_name;
                                         }
-                                    });
-                                    address_name = results[0].formatted_address;
-                                    address_lat = results[0].geometry.location.lat();
-                                    address_lng = results[0].geometry.location.lng();
-                                    setCookie('address_name1', address_name1, 365);
-                                    setCookie('address_name2', address_name2, 365);
-                                    setCookie('address_name', address_name, 365);
-                                    setCookie('address_lat', address_lat, 365);
-                                    setCookie('address_lng', address_lng, 365);
-                                    setCookie('address_zip', address_zip, 365);
-                                    setCookie('address_city', address_city, 365);
-                                    setCookie('address_state', address_state, 365);
-                                    setCookie('address_country', address_country, 365);
-                                    if (type == 'reload') {
-                                        window.location.reload(true);
+                                    } else if (address_component.types[0] ==
+                                        "postal_code") {
+                                        address_zip = address_component
+                                            .long_name;
+                                    } else if (address_component.types[0] ==
+                                        "locality") {
+                                        address_city = address_component
+                                            .long_name;
+                                    } else if (address_component.types[0] ==
+                                        "administrative_area_level_1") {
+                                        var address_state = address_component
+                                            .long_name;
+                                    } else if (address_component.types[0] ==
+                                        "country") {
+                                        var address_country = address_component
+                                            .long_name;
                                     }
+                                });
+                                address_name = results[0].formatted_address;
+                                address_lat = results[0].geometry.location.lat();
+                                address_lng = results[0].geometry.location.lng();
+                                setCookie('address_name1', address_name1, 365);
+                                setCookie('address_name2', address_name2, 365);
+                                setCookie('address_name', address_name, 365);
+                                setCookie('address_lat', address_lat, 365);
+                                setCookie('address_lng', address_lng, 365);
+                                setCookie('address_zip', address_zip, 365);
+                                setCookie('address_city', address_city, 365);
+                                setCookie('address_state', address_state, 365);
+                                setCookie('address_country', address_country, 365);
+                                if (type == 'reload') {
+                                    window.location.reload(true);
                                 }
                             }
-                        });
-                        try {
-                            if (autocomplete) {
-                                autocomplete.setBounds(circle.getBounds());
-                            }
-                        } catch (err) {}
-                    },
-                    function() {});
-            } else {}
+                        }
+                    });
+                    try {
+                        if (autocomplete) {
+                            autocomplete.setBounds(circle.getBounds());
+                        }
+                    } catch (err) { }
+                },
+                    function () { });
+            } else { }
         } else {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -532,7 +603,7 @@
         const lon1 = lon.toFixed(4);
         const url = 'https://nominatim.openstreetmap.org/reverse?lat=' + lat1 + '&lon=' + lon1 +
             '&format=json&addressdetails=1';
-        $.getJSON(url, function(data) {
+        $.getJSON(url, function (data) {
             if (data && data.address) {
                 const placeName = data.display_name;
                 $('#user_locationnew').val(placeName);
@@ -564,7 +635,7 @@
             } else {
                 console.error("Place not found.");
             }
-        }).fail(function() {
+        }).fail(function () {
             console.error("Error fetching data from Nominatim.");
         });
     }
@@ -607,9 +678,148 @@
         return null;
     }
 
+    // Location Bottom Sheet Functions
+    function checkAndShowLocationBottomSheet() {
+        // Check if user has saved location in cookies
+        var savedLocation = getCookie('address_name');
+        var savedLat = getCookie('address_lat');
+        var savedLng = getCookie('address_lng');
+        
+        // If no saved location, show the bottom sheet
+        if (!savedLocation || !savedLat || !savedLng) {
+            openLocationBottomSheet();
+        }
+    }
+
+    function openLocationBottomSheet() {
+        var bottomSheet = document.getElementById('locationBottomSheet');
+        if (bottomSheet) {
+            bottomSheet.style.display = 'block';
+            // Trigger animation
+            setTimeout(function() {
+                bottomSheet.classList.add('show');
+            }, 10);
+        }
+    }
+
+    function closeLocationBottomSheet() {
+        var bottomSheet = document.getElementById('locationBottomSheet');
+        if (bottomSheet) {
+            bottomSheet.classList.remove('show');
+            setTimeout(function() {
+                bottomSheet.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    function proceedWithoutLocation() {
+        closeLocationBottomSheet();
+    }
+
+    function useCurrentLocationFromBottomSheet() {
+        getCurrentLocation('reload');
+    }
+
+    function selectLocationFromBottomSheet(locationData) {
+        // Set the location in the header input
+        document.getElementById('user_locationnew').value = locationData.name;
+        
+        // Set cookies
+        setCookie('address_name', locationData.name, 365);
+        setCookie('address_lat', locationData.lat, 365);
+        setCookie('address_lng', locationData.lng, 365);
+        
+        if (locationData.city) setCookie('address_city', locationData.city, 365);
+        if (locationData.state) setCookie('address_state', locationData.state, 365);
+        if (locationData.country) setCookie('address_country', locationData.country, 365);
+        if (locationData.zip) setCookie('address_zip', locationData.zip, 365);
+        
+        // Close bottom sheet and reload
+        closeLocationBottomSheet();
+        window.location.reload();
+    }
+
+    // Initialize bottom sheet autocomplete after maps load
+    function initializeBottomSheetAutocomplete() {
+        var searchInput = document.getElementById('location_search_input');
+        if (!searchInput) return;
+
+        if (mapType == 'google') {
+            // Google Maps autocomplete
+            var autocompleteBottomSheet = new google.maps.places.Autocomplete(searchInput);
+            google.maps.event.addListener(autocompleteBottomSheet, 'place_changed', function() {
+                var place = autocompleteBottomSheet.getPlace();
+                if (!place.geometry) return;
+
+                var locationData = {
+                    name: place.formatted_address || place.name,
+                    lat: place.geometry.location.lat(),
+                    lng: place.geometry.location.lng()
+                };
+
+                // Extract address components
+                if (place.address_components) {
+                    place.address_components.forEach(function(component) {
+                        if (component.types.includes('postal_code')) {
+                            locationData.zip = component.long_name;
+                        } else if (component.types.includes('locality')) {
+                            locationData.city = component.long_name;
+                        } else if (component.types.includes('administrative_area_level_1')) {
+                            locationData.state = component.long_name;
+                        } else if (component.types.includes('country')) {
+                            locationData.country = component.long_name;
+                        }
+                    });
+                }
+
+                selectLocationFromBottomSheet(locationData);
+            });
+        } else {
+            // OpenStreetMap autocomplete using jQuery UI
+            $('#location_search_input').autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: `https://nominatim.openstreetmap.org/search?format=json&q=${request.term}`,
+                        dataType: 'json',
+                        success: function(data) {
+                            response(data.map(place => ({
+                                label: place.display_name,
+                                lat: place.lat,
+                                lon: place.lon,
+                                address: place.address || {}
+                            })));
+                        }
+                    });
+                },
+                select: function(event, ui) {
+                    var locationData = {
+                        name: ui.item.label,
+                        lat: ui.item.lat,
+                        lng: ui.item.lon,
+                        city: ui.item.address.city || ui.item.address.town || ui.item.address.village || '',
+                        state: ui.item.address.state || '',
+                        country: ui.item.address.country || '',
+                        zip: ui.item.address.postcode || ''
+                    };
+                    selectLocationFromBottomSheet(locationData);
+                }
+            });
+        }
+    }
+
+    // Run on document ready
+    $(document).ready(function() {
+        // Check and show bottom sheet if needed
+        setTimeout(function() {
+            checkAndShowLocationBottomSheet();
+            initializeBottomSheetAutocomplete();
+        }, 1000);
+    });
+
+
     const BATCH_SIZE = 100;
     const MAX_PARALLEL_BATCHES = 5;
-    database.collection('settings').doc("restaurant").get().then(async function(snapshots) {
+    database.collection('settings').doc("restaurant").get().then(async function (snapshots) {
         var subscriptionSetting = snapshots.data();
         localStorage.setItem('subscriptionModel', subscriptionSetting.subscription_model);
     });
@@ -618,7 +828,7 @@
         var subscriptionModel = false;
 
         var subscriptionBusinessModel = database.collection('settings').doc("restaurant");
-        await subscriptionBusinessModel.get().then(async function(snapshots) {
+        await subscriptionBusinessModel.get().then(async function (snapshots) {
             var subscriptionSetting = snapshots.data();
             if (subscriptionSetting.subscription_model == true) {
                 subscriptionModel = true;
@@ -690,7 +900,7 @@
     }
 
     var footerRef = database.collection('settings').doc('footerTemplate');
-    footerRef.get().then(async function(snapshots) {
+    footerRef.get().then(async function (snapshots) {
         var footerData = snapshots.data();
         if (footerData != undefined) {
             if (footerData.footerTemplate && footerData.footerTemplate != "" && footerData.footerTemplate !=
@@ -701,7 +911,7 @@
     });
     var langcount = 0;
     var languages_list = database.collection('settings').doc('languages');
-    languages_list.get().then(async function(snapshotslang) {
+    languages_list.get().then(async function (snapshotslang) {
         snapshotslang = snapshotslang.data();
         if (snapshotslang != undefined) {
             snapshotslang = snapshotslang.list;
@@ -717,12 +927,12 @@
                 $("#language_dropdown_box").css('visibility', 'visible');
             }
             <?php if (session()->get('locale')) { ?>
-            $("#language_dropdown").val("<?php echo session()->get('locale'); ?>");
+            $("#language_dropdown").val("<?php    echo session()->get('locale'); ?>");
             <?php } ?>
         }
     });
     var url = "{{ route('changeLang') }}";
-    $(".changeLang").change(function() {
+    $(".changeLang").change(function () {
         var slug = $(this).val();
         languages_list_main.forEach((data) => {
             if (slug == data.slug) {
@@ -736,7 +946,7 @@
             }
         });
     });
-    database.collection('settings').doc("notification_setting").get().then(async function(snapshots) {
+    database.collection('settings').doc("notification_setting").get().then(async function (snapshots) {
         var data = snapshots.data();
         if (data != undefined) {
             serviceJson = data.serviceJson;
@@ -750,7 +960,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(data) {}
+                    success: function (data) { }
                 });
             }
         }
@@ -793,7 +1003,7 @@
             if ($point == $points_polygon)
                 $point = 0;
             if ((($vertices_y[$point] > $latitude_y != ($vertices_y[$j] > $latitude_y)) && ($longitude_x < ($vertices_x[
-                    $j] - $vertices_x[$point]) * ($latitude_y - $vertices_y[$point]) / ($vertices_y[$j] -
+                $j] - $vertices_x[$point]) * ($latitude_y - $vertices_y[$point]) / ($vertices_y[$j] -
                     $vertices_y[$point]) + $vertices_x[$point])))
                 $c = !$c;
         }
@@ -801,7 +1011,7 @@
     }
     //end - Get user zone id from address
     //start - Get product price with admin commission globally
-    database.collection('settings').doc("AdminCommission").get().then(async function(snapshots) {
+    database.collection('settings').doc("AdminCommission").get().then(async function (snapshots) {
         var adminCommissionSettings = snapshots.data();
         localStorage.setItem('adminCommissionSettings', JSON.stringify(adminCommissionSettings));
     });
@@ -812,7 +1022,7 @@
             if (adminCommissionSettings != "" && adminCommissionSettings != undefined) {
                 adminCommissionSettings = JSON.parse(localStorage.getItem('adminCommissionSettings'));
                 if (adminCommissionSettings.isEnabled) {
-                    await database.collection('vendors').where('id', '==', vendorID).get().then(async function(
+                    await database.collection('vendors').where('id', '==', vendorID).get().then(async function (
                         snapshot) {
                         if (snapshot.docs.length > 0) {
                             var data = snapshot.docs[0].data();
@@ -949,7 +1159,7 @@
             if (commissionData && adminCommissionSettings.isEnabled) {
                 if (commissionData.commissionType === "Percent") {
                     dis_price = parseFloat(productData.disPrice) + (parseFloat(productData.disPrice) * parseFloat(
-                            commissionData.fix_commission) /
+                        commissionData.fix_commission) /
                         100);
                 } else {
                     dis_price = parseFloat(productData.disPrice) + parseFloat(commissionData.fix_commission);
@@ -1025,29 +1235,29 @@
 </script>
 <script type="text/javascript">
     <?php
-    use App\Models\user;
-    use App\Models\VendorUsers;
-    
-    $user_email = '';
-    
-    $user_uuid = '';
-    
-    $auth_id = Auth::id();
-    
-    if ($auth_id) {
-        $user = user::select('email')->where('id', $auth_id)->first();
-    
-        $user_email = $user->email;
-    
-        $user_uuid = VendorUsers::select('uuid')->where('email', $user_email)->first();
-    
-        $user_uuid = $user_uuid->uuid;
-    }
+use App\Models\user;
+use App\Models\VendorUsers;
+
+$user_email = '';
+
+$user_uuid = '';
+
+$auth_id = Auth::id();
+
+if ($auth_id) {
+    $user = user::select('email')->where('id', $auth_id)->first();
+
+    $user_email = $user->email;
+
+    $user_uuid = VendorUsers::select('uuid')->where('email', $user_email)->first();
+
+    $user_uuid = $user_uuid->uuid;
+}
     
     ?>
     var database = firebase.firestore();
     var refDineInRestaurant = database.collection('settings').doc("DineinForRestaurant");
-    refDineInRestaurant.get().then(async function(snapshotsDinein) {
+    refDineInRestaurant.get().then(async function (snapshotsDinein) {
         var enableddineinRestaurant = snapshotsDinein.data();
         dine_in_enable = enableddineinRestaurant.isEnabledForCustomer;
         if (dine_in_enable == true) {
@@ -1058,14 +1268,14 @@
     var placeholderImageHeader = '';
     var googleMapKey = '';
     var googleMapKeySettingHeader = database.collection('settings').doc("googleMapKey");
-    googleMapKeySettingHeader.get().then(async function(googleMapKeySnapshotsHeader) {
+    googleMapKeySettingHeader.get().then(async function (googleMapKeySnapshotsHeader) {
         var placeholderImageHeaderData = googleMapKeySnapshotsHeader.data();
         placeholderImageHeader = placeholderImageHeaderData.placeHolderImage;
         googleMapKey = placeholderImageHeaderData.key;
     });
     var placeholderImage = '';
     var placeholder = database.collection('settings').doc('placeHolderImage');
-    placeholder.get().then(async function(snapshotsimage) {
+    placeholder.get().then(async function (snapshotsimage) {
         var placeholderImageData = snapshotsimage.data();
         placeholderImage = placeholderImageData.image;
     });
@@ -1082,15 +1292,15 @@
         referral_ref = database.collection('referral').doc(user_uuid);
 
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (user_ref != '') {
-            user_ref.get().then(async function(profileSnapshots) {
+            user_ref.get().then(async function (profileSnapshots) {
                 var profile_user = profileSnapshots.docs[0].data();
                 var profile_name = profile_user.firstName + " " + profile_user.lastName;
                 if (profile_user.profilePictureURL != '') {
                     $("#dropdownMenuButton").append('<img onerror="this.onerror=null;this.src=\'' +
                         placeholderImage + '\'" alt="#" src="' + profile_user
-                        .profilePictureURL +
+                            .profilePictureURL +
                         '" class="img-fluid rounded-circle header-user mr-2 header-user">Hi ' +
                         profile_user.firstName);
                 } else {
@@ -1104,7 +1314,7 @@
             });
         }
         if (referral_ref) {
-            referral_ref.get().then(async function(refSnapshot) {
+            referral_ref.get().then(async function (refSnapshot) {
                 var referral_data = refSnapshot.data();
                 if (referral_data != undefined && referral_data.referralCode != null &&
                     referral_data.referralCode != undefined) {
@@ -1114,8 +1324,8 @@
             })
         }
     })
-    $(".user-logout-btn").click(async function() {
-        firebase.auth().signOut().then(function() {
+    $(".user-logout-btn").click(async function () {
+        firebase.auth().signOut().then(function () {
             var logoutURL = "{{ route('logout') }}";
             $.ajax({
                 type: 'POST',
@@ -1124,7 +1334,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(data1) {
+                success: function (data1) {
                     if (data1.logoutuser) {
                         window.location = "{{ route('login') }}";
                     }
@@ -1134,7 +1344,7 @@
     });
     <?php if (@$_GET['update_location'] == 1) { ?>
     var vendorsRef = database.collection('vendors');
-    vendorsRef.get().then(async function(vendorsSnapshots) {
+    vendorsRef.get().then(async function (vendorsSnapshots) {
         vendorsSnapshots.forEach((doc) => {
             vendorRate = doc.data();
             if (vendorRate.g != undefined) {
@@ -1149,7 +1359,7 @@
                         }, (error) => {
                             console.log('Error: ' + error);
                         });
-                    } catch (err) {}
+                    } catch (err) { }
                 }
             }
         });
@@ -1175,7 +1385,7 @@
     var dineInRejectedSubject = '';
     var dineInRejectedMsg = '';
     var database = firebase.firestore();
-    database.collection('dynamic_notification').get().then(async function(snapshot) {
+    database.collection('dynamic_notification').get().then(async function (snapshot) {
         if (snapshot.docs.length > 0) {
             snapshot.docs.map(async (listval) => {
                 val = listval.data();
@@ -1204,11 +1414,11 @@
             });
         }
     });
-    var route1 = '<?php echo route('my_order'); ?>';
+    var route1 = '<?php    echo route('my_order'); ?>';
     var pageloadded = 0;
-    database.collection('restaurant_orders').where('author.id', "==", cuser_id).onSnapshot(function(doc) {
+    database.collection('restaurant_orders').where('author.id', "==", cuser_id).onSnapshot(function (doc) {
         if (pageloadded) {
-            doc.docChanges().forEach(function(change) {
+            doc.docChanges().forEach(function (change) {
                 var val = change.doc.data();
                 if (change.type == "modified") {
                     if (val.status == "Order Completed" && val.takeAway == true || val.takeAway ==
@@ -1262,11 +1472,11 @@
             pageloadded = 1;
         }
     });
-    var route2 = '<?php echo route('my_dinein'); ?>';
+    var route2 = '<?php    echo route('my_dinein'); ?>';
     var pageloadded_dining = 0;
-    database.collection('booked_table').where('author.id', "==", cuser_id).onSnapshot(function(doc) {
+    database.collection('booked_table').where('author.id', "==", cuser_id).onSnapshot(function (doc) {
         if (pageloadded_dining) {
-            doc.docChanges().forEach(function(change) {
+            doc.docChanges().forEach(function (change) {
                 var val = change.doc.data();
                 if (change.type == "modified") {
                     if (val.status == "Order Accepted") {
@@ -1457,7 +1667,7 @@
     var currencyAtRight = false;
     var decimal_degits = 0;
     var refCurrency = database.collection('currencies').where('isActive', '==', true);
-    refCurrency.get().then(async function(snapshots) {
+    refCurrency.get().then(async function (snapshots) {
         var currencyData = snapshots.docs[0].data();
         currentCurrency = currencyData.symbol;
         currencyAtRight = currencyData.symbolAtRight;
@@ -1467,7 +1677,7 @@
     });
     async function sendMailData(userEmail, userName, orderId, address, paymentMethod, products, couponCode, discount,
         specialDiscount, taxSetting, deliveryCharge, tipAmount) {
-        await email_templates.get().then(async function(snapshots) {
+        await email_templates.get().then(async function (snapshots) {
             emailTemplatesData = snapshots.docs[0].data();
         });
         var formattedDate = new Date();
@@ -1516,7 +1726,7 @@
                         }
                         extra_count++;
                     })
-                } catch (error) {}
+                } catch (error) { }
             }
             totalProductPrice = parseFloat(totalProductPrice).toFixed(decimal_degits);
             productDetailsHtml += '<td style="width: 20%; border-top: 1px solid rgb(0, 0, 0);">';
@@ -1682,16 +1892,16 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(data) {
+            success: function (data) {
                 checkFlag = true;
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 checkFlag = true;
             }
         });
         return checkFlag;
     }
-  
+
 </script>
 <?php } ?>
 
@@ -1701,35 +1911,41 @@
     .list-card a:hover,
     a:hover {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .hc-offcanvas-nav h2,
     .hc-offcanvas-nav:not(.touch-device) li:not(.custom-content) a:hover,
     .cat-item a.cat-link:hover {
         background-color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .homebanner-content .ban-btn a,
     .open-ticket-btn a,
     .select-sec-btn a {
         background-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         border-color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .homebanner-content .ban-btn a:hover,
     .open-ticket-btn a:hover,
     .select-sec-btn a:hover {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .header-main .takeaway-div input[type="checkbox"]::before {
         background-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         opacity: 0.6;
     }
 
@@ -1741,24 +1957,28 @@
     .rest-basic-detail .feather_icon .fu-status a.rest-right-btn>span.open,
     .header-main .takeaway-div input[type="checkbox"]:checked::before {
         background-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .offer_coupon_code .offer_code p.badge,
     .offer_coupon_code .offer_price {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .cat-item a.cat-link:hover i.fa {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .rest-basic-detail .feather_icon a.rest-right-btn,
     .rest-basic-detail .feather_icon a.btn {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .rest-basic-detail .feather_icon a.rest-right-btn .feather-star,
@@ -1766,28 +1986,34 @@
     .rest-basic-detail .feather_icon a.rest-right-btn:hover,
     ul.rating {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .vendor-detail-left h4.h6::after,
     .sidebar-header h3.h6::after {
         background-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .gold-members .add-btn .menu-itembtn a.btn {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .btn-primary,
     .transactions-list .media-body .app-off-btn a {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .btn-primary:hover,
@@ -1799,9 +2025,11 @@
     .custom-control-input:checked~.custom-control-label::before,
     .row.fu-loadmore-btn .page-link {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .count-number-box .count-number .count-number-input,
@@ -1810,33 +2038,39 @@
     .count-number button.btn-sm.btn:hover,
     .btn-link {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .transactions-banner {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .transactions-list .media-body .app-off-btn a:hover,
     .rating-stars .feather-star.star_active,
     .rating-stars .feather-star.text-warning {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .search .nav-tabs .nav-item.show .nav-link,
     .search .nav-tabs .nav-link.active {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
         background-color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .text-primary,
     .card-icon>span {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .checkout-left-box.siddhi-cart-item::after,
@@ -1846,65 +2080,80 @@
     .restaurant-detail-left h4.h6::after,
     .sidebar-header h3.h6::after {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .page-link,
     .rest-basic-detail .feather_icon a.rest-right-btn {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .page-link:hover {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .btn-outline-primary {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .btn-outline-primary:hover {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .gendetail-row h3 {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .dyn-menulist button.view_all_menu_btn {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .daytab-cousines ul li>span {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .daytab-cousines ul li>span:hover {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .feather-star.text-warning,
     .list-card .offer_coupon_code .star .badge .feather-star.star_active,
     .list-card-body .offer-btm .star .badge .feather-star.star_active {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     a.restaurant_direction img {
@@ -1914,82 +2163,98 @@
 
     .modal-body .recepie-body .custom-control .custom-control-label>span.text-muted {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .payment-table tr th {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .slick-dots li.slick-active button::before {
         color:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
         background:
-            <?php echo $_COOKIE['section_color']; ?> !important;
+            <?php    echo $_COOKIE['section_color']; ?>
+            !important;
     }
 
     .footer-top .title::after,
     .product-list .list-card .list-card-image .discount-price {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .ft-contact-box .ft-icon {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .head-search .dropdown {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .list-card .list-card-body .offer-code a {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .vandor-sidebar .vandorcat-list li a:hover,
     .vandor-sidebar .vandorcat-list li.active a {
         border-color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .list-card .list-card-body p.text-gray span.fa.fa-map-marker,
     .car-det-head .car-det-price span.price {
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .product-detail-page .addons-option .custom-control .custom-control-label.active::before {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .product-detail-page .addtocart .add-to-cart.btn.btn-primary.booknow {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     .product-detail-page .addtocart .add-to-cart.btn.btn-primary {
-        border: 1px solid<?php echo $_COOKIE['section_color']; ?>;
+        border: 1px solid<?php    echo $_COOKIE['section_color']; ?>;
         color:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 
     @media (max-width: 991px) {
         .bg-primary {
             background:
-                <?php echo $_COOKIE['section_color']; ?> !important;
+                <?php    echo $_COOKIE['section_color']; ?>
+                !important;
         }
     }
 
     .swal2-actions .swal2-confirm.swal2-styled {
         background:
-            <?php echo $_COOKIE['section_color']; ?>;
+            <?php    echo $_COOKIE['section_color']; ?>
+        ;
     }
 </style>
 <?php } ?>

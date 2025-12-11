@@ -522,6 +522,11 @@ return [
     'min_deposite_amount_err'=>'Please enter valid amount',
     'highlights_for_you'=>'Highlights for you',
     'rejected'=>'Rejected',
-    'free_delivery'=>'Free Delivery'
+    'free_delivery'=>'Free Delivery',
+    'search_location' => 'Search Location',
+    'location_permission_message' => 'Please allow location access to find restaurants near you',
+    'search_for_area' => 'Search for area, street name...',
+    'use_current_location' => 'Use Current Location',
+    'proceed' => 'Proceed'
 
 ];

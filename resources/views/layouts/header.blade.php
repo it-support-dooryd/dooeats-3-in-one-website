@@ -63,7 +63,7 @@
                     <div class="dropdown ml-4">
                         <a class="text-dark dropdown-toggle d-flex align-items-center p-0" href="#" id="navbarDropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="head-loc" onclick="getCurrentLocation('reload')">
+                            <div class="head-loc" onclick="openLocationBottomSheet()">
                                 <i class="feather-map-pin mr-2 bg-light rounded-pill p-2 icofont-size"></i></div>
                             <div>
                                 <input id="user_locationnew" type="text" size="50" class="pac-target-input">
