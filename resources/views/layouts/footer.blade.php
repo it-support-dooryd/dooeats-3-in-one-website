@@ -178,7 +178,7 @@
     </div>
 </div>
 <div class="error-container" id="error-container"></div>
-<footer class="section-footer border-top bg-white">
+<footer class="section-footer border-top bg-dark">
     <div class="footerTemplate"></div>
 </footer>
 <script type="text/javascript" src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

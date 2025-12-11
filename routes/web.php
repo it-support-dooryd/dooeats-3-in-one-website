@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', [App\Http\Controllers\AllRestaurantsController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 
@@ -88,7 +88,10 @@ Route::get('my_order', [App\Http\Controllers\OrderController::class, 'index'])->
 
 Route::get('pay-wallet', [App\Http\Controllers\TransactionController::class, 'proccesstopaywallet'])->name('pay-wallet');
 Route::post('wallet-proccessing', [App\Http\Controllers\TransactionController::class, 'walletProccessing'])->name('wallet-proccessing');
-
+Route::post('wallet-process-stripe', [App\Http\Controllers\TransactionController::class, 'processStripePayment'])->name('wallet-process-stripe');
+Route::post('wallet-process-paypal', [App\Http\Controllers\TransactionController::class, 'processPaypalPayment'])->name('wallet-process-paypal');
+Route::post('razorpaywalletpayment', [App\Http\Controllers\TransactionController::class, 'razorpaypayment'])->name('razorpaywalletpayment');
+Route::post('wallet-process-mercadopago', [App\Http\Controllers\TransactionController::class, 'processMercadoPagoPayment'])->name('wallet-process-mercadopago');
 Route::get('wallet-success', [App\Http\Controllers\TransactionController::class, 'success'])->name('wallet-success');
 Route::get('wallet-notify', [App\Http\Controllers\TransactionController::class, 'notify'])->name('wallet-notify');
 
@@ -196,7 +199,23 @@ Route::post('order-proccessing', [App\Http\Controllers\CheckoutController::class
 
 
 
+Route::post('stripepaymentcallback', [App\Http\Controllers\PaymentController::class, 'stripePaymentcallback'])->name('stripepaymentcallback');
 
+
+
+Route::post('process-stripe', [App\Http\Controllers\CheckoutController::class, 'processStripePayment'])->name('process-stripe');
+
+
+
+Route::post('process-paypal', [App\Http\Controllers\CheckoutController::class, 'processPaypalPayment'])->name('process-paypal');
+
+
+
+Route::post('razorpaypayment', [App\Http\Controllers\CheckoutController::class, 'razorpaypayment'])->name('razorpaypayment');
+
+
+
+Route::post('process-mercadopago', [App\Http\Controllers\CheckoutController::class, 'processMercadoPagoPayment'])->name('process-mercadopago');
 
 
 
@@ -318,7 +337,11 @@ Route::get('gift-card-success', [App\Http\Controllers\GiftCardController::class,
 
 Route::get('giftcards', [App\Http\Controllers\GiftCardController::class, 'giftcards'])->name('giftcards');
 
+Route::post('giftcard-razorpaypayment', [App\Http\Controllers\GiftCardController::class, 'razorpaypayment'])->name('giftcard.razorpaypayment');
 
+Route::post('giftcard-stripepayment', [App\Http\Controllers\GiftCardController::class, 'processStripePayment'])->name('giftcard.stripepayment');
+
+Route::post('giftcard-paypalpayment', [App\Http\Controllers\GiftCardController::class, 'processPaypalPayment'])->name('giftcard.paypalpayment');
 
 
 
@@ -326,30 +349,3 @@ Route::get('delivery-address', [App\Http\Controllers\DeliveryAddressController::
 
 Route::post('store-firebase-service', [App\Http\Controllers\HomeController::class,'storeFirebaseService'])->name('store-firebase-service');
 
-
-// Deprecated Payment Routes
-$deprecatedRoutes = [
-    'razorpaypayment',
-    'paypal/payment',
-    'stripe/payment',
-    'payfast/payment',
-    'flutterwave/payment',
-    'mercadopago/payment',
-    'xendit/payment',
-    'midtrans/payment',
-    'orangepay/payment',
-    'razorpay/callback',
-    'paypal/callback',
-    'stripe/callback',
-    'payfast/callback'
-];
-
-foreach ($deprecatedRoutes as $route) {
-    Route::any($route, function() {
-        return response()->json([
-            'message' => 'This payment route is deprecated. Please migrate to Paystack.',
-            'migration_docs' => 'https://dooeats.com/docs/migration',
-            'status' => 'deprecated'
-        ], 410)->header('X-API-Deprecated', 'true');
-    });
-}

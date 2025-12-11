@@ -1,6 +1,5 @@
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
-<!-- Minimalistic Header -->
-<header class="minimalist-header">
+<header class="section-header">
     <?php
     if (Session::get('takeawayOption') == 'true' || Session::get('takeawayOption') == true) {
         $takeaway_options = true;
@@ -52,122 +51,129 @@
             });
         }
     </script>
-    
-    <div class="header-container">
-        <!-- Left: Logo + Location -->
-        <div class="header-left">
-            <a href="{{url('/')}}" class="header-logo">
-                <img alt="Dooeats" src="{{asset('img/logo_web.png')}}" id="logo_web">
-            </a>
-            
-            <div class="header-location">
-                <i class="feather-map-pin"></i>
-                <input id="user_locationnew" type="text" class="location-input" placeholder="Calabar, Cross River, Nigeria" value="<?php echo @$_COOKIE['address_name'] ?? 'Calabar, Cross River, Nigeria'; ?>" readonly>
-            </div>
-        </div>
-
-        <!-- Right: Actions -->
-        <div class="header-right">
-            <!-- Delivery/Pickup Toggle -->
-            <div class="delivery-toggle-wrapper">
-                <label class="delivery-switch">
-                    <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
-                    <span class="switch-slider">
-                        <span class="switch-label delivery-label">Delivery</span>
-                        <span class="switch-label pickup-label">Pickup</span>
-                    </span>
-                </label>
-            </div>
-
-            <!-- Search Button -->
-            <button class="header-btn search-btn" onclick="window.location.href='{{url('search')}}'">
-                <i class="feather-search"></i>
-            </button>
-
-            <!-- Cart Button -->
-            <a href="{{url('/checkout')}}" class="header-btn cart-btn">
-                <i class="feather-shopping-cart"></i>
-                <span class="cart-badge" id="cart-count" style="display:none;">0</span>
-            </a>
-
-            <!-- User Menu -->
-            @auth
-            <div class="user-dropdown">
-                <button class="header-btn user-btn" id="userMenuButton">
-                    <i class="feather-user"></i>
-                </button>
-                <div class="dropdown-menu-custom" id="userDropdownMenu">
-                    <a class="dropdown-item-custom" href="{{url('profile')}}">
-                        <i class="feather-user"></i> {{trans('lang.my_account')}}
-                    </a>
-                    <a class="dropdown-item-custom" href="{{url('my-order')}}">
-                        <i class="feather-shopping-bag"></i> My Orders
-                    </a>
-                    <a class="dropdown-item-custom" href="{{ route('terms') }}">
-                        <i class="feather-file-text"></i> {{trans('lang.terms_use')}}
-                    </a>
-                    <a class="dropdown-item-custom" href="{{ route('privacy') }}">
-                        <i class="feather-shield"></i> {{trans('lang.privacy_policy')}}
-                    </a>
-                    <a class="dropdown-item-custom" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="feather-log-out"></i> {{trans('lang.logout')}}
+    <section class="header-main shadow-sm bg-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-2">
+                    <a href="{{url('/')}}" class="brand-wrap mb-0">
+                        <img alt="#" class="img-fluid" src="{{asset('img/logo_web.png')}}" id="logo_web">
                     </a>
                 </div>
+                <div class="col-3 d-flex align-items-center m-none head-search">
+                    <div class="dropdown ml-4">
+                        <a class="text-dark dropdown-toggle d-flex align-items-center p-0" href="#" id="navbarDropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            <div class="head-loc" onclick="getCurrentLocation('reload')">
+                                <i class="feather-map-pin mr-2 bg-light rounded-pill p-2 icofont-size"></i></div>
+                            <div>
+                                <input id="user_locationnew" type="text" size="50" class="pac-target-input">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-7 header-right">
+                    <div class="d-flex align-items-center justify-content-end pr-5">
+                        <a href="{{url('search')}}" class="widget-header mr-4 text-dark">
+                            <div class="icon d-flex align-items-center">
+                                <i class="feather-search h6 mr-2 mb-0"></i> <span>{{trans('lang.search')}}</span>
+                            </div>
+                        </a>
+                        <a href="{{url('offers')}}" class="widget-header mr-4 text-dark offer-link">
+                            <div class="icon d-flex align-items-center">
+                                <img alt="#" class="img-fluid mr-2"
+                                                                                       src="{{asset('img/discount.png')}}">
+                                <span>{{trans('lang.offers')}}</span>
+                            </div>
+                        </a>
+                        @auth
+                        @else
+                        <a href="{{url('login')}}" class="widget-header mr-4 text-dark m-none">
+                            <div class="icon d-flex align-items-center">
+                                <i class="feather-user h6 mr-2 mb-0"></i> <span>{{trans('lang.signin')}}</span>
+                            </div>
+                        </a>
+                        @endauth
+                        <div class="dropdown mr-4 m-none">
+                            <a href="#" class="dropdown-toggle text-dark py-3 d-block" id="dropdownMenuButton"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                @auth
+                                <a class="dropdown-item" href="{{url('profile')}}">{{trans('lang.my_account')}}</a>
+                                <a class="dropdown-item"
+                                   href="{{url('restaurants')}}">{{trans('lang.all_restaurants')}}</a>
+                                <a class="dropdown-item dine_in_menu" style="display: none;"
+                                   href="{{url('restaurants')}}?dinein=1">{{trans('lang.dine_in_restaurants')}}</a>
+                                <a class="dropdown-item"
+                                   href="{{ route('faq') }}">{{trans('lang.delivery_support')}}</a>
+                                <a class="dropdown-item" href="{{url('contact-us')}}">{{trans('lang.contact_us')}}</a>
+                                <a class="dropdown-item" href="{{ route('terms') }}">{{trans('lang.terms_use')}}</a>
+                                <a class="dropdown-item"
+                                   href="{{ route('privacy') }}">{{trans('lang.privacy_policy')}}</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+									document.getElementById('logout-form').submit();">{{trans('lang.logout')}}</a>
+                                @else
+                                <a class="dropdown-item"
+                                   href="{{url('restaurants')}}">{{trans('lang.all_restaurants')}}</a>
+                                <a class="dropdown-item dine_in_menu" style="display: none;"
+                                   href="{{url('restaurants')}}?dinein=1">{{trans('lang.dine_in_restaurants')}}</a>
+                                <a class="dropdown-item"
+                                   href="{{ route('faq') }}">{{trans('lang.delivery_support')}}</a>
+                                <a class="dropdown-item" href="{{url('contact-us')}}">{{trans('lang.contact_us')}}</a>
+                                <a class="dropdown-item" href="{{ route('terms') }}">{{trans('lang.terms_use')}}</a>
+                                <a class="dropdown-item"
+                                   href="{{ route('privacy') }}">{{trans('lang.privacy_policy')}}</a>
+                                @endauth
+                            </div>
+                        </div>
+                        <a href="{{url('/checkout')}}" class="widget-header mr-4 text-dark">
+                            <div class="icon d-flex align-items-center">
+                                <i class="feather-shopping-cart h6 mr-2 mb-0"></i> <span>{{trans('lang.cart')}}</span>
+                            </div>
+                        </a>
+                        <?php if (Session::get('takeawayOption') == "true") { ?>
+                            <div class="icon d-flex align-items-center text-dark takeaway-div">
+											<span class="takeaway-btn">
+												<i class="fa fa-car h6 mr-1 mb-0"></i> <span> {{trans('lang.take_away')}} </span>
+												<input type="checkbox" onclick="takeAwayOnOff(this)"
+                                                       <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>> <span
+                                                        class="slider round"></span>
+												</span>
+                            </div>
+                        <?php } else { ?>
+                            <div class="icon d-flex align-items-center text-dark takeaway-div">
+										<span class="takeaway-btn">
+											<i class="fa fa-car h6 mr-1 mb-0"></i> <span> {{trans('lang.delivery')}} </span>
+											<input type="checkbox" onclick="takeAwayOnOff(this)"> <span
+                                                    class="slider round"></span>
+											</span>
+                            </div>
+                        <?php } ?>
+                        <div style="visibility: hidden;"
+                             class="language-list icon d-flex align-items-center text-dark ml-2"
+                             id="language_dropdown_box">
+                            <div class="language-select">
+                                <i class="feather-globe"></i>
+                            </div>
+                            <div class="language-options">
+                                <select class="form-control changeLang text-dark" id="language_dropdown">
+                                </select>
+                            </div>
+                        </div>
+                        <a class="toggle" href="#">
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            @else
-            <a href="{{url('login')}}" class="header-btn login-btn">
-                <i class="feather-user"></i>
-                <span class="login-text">Sign In</span>
-            </a>
-            @endauth
         </div>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenuModal">
-        <div class="mobile-delivery-toggle">
-            <label class="delivery-switch">
-                <input type="checkbox" onclick="takeAwayOnOff(this)" <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>>
-                <span class="switch-slider">
-                    <span class="switch-label delivery-label">Delivery</span>
-                    <span class="switch-label pickup-label">Pickup</span>
-                </span>
-            </label>
-        </div>
-
-        <a href="{{url('search')}}" class="mobile-menu-link">
-            <i class="feather-search"></i> Search
-        </a>
-        <a href="{{url('restaurants')}}" class="mobile-menu-link">
-            <i class="feather-grid"></i> Restaurants
-        </a>
-        
-        <div class="mobile-menu-divider"></div>
-        
-        @auth
-        <a href="{{url('profile')}}" class="mobile-menu-link">
-            <i class="feather-user"></i> My Account
-        </a>
-        <a href="{{ route('logout') }}" class="mobile-menu-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="feather-log-out"></i> Logout
-        </a>
-        @else
-        <a href="{{url('login')}}" class="mobile-menu-link">
-            <i class="feather-log-in"></i> Sign In
-        </a>
-        <a href="{{url('signup')}}" class="mobile-menu-link">
-            <i class="feather-user-plus"></i> Sign Up
-        </a>
-        @endauth
-    </div>
+    </section>
 </header>
-
-<!-- Header JavaScript -->
-<script src="{{ asset('js/glass-nav.js') }}"></script>
+<div class="d-none">
+    <div class="bg-primary p-3 d-flex align-items-center">
+        <a class="toggle togglew toggle-2" href="#"><span></span></a>
+        <a href="{{url('/')}}" class="mobile-logo brand-wrap mb-0">
+            <img alt="#" class="img-fluid" src="{{asset('img/logo_web.png')}}">
+        </a>
+    </div>
+</div>

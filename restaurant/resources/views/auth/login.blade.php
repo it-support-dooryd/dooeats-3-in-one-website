@@ -301,7 +301,7 @@
 
         function formatState(state) {
             if (!state.id) return state.text;
-            var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/";
+            var baseUrl = "<?php echo url('/'); ?>/flags/120/";
             var $state = $(
                 '<span><img src="' + baseUrl + '/' + newcountriesjs[state.element.value].toLowerCase() + '.png" class="img-flag" style="width: 20px; margin-right: 8px;" /> ' + state.text + '</span>'
             );
@@ -310,7 +310,7 @@
 
         function formatState2(state) {
             if (!state.id) return state.text;
-            var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/"
+            var baseUrl = "<?php echo url('/'); ?>/flags/120/"
             var $state = $(
                 '<span><img class="img-flag" style="width: 20px; margin-right: 8px;" /> <span></span></span>'
             );

@@ -69,7 +69,7 @@ foreach ($cityToCountry as $key => $value) {
         var fcmToken = '';
         var id_order = "<?php echo uniqid(); ?>";
 
-
+        var razorpaySettings = database.collection('settings').doc('razorpaySettings');
         <?php if (@$user_wallet['payment_status'] == 1) { ?>
             $("#data_table_processing_order").show();
             var final_wallet_balance = 0.0;

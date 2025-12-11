@@ -1,116 +1,66 @@
-# Dooeats Main Web App
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-## Overview
-This is the main web application for the Dooeats platform, serving as the customer-facing interface for ordering food, managing profiles, and tracking orders. It is built with Laravel and Vue.js, featuring a modern "Glassmorphism" design aesthetic.
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Functionalities
-- **User Authentication**: Login, Signup, Social Signup, Forgot Password.
-- **Restaurant Discovery**: Browse restaurants, filter by category, view trending spots.
-- **Ordering System**:
-  - Add items to cart (with attributes/addons).
-  - Checkout with delivery or takeaway options.
-  - Real-time order tracking (Pending, Accepted, Completed, Cancelled).
-  - Re-ordering from history.
-- **Wallet System**: Top-up wallet, pay via wallet.
-- **Profile Management**: Manage delivery addresses, favorites (stores & products).
-- **Gift Cards**: Purchase and redeem gift cards.
-- **Dine-In**: Book tables and manage dine-in orders.
-- **Localization**: Multi-language support.
+## About Laravel
 
-## Styling & Design
-The application uses a **Glassmorphism** design language with a dark mode base.
-- **Core Colors**:
-  - Primary: `#047857` (Green)
-  - Secondary: `#EF4444` (Red)
-  - Background: `#121212` (Dark)
-  - Card Background: `#1E1E1E`
-  - Text: `#FFFFFF` (Main), `#B0B0B0` (Muted)
-- **Design Elements**:
-  - Glass effects (`rgba(30, 30, 30, 0.8)` background with blur).
-  - Rounded corners and smooth transitions.
-  - Font Family: 'Montserrat', sans-serif.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Tech Stack
-- **Backend**: Laravel 10.x (PHP 8.1+)
-- **Frontend**: Vue.js 2.x, Bootstrap 5, jQuery
-- **Database**: MySQL
-- **APIs & Services**:
-  - **Firebase**: For real-time notifications and services.
-  - **Google Maps API**: For location services (`google/apiclient`).
-  - **Paystack**: Primary payment gateway.
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-## Payment Methods
-- **Primary Gateway**: **Paystack** (`perfectmak/paystack-php`).
-- **Wallet**: Internal wallet system.
-- **Deprecated Gateways**: Razorpay, PayPal, Stripe, Flutterwave, MercadoPago, etc. (Routes return 410 Gone).
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Running the Application
+## Learning Laravel
 
-### Development
-To run the application locally with hot-reloading for frontend assets:
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-1. **Start the Laravel Development Server**:
-   ```bash
-   php artisan serve
-   ```
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-2. **Compile Assets (Watch Mode)**:
-   In a separate terminal, run:
-   ```bash
-   npm run watch
-   ```
+## Laravel Sponsors
 
-Access the application at `http://localhost:8000`.
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Production Build
-To compile assets for production:
-```bash
-npm run prod
-```
+### Premium Partners
 
-## Public Information & Business Rules (Scraped from dooeats.com)
-- **Tagline**: "eat what you want, where you want..."
-- **Company**: Dooryd Enterprise Limited
-- **Service Area**: Currently serving every part of **Calabar**.
-- **Delivery Time**: Estimated 15–30 minutes.
-- **Payment Rules**:
-  - **No Cash Payments**.
-  - Payments via **Paystack** gateway.
-  - Official accounts: Paystack Titan or Dooryd Enterprise Limited GT Bank.
-- **Ordering Rules**:
-  - **Single Restaurant Policy**: Users cannot order from multiple restaurants in a single cart. Separate orders are required.
-  - **Refunds**: Processed within 7 business days.
-- **User Flow**:
-  1. Choose Location.
-  2. Select Items & Customize.
-  3. Secure Payment (Paystack).
-  4. Order Confirmation.
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[CMS Max](https://www.cmsmax.com/)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
+- **[Romega Software](https://romegasoftware.com)**
 
-## Folder Structure
-- `app/`: Core application code (Models, Controllers, etc.).
-- `resources/js/`: Vue.js components and application logic.
-- `resources/sass/`: Stylesheets (SCSS).
-- `routes/`: Application route definitions (`web.php`, `api.php`).
-- `config/`: Configuration files.
+## Contributing
 
-## Installation & Setup
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-1. **Clone & Install**:
-   ```bash
-   composer install
-   npm install
-   ```
+## Code of Conduct
 
-2. **Environment**:
-   ```bash
-   cp .env.example .env
-   # Configure DB_*, PAYSTACK_*, FIREBASE_* credentials
-   php artisan key:generate
-   ```
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-3. **Run**:
-   ```bash
-   php artisan migrate
-   php artisan serve
-   npm run watch
-   ```
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
