@@ -523,10 +523,16 @@ return [
     'highlights_for_you'=>'Highlights for you',
     'rejected'=>'Rejected',
     'free_delivery'=>'Free Delivery',
-    'search_location' => 'Search Location',
-    'location_permission_message' => 'Please allow location access to find restaurants near you',
-    'search_for_area' => 'Search for area, street name...',
+    
+    // Location Selection Modal
     'use_current_location' => 'Use Current Location',
-    'proceed' => 'Proceed'
+    'search_location_placeholder' => 'Search for area, street name...',
+    'or' => 'OR',
+    'recent_locations' => 'Recent Locations',
+    'location_permission_info' => 'We need your location to show nearby restaurants and delivery options',
+    'location_permission_denied' => 'Location permission denied. Please enable location access in your browser settings or search manually.',
+    'location_not_supported' => 'Geolocation is not supported by your browser. Please search for your location manually.',
+    'location_fetch_error' => 'Unable to fetch your location. Please try again or search manually.',
+    'no_recent_locations' => 'No recent locations found',
 
 ];

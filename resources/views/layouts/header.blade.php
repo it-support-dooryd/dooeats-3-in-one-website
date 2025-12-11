@@ -60,16 +60,25 @@
                     </a>
                 </div>
                 <div class="col-3 d-flex align-items-center m-none head-search">
-                    <div class="dropdown ml-4">
-                        <a class="text-dark dropdown-toggle d-flex align-items-center p-0" href="#" id="navbarDropdown"
-                           role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="head-loc" onclick="openLocationBottomSheet()">
-                                <i class="feather-map-pin mr-2 bg-light rounded-pill p-2 icofont-size"></i></div>
-                            <div>
-                                <input id="user_locationnew" type="text" size="50" class="pac-target-input">
-                            </div>
-                        </a>
+                    <!-- Location Selector Trigger -->
+                    <div class="header-location-trigger d-flex align-items-center" onclick="openLocationModal()">
+                        <div class="location-icon">
+                            <i class="feather-map-pin"></i>
+                        </div>
+                        <div class="header-location-text">
+                            <span class="location-label">{{ trans('lang.location') }}</span>
+                            <span class="location-value" id="headerLocationDisplay">
+                                @if(!empty(request()->cookie('address_name')))
+                                    {{ request()->cookie('address_name') }}
+                                @else
+                                    Calabar, Cross River State
+                                @endif
+                            </span>
+                        </div>
+                        <i class="feather-chevron-down header-location-caret"></i>
                     </div>
+                    <!-- Hidden input for autocomplete compatibility -->
+                    <input type="hidden" id="user_locationnew" class="pac-target-input">
                 </div>
                 <div class="col-7 header-right">
                     <div class="d-flex align-items-center justify-content-end pr-5">
