@@ -322,7 +322,7 @@ foreach ($countries as $keycountry => $valuecountry) {
             if (userImageFile != "" && photo != userImageFile) {
                 var userOldImageUrlRef = await storage.refFromURL(userImageFile);
                 imageBucket = userOldImageUrlRef.bucket;
-                var envBucket = "<?php echo env('FIREBASE_STORAGE_BUCKET'); ?>";
+                var envBucket = "<?php echo str_replace('gs://', '', env('FIREBASE_STORAGE_BUCKET')); ?>";
                 if (imageBucket == envBucket) {
                     await userOldImageUrlRef.delete().then(() => {
                         console.log("Old file deleted!")
@@ -334,15 +334,19 @@ foreach ($countries as $keycountry => $valuecountry) {
                 }
             }
             if (photo != userImageFile) {
+                // Detect mime type
+                var mimeType = 'image/jpeg';
+                var match = photo.match(/^data:(image\/[a-z]+);base64,/);
+                if (match && match[1]) {
+                    mimeType = match[1];
+                }
                 photo = photo.replace(/^data:image\/[a-z]+;base64,/, "")
                 var uploadTask = await storageRef.child(fileName).putString(photo, 'base64', {
-                    contentType: 'image/jpg'
+                    contentType: mimeType
                 });
                 var downloadURL = await uploadTask.ref.getDownloadURL();
                 newPhoto = downloadURL;
                 photo = downloadURL;
-            } else {
-                newPhoto = photo;
             }
         } catch (error) {
             console.log("ERR ===", error);
