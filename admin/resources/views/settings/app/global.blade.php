@@ -1065,7 +1065,7 @@
                     if (oldAudioData) {
                         try {
                             var OldImageUrlRef = await storage.refFromURL(oldAudioData);
-                            var envBucket = "<?php echo env('FIREBASE_STORAGE_BUCKET'); ?>";
+                            var envBucket = "<?php echo str_replace('gs://', '', env('FIREBASE_STORAGE_BUCKET')); ?>";
                             if (OldImageUrlRef.bucket === envBucket) {
                                 await OldImageUrlRef.delete();
                                 console.log("Old file deleted!");
