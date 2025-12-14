@@ -136,17 +136,24 @@
         measurementId: "{{ config('firebase.measurement_id') }}"
     };
     
+    var firebaseInitialized = false;
     var database;
     try {
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         database = firebase.firestore();
+        firebaseInitialized = true;
+        var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());
     } catch (error) {
         console.error("Firebase init error:", error);
+         // Show error in UI
+         jQuery(document).ready(function() {
+             $("#field_error").html("System error: Failed to connect to services. Please try again later.").show();
+             $(".btn-sign-up").prop('disabled', true);
+             $("#btn-signup-phone").prop('disabled', true);
+         });
     }
-    
-    var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());
     function validateFName(input) {
         // Remove leading and trailing spaces
         input.value = input.value.trimStart(); // Allow typing, but remove leading spaces
@@ -250,7 +257,7 @@
         if (!state.id) {
             return state.text;
         }
-        var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/";
+        var baseUrl = "<?php echo \URL::to('/'); ?>/flags/120/";
         var $state = $(
             '<span><img src="' + baseUrl + '/' + newcountriesjs[state.element.value].toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
         );
@@ -260,7 +267,7 @@
         if (!state.id) {
             return state.text;
         }
-        var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/"
+        var baseUrl = "<?php echo \URL::to('/'); ?>/flags/120/"
         var $state = $(
             '<span><img class="img-flag" /> <span></span></span>'
         );

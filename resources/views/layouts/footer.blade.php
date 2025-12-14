@@ -1,6 +1,6 @@
 <div id="data-table_processing" class="page-overlay" style="display:none;">
-    <div class="overlay-text">
-        <img src="{{ asset('img/spinner.gif') }}">
+    <div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <img src="{{ asset('img/spinner.gif') }}" style="width: 500px; height: 500px; object-fit: contain;">
     </div>
 </div>
 <button type="button" id="locationModal" data-toggle="modal" data-target="#locationModalAddress" hidden>submit</button>
@@ -198,6 +198,10 @@
 <script src="{{ asset('js/jquery.resizeImg.js') }}"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+<?php
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+?>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
@@ -235,8 +239,10 @@
     }
 
     <?php $id = null;
-    if (Auth::user()) {
-        $id = Auth::user()->getvendorId();
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        /** @var \App\Models\User $user */
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $id = $user->getvendorId();
     } ?>
     var cuser_id = '<?php echo $id; ?>';
     var dine_in_enable = false;
@@ -381,7 +387,7 @@
                     var address_country = address_component.long_name;
                 }
             });
-            <?php if (@Route::current()->getName() != 'checkout') { ?>
+            <?php if (@\Route::current()->getName() != 'checkout') { ?>
             setCookie('address_name1', address_name1, 365);
             setCookie('address_name2', address_name2, 365);
             setCookie('address_name', address_name, 365);
@@ -1101,7 +1107,7 @@
     
     $user_uuid = '';
     
-    $auth_id = Auth::id();
+    $auth_id = \Auth::id();
     
     if ($auth_id) {
         $user = user::select('email')->where('id', $auth_id)->first();
@@ -1227,7 +1233,7 @@
 </script>
 <script type="text/javascript" src="{{ asset('js/rocket-loader.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('https://static.cloudflareinsights.com/beacon.min.js') }}"></script>
-<?php if (Auth::user()) { ?>
+<?php if (\Auth::user()) { ?>
 <script type="text/javascript">
     var orderAcceptedSubject = '';
     var orderAcceptedMsg = '';
@@ -1591,7 +1597,7 @@
             productDetailsHtml += '<td style="width: 20%; border-top: 1px solid rgb(0, 0, 0);">';
             productDetailsHtml += product.name;
             if (extra_count > 1) {
-                productDetailsHtml += '<br> {{ trans('lang.extra_item') }} : ' + extra_html;
+                productDetailsHtml += '<br> {{ trans("lang.extra_item") }} : ' + extra_html;
             }
             subTotal += parseFloat(totalProductPrice);
             if (currencyAtRight) {
@@ -1694,11 +1700,11 @@
             '<table style="width: 100%; border-collapse: collapse; border: 1px solid rgb(0, 0, 0);">\n' +
             '    <thead>\n' +
             '        <tr>\n' +
-            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans('lang.product_name') }}<br></th>\n' +
-            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans('lang.quantity_plural') }}<br></th>\n' +
-            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans('lang.price') }}<br></th>\n' +
-            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans('lang.extra_item') }} {{ trans('lang.price') }}<br></th>\n' +
-            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans('lang.total') }}<br></th>\n' +
+            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans("lang.product_name") }}<br></th>\n' +
+            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans("lang.quantity_plural") }}<br></th>\n' +
+            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans("lang.price") }}<br></th>\n' +
+            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans("lang.extra_item") }} {{ trans("lang.price") }}<br></th>\n' +
+            '            <th style="text-align: left; border: 1px solid rgb(0, 0, 0);">{{ trans("lang.total") }}<br></th>\n' +
             '        </tr>\n' +
             '    </thead>\n' +
             '    <tbody id="productDetails">' + productDetailsHtml + '</tbody>\n' +

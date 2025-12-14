@@ -515,7 +515,7 @@ return [
     'app_setting_razorpay_secret_help' => 'Insert Razorpay Secret',
     'setup_done' => 'Setup Done',
     'select_withdrawal_method' => 'Select withdraw method',
-    'price_instruction' => 'The price for product includes the admin commission. For instance, if the product is priced at $100 and the admin commission is 10% , the effective price would be $110 for customer, which will apply automatically.',
+    'price_instruction' => 'The price for product includes the admin commission. For instance, if the product is priced at ₦1000 and the admin commission is 10% , the effective price would be ₦1,100 for customer, which will apply automatically.',
     'app_payment_method_delete_alert' => 'Are you sure, you want to delete this withdrawal method ?',
     'withdraw_method' => 'Withdraw Method',
     'enabled' => 'Enabled',

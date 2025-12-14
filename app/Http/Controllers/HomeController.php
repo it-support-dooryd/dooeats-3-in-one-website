@@ -15,10 +15,6 @@ class HomeController extends Controller
     public function __construct()
     {
         
-        $route = \Route::currentRouteName();
-        if(!isset($_COOKIE['address_name']) && $route != "set-location"){
-    		\Redirect::to('set-location')->send();
-      	}
     }
 
     /**

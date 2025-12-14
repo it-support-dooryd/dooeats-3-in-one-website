@@ -363,6 +363,11 @@
     async function callStore() {
         if (address_lat == '' || address_lng == '' || address_lng == NaN || address_lat == NaN || address_lat ==
             null || address_lng == null) {
+            jQuery("#data-table_processing").hide();
+            jQuery(".section-content").remove();
+            jQuery(".zone-error").show();
+            jQuery(".zone-error").find('.title').text('{{ trans('lang.select_location') }}');
+            jQuery(".zone-error").find('.text').text('{{ trans('lang.select_location_desc') }}'); // Ensure this key exists or use a generic one
             return false;
         }
         DriverNearByRef.get().then(async function(DriverNearByRefSnapshots) {

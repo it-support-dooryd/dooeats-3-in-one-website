@@ -411,8 +411,8 @@
         var refEmailSetting = database.collection('settings').doc("emailSetting");
         var homepagethemeRef = database.collection('settings').doc("home_page_theme");
         var refNotificationSetting = database.collection('settings').doc("notification_setting");
-        var theme_1_url = '{!! url('images/app_homepage_theme_1.png') !!}';
-        var theme_2_url = '{!! url('images/app_homepage_theme_2.png') !!}';
+        var theme_1_url = "{!! url('images/app_homepage_theme_1.png') !!}";
+        var theme_2_url = "{!! url('images/app_homepage_theme_2.png') !!}";
         var photo = "";
         var placeholderphoto = '';
         var favicon = "";
@@ -805,7 +805,7 @@
                             'mailMethod': "smtp",
                             'mailEncryptionType': "ssl",
                         }).then(function(result) {
-                            window.location.href = '{{ url('settings/app/globals') }}';
+                            window.location.href = "{{ url('settings/app/globals') }}";
                         });
                     }).catch(err => {
                         jQuery("#data-table_processing").hide();

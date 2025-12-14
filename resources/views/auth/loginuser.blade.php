@@ -314,7 +314,7 @@ foreach ($countries as $keycountry => $valuecountry) {
         if (!state.id) {
             return state.text;
         }
-        var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/";
+        var baseUrl = "{{ url('/') }}/flags/120/";
         var $state = $(
             '<span><img src="' + baseUrl + '/' + newcountriesjs[state.element.value].toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
         );
@@ -324,7 +324,7 @@ foreach ($countries as $keycountry => $valuecountry) {
         if (!state.id) {
             return state.text;
         }
-        var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/"
+        var baseUrl = "<?php echo \URL::to('/'); ?>/flags/120/"
         var $state = $(
             '<span><img class="img-flag" /> <span></span></span>'
         );

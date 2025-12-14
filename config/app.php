@@ -58,8 +58,8 @@ return [
 
     'default_address' => [
         'name' => env('DEFAULT_ADDRESS_NAME', 'Calabar, Cross River State'),
-        'lat' => env('DEFAULT_ADDRESS_LAT', '4.9517'),
-        'lng' => env('DEFAULT_ADDRESS_LNG', '8.3417'),
+        'lat' => (float) env('DEFAULT_ADDRESS_LAT', 4.9517),
+        'lng' => (float) env('DEFAULT_ADDRESS_LNG', 8.3417),
         'city' => env('DEFAULT_ADDRESS_CITY', 'Calabar'),
         'state' => env('DEFAULT_ADDRESS_STATE', 'Cross River State'),
         'country' => env('DEFAULT_ADDRESS_COUNTRY', 'Nigeria'),

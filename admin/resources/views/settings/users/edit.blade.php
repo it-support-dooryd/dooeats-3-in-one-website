@@ -321,7 +321,7 @@ foreach ($countries as $keycountry => $valuecountry) {
         try {
             if (userImageFile != "" && photo != userImageFile) {
                 var userOldImageUrlRef = await storage.refFromURL(userImageFile);
-                imageBucket = userOldImageUrlRef.bucket;
+                var imageBucket = userOldImageUrlRef.bucket;
                 var envBucket = "<?php echo str_replace('gs://', '', env('FIREBASE_STORAGE_BUCKET')); ?>";
                 if (imageBucket == envBucket) {
                     await userOldImageUrlRef.delete().then(() => {
@@ -357,7 +357,7 @@ foreach ($countries as $keycountry => $valuecountry) {
             if (!state.id) {
                 return state.text;
             }
-            var baseUrl = "<?php echo URL::to('/');?>/scss/icons/flag-icon-css/flags";
+            var baseUrl = "<?php echo \URL::to('/');?>/scss/icons/flag-icon-css/flags";
             var $state = $(
                 '<span><img src="' + baseUrl + '/' + newcountriesjs[state.element.value].toLowerCase() + '.svg" class="img-flag" /> ' + state.text + '</span>'
             );
@@ -367,7 +367,7 @@ foreach ($countries as $keycountry => $valuecountry) {
             if (!state.id) {
                 return state.text;
             }
-            var baseUrl = "<?php echo URL::to('/');?>/scss/icons/flag-icon-css/flags"
+            var baseUrl = "<?php echo \URL::to('/');?>/scss/icons/flag-icon-css/flags"
             var $state = $(
                 '<span><img class="img-flag" /> <span></span></span>'
             );

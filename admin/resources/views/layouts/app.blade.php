@@ -3,7 +3,7 @@
       <?php if (str_replace('_', '-', app()->getLocale()) == 'ar' || @$_COOKIE['is_rtl'] == 'true') { ?> dir="rtl" <?php } ?>>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
@@ -214,16 +214,11 @@
         .pricing-card-btm .btn:hover{background: <?php echo $_COOKIE['admin_panel_color']; ?>;border-color: <?php echo $_COOKIE['admin_panel_color']; ?>;}
         @media screen and ( max-width: 767px ) {
 
-            .mini-sidebar .sidebar-nav ul li a:hover, .sidebar-nav > ul > li.active > a {
-                color: <?php    echo $_COOKIE['admin_panel_color']; ?>  !important;
+            .left-sidebar {
+                display: none;
             }
-
-            .mini-sidebar .sidebar-nav #sidebarnav > li:hover a i, .mini-sidebar .sidebar-nav ul li a, .sidebar-nav ul li a.active i, .sidebar-nav ul li a.active:hover i, .sidebar-nav ul li.active a:hover i {
-                color: #fff;
-            }
-
-            .sidebar-nav > ul > li.active > a, .sidebar-nav > ul > li.active > a i, .sidebar-nav > ul > li > a:hover i {
-                color: <?php    echo $_COOKIE['admin_panel_color']; ?>  !important;
+            .show-sidebar .left-sidebar {
+                display: block;
             }
         }
     </style>
@@ -234,9 +229,9 @@
 
 <div id="app" class="fix-header fix-sidebar card-no-border">
     <div id="main-wrapper">
-        <div id="data-table_processing" class="page-overlay" style="display:none;">
-            <div class="overlay-text">
-                <img src="{{asset('images/spinner.gif')}}">
+        <div id="data-table_processing" class="page-overlay" style="display:block; background: #000; position: fixed; width: 100%; height: 100%; z-index: 9999; top: 0; left: 0; opacity: 1; align-items: center; justify-content: center;">
+            <div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <img src="{{asset('images/spinner.gif')}}" style="width: 500px; height: 500px; object-fit: contain;">
             </div>
         </div>
         <header class="topbar">
@@ -292,6 +287,10 @@
             jQuery("body").addClass("sticky");
         }
     });
+    
+    jQuery(window).on('load', function() {
+        jQuery("#data-table_processing").fadeOut(500);
+    });
 
 </script>
 <script src="{{ asset('assets/plugins/select2/dist/js/select2.min.js') }}"></script>
@@ -326,29 +325,28 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script type="text/javascript">
-    if (!firebase.apps.length) {}
-        var firebaseConfig = {
-            apiKey: "{{ config('firebase.api_key') }}",
-            authDomain: "{{ config('firebase.auth_domain') }}",
-            databaseURL: "{{ config('firebase.database_url') }}",
-            projectId: "{{ config('firebase.project_id') }}",
-            storageBucket: "{{ str_replace('gs://', '', config('firebase.storage_bucket')) }}",
-            messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
-            appId: "{{ config('firebase.app_id') }}",
-            measurementId: "{{ config('firebase.measurement_id') }}"
-        };
-        firebase.initializeApp(firebaseConfig);
-    }
-    
+    var firebaseConfig = {
+        apiKey: "{{ config('firebase.api_key') }}",
+        authDomain: "{{ config('firebase.auth_domain') }}",
+        databaseURL: "{{ config('firebase.database_url') }}",
+        projectId: "{{ config('firebase.project_id') }}",
+        storageBucket: "{{ str_replace('gs://', '', config('firebase.storage_bucket')) }}",
+        messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
+        appId: "{{ config('firebase.app_id') }}",
+        measurementId: "{{ config('firebase.measurement_id') }}"
+    };
+
     // Initialize Firebase only if not already initialized
     if (!firebase.apps.length) {
         try {
             firebase.initializeApp(firebaseConfig);
         } catch (error) {
             console.error("Firebase initialization failed:", error);
-            throw error;
+            // Optionally re-throw if critical
+            // throw error;
         }
     }
+    
     var database = firebase.firestore();
     var geoFirestore = new GeoFirestore(database);
     var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());

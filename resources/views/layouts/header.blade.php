@@ -1,7 +1,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
 <header class="section-header">
     <?php
-    if (Session::get('takeawayOption') == 'true' || Session::get('takeawayOption') == true) {
+    if (\Session::get('takeawayOption') == 'true' || \Session::get('takeawayOption') == true) {
         $takeaway_options = true;
     } else {
         $takeaway_options = false;
@@ -140,12 +140,12 @@
                                 <i class="feather-shopping-cart h6 mr-2 mb-0"></i> <span>{{trans('lang.cart')}}</span>
                             </div>
                         </a>
-                        <?php if (Session::get('takeawayOption') == "true") { ?>
+                        <?php if (\Session::get('takeawayOption') == "true") { ?>
                             <div class="icon d-flex align-items-center text-dark takeaway-div">
 											<span class="takeaway-btn">
 												<i class="fa fa-car h6 mr-1 mb-0"></i> <span> {{trans('lang.take_away')}} </span>
 												<input type="checkbox" onclick="takeAwayOnOff(this)"
-                                                       <?php if (Session::get('takeawayOption') == "true") { ?> checked <?php } ?>> <span
+                                                       <?php if (\Session::get('takeawayOption') == "true") { ?> checked <?php } ?>> <span
                                                         class="slider round"></span>
 												</span>
                             </div>

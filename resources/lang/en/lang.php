@@ -133,10 +133,7 @@ return [
     'already_an_account' => "Already an account?",
     'sign_in' => 'SIGN IN',
     'signin' => 'Sign In',
-    'sign_up' => 'SIGN UP',
-    'sign_up_with_us' => 'Sign up With Us',
-    'sign_up_to_continue' => 'Sign up to continue',
-    'mobile_number' => 'Mobile Number',
+
     'delivery_address' => 'Delivery Address',
     'save_address_location' => 'You have a saved address in this location',
     'change' => 'Change',
@@ -287,7 +284,7 @@ return [
     'checkout' => 'Checkout',
     'successful' => 'Successful',
     'live_map' => 'Live Map',
-    'contact_us' => 'Contact Us',
+
     'navigation_link_exp' => 'Navigation Link Example',
     'link' => 'Link',
     'faq' => 'FAQ',
@@ -373,7 +370,7 @@ return [
     'size' => 'Size',
     'your_cart_is_empty' => 'Your Cart is Empty',
     'delivery_option' => 'Delivery Option',
-    'take_away' => 'Takeaway',
+
     'free' => 'Free',
     'tip_your_delivery_partner' => 'Tip Your delivery partner',
     'tip_go_to_your_delivery_partner' => 'tip go to your delivery partner',
@@ -411,7 +408,7 @@ return [
     'categories' => 'Categories',
     'no_results' => 'No results found',
     'we_give_best_product' => 'We Give Best Food',
-    'for_you' => 'For You',
+
     'available_coupon' => 'Available Coupon',
     'no_more_store_found' => 'No more restaurant found',
     'reviews' => 'Reviews',
@@ -420,7 +417,7 @@ return [
     'store' => 'Restaurant',
     'grams' => 'Grams',
     'calories' => 'Calories',
-    'proteins' => 'Proteins',
+
     'fats' => 'Fats',
     'addons' => 'Add Ons (Optional)',
     'add_to_cart' => 'Add to Cart',
@@ -461,10 +458,8 @@ return [
     'product_name' => 'Product Name',
     'quantity_plural' => 'Quantity',
     'veg' => 'veg',
-    'non_veg' => 'Non Veg',
-    'open' => 'Open',
-    'closed' => 'Closed',
-    'review' => 'Review',
+
+
     'send_link' => 'Send Link',
     'email_address_error' => 'Please Enter Email Address',
     'email_sent' => 'We have emailed your password reset link!',
@@ -489,7 +484,7 @@ return [
     'invalid_gift_pin' => 'Enter valid gift pin',
     'share' => 'Share',
     'save_as' => 'Save As',
-    'add_new_address' => 'Add New',
+
     'please_add_flat_no' => 'Please add flat/house/building',
     'please_add_locality' => 'Please add area/sector/locality',
     'address_book' => 'Address Book',
