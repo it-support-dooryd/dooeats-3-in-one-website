@@ -125,8 +125,28 @@ foreach ($countries as $keycountry => $valuecountry) {
         appId: "{{ config('firebase.app_id') }}",
         measurementId: "{{ config('firebase.measurement_id') }}"
     };
-    firebase.initializeApp(firebaseConfig);
-    var database = firebase.firestore();
+
+    var database;
+
+    try {
+        // Validate required config keys
+        if (!firebaseConfig.apiKey || !firebaseConfig.projectId || !firebaseConfig.appId) {
+            console.error("Firebase configuration is missing required keys.");
+            // Optionally, handle the error gracefully here
+        } else {
+            // Check if Firebase is already initialized
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            } else {
+                // If specific app handling is needed, access it here
+                // firebase.app(); 
+            }
+             database = firebase.firestore();
+        }
+    } catch (error) {
+        console.error("Error initializing Firebase:", error);
+        // Handle initialization error safely
+    }
     function loginClick() {
         var email = $("#email").val();
         var password = $("#password").val();

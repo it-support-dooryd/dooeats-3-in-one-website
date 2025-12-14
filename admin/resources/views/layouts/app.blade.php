@@ -326,18 +326,29 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script type="text/javascript">
-
-    var firebaseConfig = {
-        apiKey: "{{ config('firebase.api_key') }}",
-        authDomain: "{{ config('firebase.auth_domain') }}",
-        databaseURL: "{{ config('firebase.database_url') }}",
-        projectId: "{{ config('firebase.project_id') }}",
-        storageBucket: "{{ str_replace('gs://', '', config('firebase.storage_bucket')) }}",
-        messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
-        appId: "{{ config('firebase.app_id') }}",
-        measurementId: "{{ config('firebase.measurement_id') }}"
-    };
-    firebase.initializeApp(firebaseConfig);
+    if (!firebase.apps.length) {}
+        var firebaseConfig = {
+            apiKey: "{{ config('firebase.api_key') }}",
+            authDomain: "{{ config('firebase.auth_domain') }}",
+            databaseURL: "{{ config('firebase.database_url') }}",
+            projectId: "{{ config('firebase.project_id') }}",
+            storageBucket: "{{ str_replace('gs://', '', config('firebase.storage_bucket')) }}",
+            messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
+            appId: "{{ config('firebase.app_id') }}",
+            measurementId: "{{ config('firebase.measurement_id') }}"
+        };
+        firebase.initializeApp(firebaseConfig);
+    }
+    
+    // Initialize Firebase only if not already initialized
+    if (!firebase.apps.length) {
+        try {
+            firebase.initializeApp(firebaseConfig);
+        } catch (error) {
+            console.error("Firebase initialization failed:", error);
+            throw error;
+        }
+    }
     var database = firebase.firestore();
     var geoFirestore = new GeoFirestore(database);
     var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());
