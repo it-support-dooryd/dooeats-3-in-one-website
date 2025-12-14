@@ -2150,7 +2150,7 @@ return [
 
     'atleast_one_document_should_enable'=>'Atleast one document should enable',
 
-    'price_instruction'=>'The price for product includes the admin commission. For instance, if the product is priced at $100 and the admin commission is 10% , the effective price would be $110 for customer, which will apply automatically.',
+    'price_instruction'=>'The price for product includes the admin commission. For instance, if the product is priced at ₦1000 and the admin commission is 10% , the effective price would be ₦1,100 for customer, which will apply automatically.',
 
     'document_verification_is_pending' => 'Document verification is pending, Please first verify your documents.',  
 
