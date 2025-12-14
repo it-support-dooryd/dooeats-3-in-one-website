@@ -23,17 +23,6 @@
             <!-- Left Panel: Login Form -->
             <div class="auth-form-panel">
                 
-                <!-- Tab Switcher: Restaurant / Customer -->
-                <div class="auth-tabs show-tabs">
-                    <button class="auth-tab active" data-tab="restaurant">
-                        Restaurant Login
-                    </button>
-                    <!-- Adjust this link to point to the customer login page -->
-                    <a href="{{ url('/login') }}" class="auth-tab" data-tab="customer">
-                        Customer Login
-                    </a>
-                </div>
-
                 <!-- Header -->
                 <div class="auth-header" style="text-align: center;">
                     <h1 class="auth-title">{{trans('Welcome Back')}}</h1>

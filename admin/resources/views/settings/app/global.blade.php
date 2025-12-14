@@ -847,7 +847,11 @@
         });
         var storageRef = firebase.storage().ref('images');
         async function storeImageData() {
-            var newPhoto = [];
+            var newPhoto = {
+                photo: photo,
+                favicon: favicon,
+                placeholderphoto: placeholderphoto
+            };
             try {
                 if (appLogoImagePath != "" && photo != appLogoImagePath) {
                     var appLogoImagePathRef = await storage.refFromURL(appLogoImagePath);

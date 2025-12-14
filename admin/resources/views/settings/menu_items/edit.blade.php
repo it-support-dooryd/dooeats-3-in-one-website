@@ -191,7 +191,7 @@
         reader.readAsDataURL(f);
     }
     async function storeImageData() {
-        var newPhoto = '';
+        var newPhoto = photo;
         try {
             if (bannerImageFile != "" && photo != bannerImageFile) {
                 var bannerOldImageUrlRef = await storage.refFromURL(bannerImageFile);

@@ -212,6 +212,27 @@
 <script type="text/javascript" src="{{ asset('js/sweetalert2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/location-selector.js') }}"></script>
 <script type="text/javascript">
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
     <?php $id = null;
     if (Auth::user()) {
         $id = Auth::user()->getvendorId();
@@ -228,6 +249,17 @@
     var address_city = getCookie('address_city');
     var address_state = getCookie('address_state');
     var address_country = getCookie('address_country');
+    var firebaseConfig = {
+        apiKey: "{{ config('firebase.api_key') }}",
+        authDomain: "{{ config('firebase.auth_domain') }}",
+        databaseURL: "{{ config('firebase.database_url') }}",
+        projectId: "{{ config('firebase.project_id') }}",
+        storageBucket: "{{ config('firebase.storage_bucket') }}",
+        messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
+        appId: "{{ config('firebase.app_id') }}",
+        measurementId: "{{ config('firebase.measurement_id') }}"
+    };
+    firebase.initializeApp(firebaseConfig);
     var database = firebase.firestore();
     var googleMapKey = '';
     var mapType = '';
@@ -621,26 +653,7 @@
         }
     }
 
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
 
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
     
     // Set default location to Calabar, Cross River State if no location is set
     // This must run AFTER setCookie is defined

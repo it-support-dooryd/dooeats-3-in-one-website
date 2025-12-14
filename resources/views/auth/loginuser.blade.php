@@ -115,6 +115,17 @@ foreach ($countries as $keycountry => $valuecountry) {
 <script src="{{ asset('js/jquery.cookie.js') }}"></script>
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
 <script type="text/javascript">
+    var firebaseConfig = {
+        apiKey: "{{ config('firebase.api_key') }}",
+        authDomain: "{{ config('firebase.auth_domain') }}",
+        databaseURL: "{{ config('firebase.database_url') }}",
+        projectId: "{{ config('firebase.project_id') }}",
+        storageBucket: "{{ config('firebase.storage_bucket') }}",
+        messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
+        appId: "{{ config('firebase.app_id') }}",
+        measurementId: "{{ config('firebase.measurement_id') }}"
+    };
+    firebase.initializeApp(firebaseConfig);
     var database = firebase.firestore();
     function loginClick() {
         var email = $("#email").val();

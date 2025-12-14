@@ -327,6 +327,17 @@
 
 <script type="text/javascript">
 
+    var firebaseConfig = {
+        apiKey: "{{ config('firebase.api_key') }}",
+        authDomain: "{{ config('firebase.auth_domain') }}",
+        databaseURL: "{{ config('firebase.database_url') }}",
+        projectId: "{{ config('firebase.project_id') }}",
+        storageBucket: "{{ config('firebase.storage_bucket') }}",
+        messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
+        appId: "{{ config('firebase.app_id') }}",
+        measurementId: "{{ config('firebase.measurement_id') }}"
+    };
+    firebase.initializeApp(firebaseConfig);
     var database = firebase.firestore();
     var geoFirestore = new GeoFirestore(database);
     var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());

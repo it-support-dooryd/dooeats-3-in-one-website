@@ -317,7 +317,7 @@ foreach ($countries as $keycountry => $valuecountry) {
         })
     })
     async function storeImageData() {
-        var newPhoto = '';
+        var newPhoto = photo;
         try {
             if (userImageFile != "" && photo != userImageFile) {
                 var userOldImageUrlRef = await storage.refFromURL(userImageFile);
