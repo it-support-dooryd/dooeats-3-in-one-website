@@ -129,23 +129,26 @@ foreach ($countries as $keycountry => $valuecountry) {
     var database;
 
     try {
-        // Validate required config keys
-        if (!firebaseConfig.apiKey || !firebaseConfig.projectId || !firebaseConfig.appId) {
-            console.error("Firebase configuration is missing required keys.");
-            // Optionally, handle the error gracefully here
+        // robust validation of config keys
+        const requiredKeys = ['apiKey', 'authDomain', 'projectId', 'appId', 'databaseURL', 'storageBucket', 'messagingSenderId'];
+        const missingKeys = requiredKeys.filter(key => !firebaseConfig[key]);
+
+        if (missingKeys.length > 0) {
+            console.error("Firebase initialization aborted. Missing config keys:", missingKeys.join(', '));
+            // In a production app, you might want to report this to an error tracking service
         } else {
-            // Check if Firebase is already initialized
+             // Check if Firebase is already initialized
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             } else {
-                // If specific app handling is needed, access it here
-                // firebase.app(); 
+                // Determine if the existing app has the same config, or just use it.
+                // For simplicity in this legacy context, we assume the existing app is correct.
+                console.log("Firebase already initialized, using existing app.");
             }
-             database = firebase.firestore();
+            database = firebase.firestore();
         }
     } catch (error) {
-        console.error("Error initializing Firebase:", error);
-        // Handle initialization error safely
+        console.error("Critical error initializing Firebase:", error);
     }
     function loginClick() {
         var email = $("#email").val();

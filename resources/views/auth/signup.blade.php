@@ -116,16 +116,15 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{ asset('vendor/select2/dist/js/select2.min.js') }}"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
 <script src="{{ asset('js/crypto-js.js') }}"></script>
 <script src="{{ asset('js/jquery.cookie.js') }}"></script>
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
 <script type="text/javascript">
-    var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());
     var firebaseConfig = {
         apiKey: "{{ config('firebase.api_key') }}",
         authDomain: "{{ config('firebase.auth_domain') }}",
@@ -136,8 +135,18 @@
         appId: "{{ config('firebase.app_id') }}",
         measurementId: "{{ config('firebase.measurement_id') }}"
     };
-    firebase.initializeApp(firebaseConfig);
-    var database = firebase.firestore();
+    
+    var database;
+    try {
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        database = firebase.firestore();
+    } catch (error) {
+        console.error("Firebase init error:", error);
+    }
+    
+    var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());
     function validateFName(input) {
         // Remove leading and trailing spaces
         input.value = input.value.trimStart(); // Allow typing, but remove leading spaces
