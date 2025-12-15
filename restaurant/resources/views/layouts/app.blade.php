@@ -534,6 +534,14 @@
             var route1 = '{{ route('orders.edit', ':id') }}';
             var booktable = '{{ route('booktable.edit', ':id') }}';
             var database = firebase.firestore();
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (!user) {
+                    firebase.auth().signInAnonymously().catch(function(error) {
+                        console.error("Auth Error", error);
+                    });
+                }
+            });
             var pageloadded = 0;
 
             var version = database.collection('settings').doc("Version");
