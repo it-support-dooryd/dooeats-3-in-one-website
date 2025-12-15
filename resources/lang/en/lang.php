@@ -529,5 +529,23 @@ return [
     'location_not_supported' => 'Geolocation is not supported by your browser. Please search for your location manually.',
     'location_fetch_error' => 'Unable to fetch your location. Please try again or search manually.',
     'no_recent_locations' => 'No recent locations found',
+    
+    // Login / Signup Redesign
+    'welcome_back' => 'Welcome Back',
+    'customer_login' => 'Customer Login',
+    'restaurant_login' => 'Restaurant Login',
+    'remember_me' => 'Remember Me',
+    'or_continue_with' => 'or continue with',
+    'dont_have_account' => "Don't have an account?",
+    'login_with_phone' => 'Login with Phone',
+    'back_to_login' => 'Back to Login',
+    'not_a_vendor' => 'This account is not registered as a vendor.',
+    'account_waiting_approval' => 'Your account is waiting for admin approval.',
+    'user_not_found' => 'User not found.',
+    'enter_valid_phone' => 'Please enter a valid phone number.',
+    'enter_otp' => 'Please enter the OTP.',
+    'otp_invalid' => 'Invalid OTP. Please try again.',
+    'terms_accepted' => 'I accept the terms and conditions',
+    'please_select_location' => 'Please select your location to continue.', // Added key
 
 ];

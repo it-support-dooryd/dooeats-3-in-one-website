@@ -26,7 +26,7 @@ foreach ($countries as $keycountry => $valuecountry) {
             <!-- Tab Bar -->
             <div class="auth-tabs">
                 <a href="{{ route('login') }}" class="auth-tab-link active">{{trans('lang.customer_login')}}</a>
-                <a href="/restaurant/login" class="auth-tab-link">{{trans('lang.restaurant_login')}}</a>
+                <a href="http://127.0.0.1:8001/login" class="auth-tab-link">{{trans('lang.restaurant_login')}}</a>
             </div>
 
             <h4 class="text-center mb-4" style="font-weight: 600; color: #333;">{{trans('lang.welcome_back')}}</h4>

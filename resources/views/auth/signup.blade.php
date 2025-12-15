@@ -35,7 +35,7 @@
             <!-- Tab Bar -->
             <div class="auth-tabs">
                 <a href="{{ route('signup') }}" class="auth-tab-link active">{{trans('lang.sign_up')}} (User)</a>
-                <a href="{{ route('register') }}" class="auth-tab-link">{{trans('lang.sign_up')}} (Restaurant)</a>
+                <a href="http://127.0.0.1:8001/register" class="auth-tab-link">{{trans('lang.sign_up')}} (Restaurant)</a>
             </div>
 
             <h4 class="text-center mb-4" style="font-weight: 600; color: #333;">{{trans('lang.sign_up_with_us')}}</h4>

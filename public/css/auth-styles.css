@@ -1,8 +1,10 @@
 /* Auto-generated Auth Styles for Dooeats */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* Main Body with Background */
 body.auth-body {
-    background-image: url('../img/login-bg.png'); /* Ensure this file exists */
+    background-image: url('../img/login-bg.png');
+    /* User provided background */
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -13,8 +15,9 @@ body.auth-body {
     overflow-x: hidden;
 }
 
+/* Dark Overlay */
 .auth-overlay {
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
     top: 0;
     left: 0;
@@ -23,6 +26,7 @@ body.auth-body {
     z-index: 0;
 }
 
+/* Container */
 .auth-container {
     position: relative;
     z-index: 1;
@@ -33,95 +37,149 @@ body.auth-body {
     padding: 20px;
 }
 
+/* Card */
 .auth-card {
     background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     width: 100%;
-    max-width: 450px;
-    padding: 40px 30px;
+    max-width: 420px;
+    padding: 40px 35px;
     border: none;
+    text-align: center;
+    position: relative;
 }
 
+/* Logo */
 .auth-logo {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .auth-logo img {
-    height: 50px;
+    height: 35px;
+    /* Adjusted smaller logo */
     object-fit: contain;
 }
 
-/* Tab Bar */
+/* Headings */
+.auth-card h4 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2D3436;
+    margin-bottom: 5px;
+}
+
+.auth-subtitle {
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 25px;
+    display: block;
+}
+
+/* Tab Bar - Keeping functionality but styling nicely */
 .auth-tabs {
-    background: #f5f5f5;
-    border-radius: 30px;
-    padding: 5px;
+    background: #F0F2F5;
+    border-radius: 12px;
+    padding: 4px;
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     position: relative;
 }
 
 .auth-tab-link {
     flex: 1;
     text-align: center;
-    padding: 10px;
-    color: #777;
+    padding: 8px 10px;
+    color: #888;
     text-decoration: none;
     font-weight: 500;
-    font-size: 14px;
-    border-radius: 25px;
+    font-size: 13px;
+    border-radius: 10px;
     transition: all 0.3s ease;
     display: block;
 }
 
 .auth-tab-link:hover {
+    color: #555;
     text-decoration: none;
-    color: #333;
 }
 
 .auth-tab-link.active {
-    background: #FF6B6B; /* Primary Color */
+    background: #FF6B00;
+    /* Orange */
     color: #fff;
-    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.2);
 }
 
-/* Inputs */
+/* Form Styles */
 .form-group-auth {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    position: relative;
 }
 
+.form-label-auth {
+    display: none;
+    /* Hiding labels as placeholders are enough per design */
+}
+
+/* Inputs matching the reference */
 .form-control-auth {
     width: 100%;
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: 1px solid #eee;
-    background: #f9f9f9;
+    padding: 14px 20px 14px 45px;
+    /* Left padding for icons */
+    border-radius: 8px;
+    border: 1px solid #E0E0E0;
+    background: #F4F6F8;
+    color: #333;
     font-size: 14px;
     transition: all 0.3s;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-size: 18px;
+    font-weight: 500;
+}
+
+/* Specific Input Icons */
+input[type="email"],
+input#email {
+    /* Email Icon */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'%3E%3C/path%3E%3Cpolyline points='22,6 12,13 2,6'%3E%3C/polyline%3E%3C/svg%3E");
+    background-color: #FDF4F0;
+    /* Slight orange tint for email default to match ref? Or only active? */
+    border: 1px solid #FF6B00;
+    /* Orange border for email field by default as per ref image active state */
+}
+
+/* Only apply the active style if focused or filled? Ref image shows it filled. 
+   Let's keep the orange border for the "primary" input focused look */
+input[type="email"]:focus,
+input#email:focus {
+    background-color: #FDF4F0;
+    border-color: #FF6B00;
+}
+
+input[type="password"] {
+    /* Lock Icon */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'%3E%3C/path%3E%3C/svg%3E");
+    background-color: #F4F6F8;
+    /* Light gray for password */
+    border-color: #E0E0E0;
 }
 
 .form-control-auth:focus {
     background: #fff;
-    border-color: #FF6B6B;
+    border-color: #FF6B00;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
 }
 
-.form-label-auth {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #333;
-    font-size: 13px;
-}
-
-/* Password Toggle */
+/* Password Group for Icon placement */
 .password-input-group {
     position: relative;
 }
 
+/* Forgot Password INSIDE Input - we need to adjust HTML for this or simulate */
 .password-toggle-icon {
     position: absolute;
     right: 15px;
@@ -132,139 +190,170 @@ body.auth-body {
     z-index: 10;
 }
 
-.password-toggle-icon:hover {
-    color: #FF6B6B;
-}
-
-/* Remember Me */
+/* "Remember Me" & Bottom Links */
 .remember-me-group {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 25px;
     font-size: 13px;
-    color: #666;
+    color: #555;
+    margin-top: 5px;
 }
 
+/* Custom Checkbox */
 .custom-switch-auth {
     display: flex;
     align-items: center;
     cursor: pointer;
+    font-weight: 500;
 }
 
 .custom-switch-auth input {
     display: none;
 }
 
+/* We will reuse the slider class name but style it as a checkbox for the reference look */
 .slider-auth {
-    width: 36px;
-    height: 20px;
-    background-color: #ccc;
-    border-radius: 34px;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    /* Square checkbox */
     position: relative;
-    transition: 0.4s;
-    margin-right: 10px;
+    transition: 0.2s;
+    margin-right: 8px;
 }
 
 .slider-auth:before {
+    /* Checkmark instead of circle */
+    content: '';
     position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    border-radius: 50%;
-    transition: 0.4s;
+    top: 2px;
+    left: 6px;
+    width: 3px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: 0.2s;
+    background: transparent;
+    border-radius: 0;
 }
 
-input:checked + .slider-auth {
-    background-color: #FF6B6B;
+input:checked+.slider-auth {
+    background-color: #FF6B00;
+    border-color: #FF6B00;
 }
 
-input:checked + .slider-auth:before {
-    transform: translateX(16px);
+input:checked+.slider-auth:before {
+    opacity: 1;
+    transform: rotate(45deg);
 }
 
 .forgot-password-link {
-    color: #FF6B6B;
+    color: #FF6B00;
+    font-weight: 600;
     text-decoration: none;
-    font-weight: 500;
+    font-size: 13px;
 }
 
-/* Buttons */
+/* Main Login Button */
 .btn-auth-primary {
-    background: #FF6B6B;
-    color: #fff;
+    background: #fff;
+    color: #333;
     border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     width: 100%;
-    padding: 14px;
+    padding: 0 20px;
     border-radius: 12px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
-}
-
-.btn-auth-primary:hover {
-    background: #ff5252;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 82, 82, 0.3);
-}
-
-.or-divider {
-    text-align: center;
-    margin: 25px 0;
-    position: relative;
-}
-
-.or-divider span {
-    background: #fff;
-    padding: 0 10px;
-    color: #999;
-    font-size: 13px;
-    position: relative;
-    z-index: 1;
-}
-
-.or-divider:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: #eee;
-    z-index: 0;
-}
-
-/* Social Buttons */
-.social-login-group {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.social-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid #eee;
+    transition: all 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    /* Center text */
+    position: relative;
+    height: 55px;
+    /* Taller button */
+}
+
+/* Orange Arrow Button */
+.btn-auth-primary::after {
+    content: '\f061';
+    /* FontAwesome arrow right */
+    font-family: 'FontAwesome';
+    width: 36px;
+    height: 36px;
+    background: #FF6B00;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
     transition: all 0.3s;
 }
 
-.social-btn:hover {
-    background: #f9f9f9;
-    transform: scale(1.1);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+.btn-auth-primary:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
 }
 
-.social-btn img {
-    width: 24px;
-    height: 24px;
+.btn-auth-primary:hover::after {
+    background: #e65100;
+    right: 8px;
+}
+
+/* Footer Text */
+.auth-footer-text,
+.text-center span {
+    font-size: 11px;
+    color: #AAA;
+    line-height: 1.5;
+}
+
+.text-center.mt-3 {
+    margin-top: 25px !important;
+}
+
+.or-divider {
+    display: none;
+    /* remove for this clean design unless needed */
+}
+
+/* Social Login overrides */
+.social-login-group {
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-btn {
+    border-radius: 50% !important;
+    width: 45px !important;
+    height: 45px !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eee;
+    background: white;
+}
+
+.social-btn i {
+    font-size: 18px;
+    margin: 0 !important;
+}
+
+.social-btn span {
+    display: none;
+    /* Hide text, keep icons */
 }

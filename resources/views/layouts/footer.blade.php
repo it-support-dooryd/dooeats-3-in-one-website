@@ -666,21 +666,26 @@ use Illuminate\Support\Facades\Route;
     
     // Set default location to Calabar, Cross River State if no location is set
     // This must run AFTER setCookie is defined
+    // If no location is set, prompt user to select one
     if (!address_name || address_name === '' || address_name === 'null') {
-        address_name = 'Calabar, Cross River State';
-        address_lat = '4.9517';  // Calabar coordinates
-        address_lng = '8.3417';
-        address_city = 'Calabar';
-        address_state = 'Cross River State';
-        address_country = 'Nigeria';
-        
-        // Save default location to cookies
-        setCookie('address_name', address_name, 365);
-        setCookie('address_lat', address_lat, 365);
-        setCookie('address_lng', address_lng, 365);
-        setCookie('address_city', address_city, 365);
-        setCookie('address_state', address_state, 365);
-        setCookie('address_country', address_country, 365);
+         jQuery(document).ready(function() {
+             var verify_location = "{{ trans('lang.please_select_location') }}";
+             
+             // Trigger modal
+             $('#locationModal').modal('show');
+             
+             // Optional: Show a small notification using Swal or similar if available, or just rely on the modal opening
+             if (typeof Swal !== 'undefined') {
+                /* Swal.fire({
+                     text: verify_location,
+                     icon: 'info',
+                     toast: true,
+                     position: 'top-end',
+                     showConfirmButton: false,
+                     timer: 3000
+                 }); */
+             }
+        });
     }
 
 
