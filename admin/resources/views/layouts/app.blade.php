@@ -615,6 +615,7 @@
 
         }else{
             script.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapKey + "&libraries=places,drawing";
+            script.async = true;
         }
         script.onload = function () {
             navigator.geolocation.getCurrentPosition(GeolocationSuccessCallback,GeolocationErrorCallback);
