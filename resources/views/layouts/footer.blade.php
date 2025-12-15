@@ -266,7 +266,9 @@ use Illuminate\Support\Facades\Route;
         appId: "{{ config('firebase.app_id') }}",
         measurementId: "{{ config('firebase.measurement_id') }}"
     };
-    firebase.initializeApp(firebaseConfig);
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
     var database = firebase.firestore();
     var googleMapKey = '';
     var mapType = '';
@@ -387,7 +389,7 @@ use Illuminate\Support\Facades\Route;
                     var address_country = address_component.long_name;
                 }
             });
-            <?php if (@\Route::current()->getName() != 'checkout') { ?>
+            <?php if (@Route::current()->getName() != 'checkout') { ?>
             setCookie('address_name1', address_name1, 365);
             setCookie('address_name2', address_name2, 365);
             setCookie('address_name', address_name, 365);
@@ -839,6 +841,7 @@ use Illuminate\Support\Facades\Route;
         if (snapshots.docs.length > 0) {
             snapshots.docs.forEach((snapshot) => {
                 var zone_data = snapshot.data();
+                zone_data.id = snapshot.id;
                 zone_list.push(zone_data);
             });
         }
@@ -887,19 +890,29 @@ use Illuminate\Support\Facades\Route;
             if (adminCommissionSettings != "" && adminCommissionSettings != undefined) {
                 adminCommissionSettings = JSON.parse(localStorage.getItem('adminCommissionSettings'));
                 if (adminCommissionSettings.isEnabled) {
-                    await database.collection('vendors').where('id', '==', vendorID).get().then(async function(
-                        snapshot) {
-                        if (snapshot.docs.length > 0) {
-                            var data = snapshot.docs[0].data();
-                            if (data.hasOwnProperty('adminCommission') && data.adminCommission !=
-                                null &&
-                                data.adminCommission != '') {
-                                if (data.adminCommission.commissionType == "Percent") {
-                                    final_price = price + ((parseFloat(data.adminCommission
-                                        .fix_commission) * price) / 100);
+                    if (vendorID) {
+                        await database.collection('vendors').where('id', '==', vendorID).get().then(async function(
+                            snapshot) {
+                            if (snapshot.docs.length > 0) {
+                                var data = snapshot.docs[0].data();
+                                if (data.hasOwnProperty('adminCommission') && data.adminCommission !=
+                                    null &&
+                                    data.adminCommission != '') {
+                                    if (data.adminCommission.commissionType == "Percent") {
+                                        final_price = price + ((parseFloat(data.adminCommission
+                                            .fix_commission) * price) / 100);
+                                    } else {
+                                        final_price = price + parseFloat(data.adminCommission
+                                            .fix_commission);
+                                    }
                                 } else {
-                                    final_price = price + parseFloat(data.adminCommission
-                                        .fix_commission);
+                                    if (adminCommissionSettings.commissionType == "Percent") {
+                                        final_price = price + ((parseFloat(adminCommissionSettings
+                                            .fix_commission) * price) / 100);
+                                    } else {
+                                        final_price = price + parseFloat(adminCommissionSettings
+                                            .fix_commission);
+                                    }
                                 }
                             } else {
                                 if (adminCommissionSettings.commissionType == "Percent") {
@@ -910,16 +923,16 @@ use Illuminate\Support\Facades\Route;
                                         .fix_commission);
                                 }
                             }
+                        })
+                    } else {
+                        if (adminCommissionSettings.commissionType == "Percent") {
+                            final_price = price + ((parseFloat(adminCommissionSettings
+                                .fix_commission) * price) / 100);
                         } else {
-                            if (adminCommissionSettings.commissionType == "Percent") {
-                                final_price = price + ((parseFloat(adminCommissionSettings
-                                    .fix_commission) * price) / 100);
-                            } else {
-                                final_price = price + parseFloat(adminCommissionSettings
-                                    .fix_commission);
-                            }
+                            final_price = price + parseFloat(adminCommissionSettings
+                                .fix_commission);
                         }
-                    })
+                    }
                 }
             }
         }
@@ -934,22 +947,30 @@ use Illuminate\Support\Facades\Route;
             if (adminCommissionSettings && adminCommissionSettings !== undefined) {
                 adminCommissionSettings = JSON.parse(adminCommissionSettings);
                 if (adminCommissionSettings.isEnabled) {
-                    // Fetch vendor data from Firestore
-                    const snapshot = await database.collection('vendors').where('id', '==', vendorID).get();
-                    if (snapshot.docs.length > 0) {
-                        const data = snapshot.docs[0].data();
-                        // Check for admin commission in the vendor data
-                        if (data.hasOwnProperty('adminCommission') && data.adminCommission !== null && data
-                            .adminCommission !== '') {
-                            const commission = data.adminCommission;
-                            if (commission.commissionType === "Percent") {
-                                final_price += (parseFloat(commission.fix_commission) * price) / 100;
+                    if (vendorID) {
+                        // Fetch vendor data from Firestore
+                        const snapshot = await database.collection('vendors').where('id', '==', vendorID).get();
+                        if (snapshot.docs.length > 0) {
+                            const data = snapshot.docs[0].data();
+                            // Check for admin commission in the vendor data
+                            if (data.hasOwnProperty('adminCommission') && data.adminCommission !== null && data
+                                .adminCommission !== '') {
+                                const commission = data.adminCommission;
+                                if (commission.commissionType === "Percent") {
+                                    final_price += (parseFloat(commission.fix_commission) * price) / 100;
+                                } else {
+                                    final_price += parseFloat(commission.fix_commission);
+                                }
+                            }
+                        } else {
+                            // Handle case where vendor data is not found
+                            if (adminCommissionSettings.commissionType === "Percent") {
+                                final_price += (parseFloat(adminCommissionSettings.fix_commission) * price) / 100;
                             } else {
-                                final_price += parseFloat(commission.fix_commission);
+                                final_price += parseFloat(adminCommissionSettings.fix_commission);
                             }
                         }
                     } else {
-                        // Handle case where vendor data is not found
                         if (adminCommissionSettings.commissionType === "Percent") {
                             final_price += (parseFloat(adminCommissionSettings.fix_commission) * price) / 100;
                         } else {

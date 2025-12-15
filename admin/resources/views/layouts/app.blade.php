@@ -346,6 +346,14 @@
             // throw error;
         }
     }
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (!user) {
+            firebase.auth().signInAnonymously().catch(function(error) {
+                console.error("Auth Error", error);
+            });
+        }
+    });
     
     var database = firebase.firestore();
     var geoFirestore = new GeoFirestore(database);
