@@ -13,96 +13,118 @@ foreach ($countries as $keycountry => $valuecountry) {
 ?>
 <link href="{{ asset('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet">
 <link href="{{ asset('/css/font-awesome.min.css')}}" rel="stylesheet">
-<div class="login-page vh-100">
-    <div class="d-flex align-items-center justify-content-center vh-100">
-        <div class="col-md-6">
-            <div class="col-10 mx-auto card p-3">
-                <h3 class="text-dark my-0 mb-3">{{trans('lang.login')}}</h3>
-                <p class="text-50">{{trans('lang.sign_in_to_continue')}}</p>
-                <div class="error" id="error"></div>
-                <form class="mt-3 mb-4" action="#" onsubmit="return loginClick()" id="login-box">
-                    <div class="form-group">
-                        <label for="email" class="text-dark">{{trans('lang.user_email')}}</label>
-                        <input type="email" placeholder="{{trans('lang.user_email_help_2')}}" class="form-control"
-                               id="email" aria-describedby="emailHelp" name="email">
-                        <div  class="error" id="email_required"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="text-dark">{{trans('lang.password')}}</label>
-                        <input type="password" placeholder="{{trans('lang.user_password_help_2')}}" class="form-control"
-                               id="password" name="password">
-                        <div class="error" id="password_required"></div>
-                    </div>
-                    <div class="forgot-password">
-                        <p><a href="{{url('forgot-password')}}" class="standard-link"
-                              target="_blank">{{trans('lang.forgot_password')}}?</a></p>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block"
-                            id="login_btn">{{trans('lang.log_in')}}</button>
-                    <a href="{{route('signup')}}" class="btn btn-primary btn-lg btn-block">{{trans('lang.sign_up')}}</a>
-                    <button onclick="googleAuth()" type="button"
-                            class="btn btn-dark btn-lg btn-block text-uppercase waves-effect waves-light btn btn-primary">
-                            <i class="fa fa-google"> </i>{{trans('lang.auth_google')}}
-                    </button>
-                    <div class="or-line mb-3 mt-3">
-                        <span>OR</span>
-                    </div>
-                    <button type="button" onclick="loginWithPhoneClick()" id="loginphon_btn"
-                            class="btn btn-dark btn-lg btn-block text-uppercase waves-effect waves-light btn btn-primary">
-                        <i class="fa fa-phone mr-2"> </i> {{ __('Login') }} {{trans('lang.with_phone')}}</button>
-                </form>
-                <form class="form-horizontal form-material" name="loginwithphon" id="login-with-phone-box" action="#"
-                      style="display:none;">
-                    @csrf
-                    <div class="box-title m-b-20">{{ __('Login') }}</div>
-                    <div class="form-group " id="phone-box">
-                        <div class="col-xs-12">
-                            <select name="country" id="country_selector">
-                                <?php foreach ($newcountries as $keycy => $valuecy) { ?>
-                                <?php $selected = ""; ?>
-                                <option <?php echo $selected; ?> code="<?php echo $valuecy->code; ?>"
-                                        value="<?php echo $keycy; ?>">+<?php echo $valuecy->phoneCode; ?>  {{$valuecy->countryName}}</option>
-                                <?php } ?>
-                            </select>
-                            <input class="form-control" placeholder="{{trans('lang.user_phone')}}" id="phone"
-                                   type="number" class="form-control" name="phone" value="{{ old('phone') }}" required
-                                   autocomplete="phone" autofocus>
-                        </div>
-                        @error('phone')
-                        <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-                        @enderror
-                    </div>
-                    <div class="error" id="password_required_new1" style="display:none;"></div>
-                    <div class="form-group " id="otp-box" style="display:none;">
-                        <input class="form-control" placeholder="{{trans('lang.otp')}}" id="verificationcode"
-                               type="text" class="form-control" name="otp" value="{{ old('otp') }}" required
-                               autocomplete="otp" autofocus>
-                    </div>
-                    <div id="recaptcha-container" style="display:none;"></div>
-                    <div class="form-group text-center m-t-20">
-                        <div class="col-xs-12">
-                            <button type="button" style="display:none;" onclick="applicationVerifier()" id="verify_btn"
-                                    class="btn btn-dark btn-lg btn-block text-uppercase waves-effect waves-light btn btn-primary">{{trans('lang.otp_verify')}}</button>
-                            <button type="button" style="display:none;" onclick="sendOTP()" id="sendotp_btn"
-                                    class="btn btn-dark btn-lg btn-block text-uppercase waves-effect waves-light btn btn-primary">{{trans('lang.otp_send')}}</button>
-                            <div class="or-line mb-3 mt-3">
-                                <span>OR</span>
-                            </div>
-                            <button type="button" onclick="loginBackClick()"
-                                    class="btn btn-dark btn-lg btn-block text-uppercase waves-effect waves-light btn btn-primary">
-                                <i class="fa fa-envelope mr-2"> </i> {{ __('Login') }} {{trans('lang.with_email')}}
-                            </button>
-                            <div class="error" id="password_required_new"></div>
-                        </div>
-                    </div>
-                </form>
+<link href="{{ asset('css/auth-styles.css') }}" rel="stylesheet">
+
+<body class="auth-body">
+    <div class="auth-overlay"></div>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <img src="{{ asset('images/logo_web.png') }}" alt="Dooeats Logo">
             </div>
+
+            <!-- Tab Bar -->
+            <div class="auth-tabs">
+                <a href="{{ route('login') }}" class="auth-tab-link active">{{trans('lang.customer_login')}}</a>
+                <a href="/restaurant/login" class="auth-tab-link">{{trans('lang.restaurant_login')}}</a>
+            </div>
+
+            <h4 class="text-center mb-4" style="font-weight: 600; color: #333;">{{trans('lang.welcome_back')}}</h4>
+            <div class="error" id="error" style="display:none; color:red; text-align:center;"></div>
+
+            <!-- Login Form -->
+            <form action="#" onsubmit="return loginClick()" id="login-box">
+                <div class="form-group-auth">
+                    <label class="form-label-auth">{{trans('lang.user_email')}}</label>
+                    <input type="email" class="form-control-auth" id="email" name="email" placeholder="{{trans('lang.user_email_help_2')}}">
+                    <div class="error" id="email_required" style="display:none; color:red; font-size:12px; margin-top:5px;"></div>
+                </div>
+
+                <div class="form-group-auth">
+                    <label class="form-label-auth">{{trans('lang.password')}}</label>
+                    <div class="password-input-group">
+                        <input type="password" class="form-control-auth" id="password" name="password" placeholder="{{trans('lang.user_password_help_2')}}">
+                        <div class="password-toggle-icon" onclick="togglePassword()">
+                            <i class="fa fa-eye"></i>
+                        </div>
+                    </div>
+                    <div class="error" id="password_required" style="display:none; color:red; font-size:12px; margin-top:5px;"></div>
+                </div>
+
+                <div class="remember-me-group">
+                    <label class="custom-switch-auth">
+                        <input type="checkbox" id="remember_me">
+                        <span class="slider-auth"></span>
+                        <span>{{trans('lang.remember_me')}}</span>
+                    </label>
+                    <a href="{{url('forgot-password')}}" class="forgot-password-link">{{trans('lang.forgot_password')}}?</a>
+                </div>
+
+                <button type="submit" class="btn-auth-primary" id="login_btn">{{trans('lang.log_in')}}</button>
+
+                <div class="text-center mt-3">
+                    <span style="color:#666; font-size:14px;">{{trans('lang.dont_have_account')}} </span>
+                    <a href="{{route('signup')}}" class="forgot-password-link">{{trans('lang.sign_up')}}</a>
+                </div>
+
+                <div class="or-divider">
+                    <span>{{trans('lang.or_continue_with')}}</span>
+                </div>
+
+                <div class="social-login-group">
+                    <div class="social-btn" onclick="googleAuth()" title="Google">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                    </div>
+                    <!-- Apple would go here if configured -->
+                    <div class="social-btn" onclick="loginWithPhoneClick()" title="Phone">
+                        <i class="fa fa-phone" style="font-size: 20px; color: #333;"></i>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Phone Login Form (Hidden) -->
+            <form id="login-with-phone-box" action="#" style="display:none;">
+                @csrf
+                <div class="text-center mb-4">
+                    <h5 style="font-weight:600;">{{trans('lang.login_with_phone')}}</h5>
+                </div>
+
+                <div class="form-group-auth" id="phone-box">
+                    <label class="form-label-auth">{{trans('lang.user_phone')}}</label>
+                    <div style="display:flex;">
+                        <select name="country" id="country_selector" class="form-control-auth" style="width: 35%; margin-right: 5px;">
+                            <?php foreach ($newcountries as $keycy => $valuecy) { ?>
+                            <?php $selected = ""; ?>
+                            <option <?php echo $selected; ?> code="<?php echo $valuecy->code; ?>" value="<?php echo $keycy; ?>">+<?php echo $valuecy->phoneCode; ?></option>
+                            <?php } ?>
+                        </select>
+                        <input placeholder="{{trans('lang.user_phone')}}" id="phone" type="number" class="form-control-auth" name="phone" required>
+                    </div>
+                    <div class="error" id="password_required_new1" style="display:none; color:red;"></div>
+                </div>
+
+                <div class="form-group-auth" id="otp-box" style="display:none;">
+                    <label class="form-label-auth">{{trans('lang.otp')}}</label>
+                    <input class="form-control-auth" placeholder="{{trans('lang.otp')}}" id="verificationcode" type="text" name="otp">
+                </div>
+
+                <div id="recaptcha-container" style="display:none;"></div>
+
+                <button type="button" style="display:none;" onclick="applicationVerifier()" id="verify_btn" class="btn-auth-primary">{{trans('lang.otp_verify')}}</button>
+                <button type="button" style="display:none;" onclick="sendOTP()" id="sendotp_btn" class="btn-auth-primary">{{trans('lang.otp_send')}}</button>
+
+                <div class="text-center mt-3">
+                    <a href="javascript:void(0)" onclick="loginBackClick()" class="forgot-password-link">
+                        <i class="fa fa-arrow-left"></i> {{trans('lang.back_to_login')}}
+                    </a>
+                </div>
+                <div class="error" id="password_required_new" style="color:red; text-align:center; margin-top:10px;"></div>
+            </form>
+
         </div>
     </div>
-</div>
-</div>
+</body>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{ asset('vendor/select2/dist/js/select2.min.js') }}"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
@@ -127,92 +149,116 @@ foreach ($countries as $keycountry => $valuecountry) {
     };
 
     var database;
-
     try {
-        // robust validation of config keys
-        const requiredKeys = ['apiKey', 'authDomain', 'projectId', 'appId', 'databaseURL', 'storageBucket', 'messagingSenderId'];
-        const missingKeys = requiredKeys.filter(key => !firebaseConfig[key]);
-
-        if (missingKeys.length > 0) {
-            console.error("Firebase initialization aborted. Missing config keys:", missingKeys.join(', '));
-            // In a production app, you might want to report this to an error tracking service
-        } else {
-             // Check if Firebase is already initialized
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            } else {
-                // Determine if the existing app has the same config, or just use it.
-                // For simplicity in this legacy context, we assume the existing app is correct.
-                console.log("Firebase already initialized, using existing app.");
-            }
-            database = firebase.firestore();
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
         }
+        database = firebase.firestore();
     } catch (error) {
-        console.error("Critical error initializing Firebase:", error);
+        console.error("Firebase initialization failed:", error);
     }
+    
+    // Remember Me Logic
+    $(document).ready(function() {
+        if (localStorage.getItem("remember_me") === "true") {
+            $("#email").val(localStorage.getItem("email"));
+            $("#password").val(localStorage.getItem("password"));
+            $("#remember_me").prop("checked", true);
+        }
+    });
+
+    function togglePassword() {
+        var x = document.getElementById("password");
+        var icon = document.querySelector(".password-toggle-icon i");
+        if (x.type === "password") {
+            x.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            x.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+
     function loginClick() {
         var email = $("#email").val();
         var password = $("#password").val();
         $("#email_required").css('display', 'none');
         $("#password_required").html("");
+        $("#password_required").hide();
+
         if (email == '') {
-            $("#email_required").css('display','block');
-            jQuery("#email_required").html("Please enter email id").css("color", "red");
-            return false;    
-        }
-        else if (password == '') {
-            $("#email_required").css('display','none');
-            jQuery("#password_required").html("Please enter valid password").css("color", "red");
+            $("#email_required").css('display', 'block');
+            jQuery("#email_required").html("{{trans('lang.user_email_help_2')}}");
             return false;
         }
-                $("#email_required").css('display', 'none');
-                firebase.auth().signInWithEmailAndPassword(email, password).then(function (result) {
-                    var userEmail = result.user.email;
-                    database.collection("users").where("email", "==", email).where('active', '==', true).get().then(async function (snapshots) {
-                        if (snapshots.docs.length) {
-                            var userData = snapshots.docs[0].data();
-                            if (userData.role == "customer") {
-                                var userToken = result.user.getIdToken();
-                                var uid = result.user.uid;
-                                var user = userData.id;
-                                var firstName = userData.firstName;
-                                var lastName = userData.lastName;
-                                var imageURL = userData.profilePictureURL;
-                                var url = "{{route('setToken')}}";
-                                $.ajax({
-                                    type: 'POST',
-                                    url: url,
-                                    data: {
-                                        id: uid,
-                                        userId: user,
-                                        email: email,
-                                        password: password,
-                                        firstName: firstName,
-                                        lastName: lastName,
-                                        profilePicture: imageURL
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (data) {
-                                        if (data.access) {
-                                            setCookie("loginType", "EmailPassword");
-                                            window.location = "{{url('/')}}";
-                                        }
-                                    }
-                                });
+        else if (password == '') {
+            $("#password_required").css('display', 'block');
+            jQuery("#password_required").html("{{trans('lang.user_password_help_2')}}");
+            return false;
+        }
+        
+        // Remember Me Save
+        if ($("#remember_me").is(":checked")) {
+            localStorage.setItem("remember_me", "true");
+            localStorage.setItem("email", email);
+            localStorage.setItem("password", password);
+        } else {
+            localStorage.removeItem("remember_me");
+            localStorage.removeItem("email");
+            localStorage.removeItem("password");
+        }
+
+        firebase.auth().signInWithEmailAndPassword(email, password).then(function (result) {
+            var userEmail = result.user.email;
+            database.collection("users").where("email", "==", email).where('active', '==', true).get().then(async function (snapshots) {
+                if (snapshots.docs.length) {
+                    var userData = snapshots.docs[0].data();
+                    if (userData.role == "customer") {
+                        var userToken = result.user.getIdToken();
+                        var uid = result.user.uid;
+                        var user = userData.id;
+                        var firstName = userData.firstName;
+                        var lastName = userData.lastName;
+                        var imageURL = userData.profilePictureURL;
+                        var url = "{{route('setToken')}}";
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            data: {
+                                id: uid,
+                                userId: user,
+                                email: email,
+                                password: password,
+                                firstName: firstName,
+                                lastName: lastName,
+                                profilePicture: imageURL
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                                if (data.access) {
+                                    setCookie("loginType", "EmailPassword");
+                                    window.location = "{{url('/')}}"; // Redirect to Customer Home
+                                }
                             }
-                        } else {
-                            $("#password_required").html("");
-                            $("#password_required").append("<p>{{trans('lang.waiting_for_approval')}}</p>");
-                        }
-                    })
-                })
-                .catch(function (error) {
-                    $("#password_required").html("The entered password is invalid. Please check and try again.").css("color", "red");
-                });
-                return false;
+                        });
+                    }
+                } else {
+                     $("#password_required").css('display', 'block');
+                    $("#password_required").html("{{trans('lang.waiting_for_approval')}}");
+                }
+            })
+        })
+        .catch(function (error) {
+            $("#password_required").css('display', 'block');
+            $("#password_required").html("{{trans('lang.invalid_password_email')}}");
+        });
+        return false;
     }
+
     function loginWithPhoneClick() {
         jQuery("#login-box").hide();
         jQuery("#login-with-phone-box").show();
@@ -221,22 +267,24 @@ foreach ($countries as $keycountry => $valuecountry) {
         jQuery("#sendotp_btn").show();
         window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
             'size': 'invisible',
-            'callback': (response) => {
-            }
+            'callback': (response) => {}
         });
     }
+
     function loginBackClick() {
         jQuery("#login-box").show();
         jQuery("#login-with-phone-box").hide();
-        jQuery("#sendotp_btn").hide();
+        jQuery("#otp-box").hide();
+        jQuery("#sendotp_btn").hide(); 
+        jQuery("#verify_btn").hide();
     }
+
     function sendOTP() {
-        if(jQuery("#phone").val() == "")
-        {
-            $("#password_required_new1").css('display','block');
-            jQuery("#password_required_new1").html("Enter valid phone number.").css("color", "red");
-        }
-        else if (jQuery("#phone").val() && jQuery("#country_selector").val()) {
+        $("#password_required_new1").hide();
+        if(jQuery("#phone").val() == "") {
+            $("#password_required_new1").show();
+            jQuery("#password_required_new1").html("{{trans('lang.enter_valid_phone')}}");
+        } else if (jQuery("#phone").val() && jQuery("#country_selector").val()) {
             var countryCode = '+' + jQuery("#country_selector").val();
             var phone = jQuery("#phone").val();
             var phoneNumber = '+' + jQuery("#country_selector").val() + '' + jQuery("#phone").val();
@@ -251,19 +299,21 @@ foreach ($countries as $keycountry => $valuecountry) {
                                 jQuery("#recaptcha-container").hide();
                                 jQuery("#otp-box").show();
                                 jQuery("#verify_btn").show();
+                                jQuery("#sendotp_btn").hide();
                                 $("#password_required_new1").css('display','none');
                             }
                         });
                 } else {
-                    jQuery("#password_required_new").html("User not found.");
+                    jQuery("#password_required_new1").show();
+                     jQuery("#password_required_new1").html("{{trans('lang.user_not_found')}}");
                 }
             });
         }
     }
+
     function applicationVerifier() {
         window.confirmationResult.confirm(document.getElementById("verificationcode").value)
             .then(function (result) {
-                var countryCode = '+' + jQuery("#country_selector").val();
                 var phone = jQuery("#phone").val();
                 database.collection("users").where('phoneNumber', '==', phone).get().then(async function (snapshots_login) {
                     userData = snapshots_login.docs[0].data();
@@ -304,9 +354,8 @@ foreach ($countries as $keycountry => $valuecountry) {
                     }
                 })
             }).catch(function (error) {
-            $('#email_required').text('');
-            jQuery("#password_required_new").html(error.message);
-        });
+                jQuery("#password_required_new").html("{{trans('lang.otp_invalid')}}");
+            });
     }
     var newcountriesjs = '<?php echo json_encode($newcountriesjs); ?>';
     var newcountriesjs = JSON.parse(newcountriesjs);
@@ -342,74 +391,59 @@ foreach ($countries as $keycountry => $valuecountry) {
     });
     function googleAuth() {
         var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider)
-            .then(function(result) {
-                var user = result.user;
-                saveUserData(user);
-            }).catch(function(error) {
-                console.error("Google Sign-In Error:", error.message);
-            });
-    }
-    function saveUserData(user, event) {
-        jQuery('#overlay').show();
-        database.collection("users").doc(user.uid).get().then(async function (snapshots_login) {
-            var userData = snapshots_login.data();
-            if (userData) {
-                if (userData.role == "customer") {
-                    var uid = user.uid;
-                    var firstName = userData.firstName || '';
-                    var lastName = userData.lastName || '';
-                    var imageURL = userData.profilePictureURL || '';
-                    var url = "{{route('setToken')}}";
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        data: {
-                            id: uid,
-                            userId: user.uid,
-                            email: userData.email || '',
-                            password: '',
-                            firstName: firstName,
-                            lastName: lastName,
-                            profilePicture: imageURL,
-                            provider:'google'
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (data) {
-                            if (data.access) {
-                                setCookie("loginType", "Social");
-                                window.location = "{{url('/')}}";
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+            var user = result.user;
+            var userEmail = result.user.email;
+             database.collection("users").where("email", "==", userEmail).where('active', '==', true).get().then(async function (snapshots) {
+                if (snapshots.docs.length) {
+                    var userData = snapshots.docs[0].data();
+                    if (userData.role == "customer") {
+                         var uid = result.user.uid;
+                        var user = userData.id;
+                        var firstName = userData.firstName;
+                        var lastName = userData.lastName;
+                        var imageURL = userData.profilePictureURL;
+                        var url = "{{route('setToken')}}";
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            data: {
+                                id: uid,
+                                userId: user,
+                                email: userEmail,
+                                password: "",
+                                firstName: firstName,
+                                lastName: lastName,
+                                profilePicture: imageURL
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (data) {
+                                if (data.access) {
+                                    setCookie("loginType", "Google");
+                                    window.location = "{{url('/')}}";
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        $("#password_required").css('display', 'block');
+                        $("#password_required").html("{{trans('lang.waiting_for_approval')}}"); 
+                    }
                 } else {
-                    $("#password_required").html("");
-                    $("#password_required").append("<p>User not found.</p>");
+                     // Redirect to social signup
+                    var firstName = user.displayName ? user.displayName.split(' ')[0] : '';
+                    var lastName = user.displayName ? (user.displayName.split(' ')[1] || '') : '';
+                    var uuid = user.uid;
+                    var email = user.email;
+                    var photoURL = user.photoURL;
+                    var phoneNumber = user.phoneNumber || '';
+                    var redirectUrl = "{{ url('socialsignup') }}?uuid="+uuid+"&firstName="+firstName+"&lastName="+lastName+"&email="+email+"&photoURL="+photoURL+"&phoneNumber="+phoneNumber;
+                    window.location.href = redirectUrl;
                 }
-            } else {
-                var phoneNumber = user.phoneNumber || '';
-                var firstName = user.displayName ? user.displayName.split(' ')[0] : '';
-                var lastName = '';
-                if(user.displayName.split(' ')[1] == "" || user.displayName.split(' ')[1] == null || user.displayName.split(' ')[1] == undefined){
-                    lastName = " ";
-                }
-                else{
-                    
-                    lastName = user.displayName.split(' ')[1];
-                }
-                var uuid = user.uid;
-                var email = user.email || '';
-                var photoURL = user.photoURL || '';
-                var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());
-                var redirectUrl = `{{ url('socialsignup') }}?uuid=${encodeURIComponent(uuid)}&phoneNumber=${encodeURIComponent(phoneNumber)}&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&email=${encodeURIComponent(email)}&photoURL=${encodeURIComponent(photoURL)}&createdAt=${createdAtman.toDate()}`;
-                window.location.href = redirectUrl;
-            }
+             });
         }).catch(function (error) {
             console.log(error);
-            $("#password_required").html("");
-            $("#password_required").append("<p>"+ error.message +"</p>");
         });
     }
     function setCookie(cname, cvalue, exdays) {

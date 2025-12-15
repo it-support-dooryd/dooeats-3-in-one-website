@@ -451,6 +451,10 @@
             if (snapshots.docs.length > 0) {
                 var html = buildAllStoresHTML(snapshots);
                 var all_stores = document.getElementById('all_stores');
+                if (!all_stores) {
+                    console.warn('Element with id "all_stores" not found in DOM');
+                    return;
+                }
                 all_stores.innerHTML = html;
                 start = snapshots.docs[snapshots.docs.length - 1];
                 endarray.push(snapshots.docs[0]);
@@ -488,6 +492,10 @@
             newProductRef.get().then(async function(newProductSnapshot) {
                 if (newProductSnapshot.docs.length > 0) {
                     new_arrival = document.getElementById('new_arrival');
+                    if (!new_arrival) {
+                        console.warn('Element with id "new_arrival" not found in DOM');
+                        return;
+                    }
                     new_arrival.innerHTML = '';
                     var newproducthtml = await buildHTMLNewProducts(newProductSnapshot);
                     new_arrival.innerHTML = newproducthtml;
@@ -584,6 +592,14 @@
     async function getItemCategories() {
         itemCategoriesref.get().then(async function(foodCategories) {
             top_categories = document.getElementById('top_categories');
+            
+            // Check if element exists before trying to set innerHTML
+            if (!top_categories) {
+                console.warn('Element with id "top_categories" not found in DOM');
+                jQuery("#data-table_processing").hide();
+                return;
+            }
+            
             top_categories.innerHTML = '';
             foodCategorieshtml = await buildHTMLItemCategory(foodCategories);
             top_categories.innerHTML = foodCategorieshtml;
@@ -596,6 +612,10 @@
             'show_in_homepage', '==', true).limit(5);
         home_cat_ref.get().then(async function(homeCategories) {
             home_categories = document.getElementById('home_categories');
+            if (!home_categories) {
+                console.warn('Element with id "home_categories" not found in DOM');
+                return;
+            }
             home_categories.innerHTML = '';
             var homeCategorieshtml = '';
             var alldata = [];
@@ -781,6 +801,10 @@
         if (popularStoresList.length > 0) {
             var popularStoresListnw = [];
             most_popular_item = document.getElementById('most_popular_item');
+            if (!most_popular_item) {
+                console.warn('Element with id "most_popular_item" not found in DOM');
+                return;
+            }
             most_popular_item.innerHTML = '';
             var from = 0;
             var total = 0;
@@ -819,6 +843,10 @@
         await popularRestauantRefnew.get().then(async function(popularRestauantSnapshot) {
             if (popularRestauantSnapshot.docs.length > 0) {
                 var most_popular_store = document.getElementById('most_popular_store');
+                if (!most_popular_store) {
+                    console.warn('Element with id "most_popular_store" not found in DOM');
+                    return;
+                }
                 most_popular_store.innerHTML = '';
                 var popularStorehtml = await buildHTMLPopularStore(popularRestauantSnapshot);
                 most_popular_store.innerHTML = popularStorehtml;
@@ -1313,6 +1341,10 @@
             couponsRef2.get().then(async function(couponListSnapshot) {
                 if (couponListSnapshot.docs.length > 0) {
                     offers_coupons = document.getElementById('offers_coupons');
+                    if (!offers_coupons) {
+                        console.warn('Element with id "offers_coupons" not found in DOM');
+                        return;
+                    }
                     offers_coupons.innerHTML = '';
                     var couponlistHTML = buildHTMLCouponList(couponListSnapshot);
                     offers_coupons.innerHTML = couponlistHTML;
