@@ -618,7 +618,10 @@
             script.async = true;
         }
         script.onload = function () {
-            navigator.geolocation.getCurrentPosition(GeolocationSuccessCallback,GeolocationErrorCallback);
+            // Geolocation call removed - location is now optional
+            // Set default coordinates without requesting location
+            setCookie('default_latitude', '23.022505', 365);
+            setCookie('default_longitude','72.571365', 365);
             if(typeof window['InitializeGodsEyeMap'] === 'function') { 
                 InitializeGodsEyeMap();
             }
@@ -626,20 +629,8 @@
         document.head.appendChild(script);
     }
 
-    const GeolocationSuccessCallback = (position) => {
-        if(position.coords != undefined){
-            default_latitude = position.coords.latitude
-            default_longitude = position.coords.longitude
-            setCookie('default_latitude', default_latitude, 365);
-            setCookie('default_longitude', default_longitude, 365);
-        }
-    };
-
-    const GeolocationErrorCallback = (error) => {
-        console.log('Error: You denied for your default Geolocation',error.message);
-        setCookie('default_latitude', '23.022505', 365);
-        setCookie('default_longitude','72.571365', 365);
-    };
+    // Geolocation callbacks removed - location is now optional
+    // Default coordinates are set without requesting location
 
     loadGoogleMapsScript();
 

@@ -9,9 +9,7 @@ class LangController extends Controller
   
   	public function __construct()
     {
-    	if(!isset($_COOKIE['address_name'])) {
-    		\Redirect::to('set-location')->send();
-		}
+        // Location check removed - location is now optional
     }
     
     public function change(Request $request)

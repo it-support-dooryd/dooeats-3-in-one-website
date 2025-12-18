@@ -503,189 +503,47 @@ use Illuminate\Support\Facades\Route;
         }
     }
     <?php } ?>
+    // getCurrentLocation function removed - location is now optional
+    // This function is kept for backward compatibility but does nothing
     async function getCurrentLocation(type = '') {
-        if (mapType == 'google') {
-            var geocoder = new google.maps.Geocoder();
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async function(position) {
-                        var pos = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-                        var geolocation = new google.maps.LatLng(position.coords.latitude, position.coords
-                            .longitude);
-                        var circle = new google.maps.Circle({
-                            center: geolocation,
-                            radius: position.coords.accuracy
-                        });
-                        var location = new google.maps.LatLng(pos['lat'], pos[
-                            'lng']); // turn coordinates into an object
-                        geocoder.geocode({
-                            'latLng': location
-                        }, async function(results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                if (results.length > 0) {
-                                    document.getElementById('user_locationnew').value = results[
-                                        0].formatted_address;
-                                    address_name1 = '';
-                                    $.each(results[0].address_components, async function(i,
-                                        address_component) {
-                                        address_name1 = '';
-                                        if (address_component.types[0] ==
-                                            "premise") {
-                                            if (address_name1 == '') {
-                                                address_name1 = address_component
-                                                    .long_name;
-                                            } else {
-                                                address_name2 = address_component
-                                                    .long_name;
-                                            }
-                                        } else if (address_component.types[0] ==
-                                            "postal_code") {
-                                            address_zip = address_component
-                                                .long_name;
-                                        } else if (address_component.types[0] ==
-                                            "locality") {
-                                            address_city = address_component
-                                                .long_name;
-                                        } else if (address_component.types[0] ==
-                                            "administrative_area_level_1") {
-                                            var address_state = address_component
-                                                .long_name;
-                                        } else if (address_component.types[0] ==
-                                            "country") {
-                                            var address_country = address_component
-                                                .long_name;
-                                        }
-                                    });
-                                    address_name = results[0].formatted_address;
-                                    address_lat = results[0].geometry.location.lat();
-                                    address_lng = results[0].geometry.location.lng();
-                                    setCookie('address_name1', address_name1, 365);
-                                    setCookie('address_name2', address_name2, 365);
-                                    setCookie('address_name', address_name, 365);
-                                    setCookie('address_lat', address_lat, 365);
-                                    setCookie('address_lng', address_lng, 365);
-                                    setCookie('address_zip', address_zip, 365);
-                                    setCookie('address_city', address_city, 365);
-                                    setCookie('address_state', address_state, 365);
-                                    setCookie('address_country', address_country, 365);
-                                    if (type == 'reload') {
-                                        window.location.reload(true);
-                                    }
-                                }
-                            }
-                        });
-                        try {
-                            if (autocomplete) {
-                                autocomplete.setBounds(circle.getBounds());
-                            }
-                        } catch (err) {}
-                    },
-                    function() {});
-            } else {}
-        } else {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                document.getElementById('user_locationnew').innerHTML =
-                    "Geolocation is not supported by this browser.";
-            }
-            if (type == 'reload') {
-                window.location.reload(true);
-            }
-        }
+        // Location functionality removed - app works without geolocation
+        // If location is needed, user can manually search/select
+        console.log('Location functionality has been disabled. Please use manual location selection.');
     }
 
-    function showPosition(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        fetchNearbyPlaces(latitude, longitude);
-    }
-
-    function fetchNearbyPlaces(lat, lon) {
-        const lat1 = lat.toFixed(4);
-        const lon1 = lon.toFixed(4);
-        const url = 'https://nominatim.openstreetmap.org/reverse?lat=' + lat1 + '&lon=' + lon1 +
-            '&format=json&addressdetails=1';
-        $.getJSON(url, function(data) {
-            if (data && data.address) {
-                const placeName = data.display_name;
-                $('#user_locationnew').val(placeName);
-                var address_name = placeName;
-                var address_lat = lat1;
-                var address_lng = lon1;
-                var address = placeName || {}; // Default to empty object if address is undefined
-                // Extract address components from the selected place
-                var address = data.address;
-                var address_city = address.city || address.town || address.village || '';
-                var address_state = address.state || '';
-                var address_country = address.country || '';
-                var address_zip = address.postcode || '';
-                var address_name1 = address.road || '';
-                var address_name2 = address.neighbourhood || address.suburb || '';
-                // Set the cookies for the selected address details
-                setCookie('address_name1', address_name1, 365);
-                setCookie('address_name2', address_name2, 365);
-                setCookie('address_name', address_name, 365);
-                setCookie('address_lat', address_lat, 365);
-                setCookie('address_lng', address_lng, 365);
-                setCookie('address_zip', address_zip, 365);
-                setCookie('address_city', address_city, 365);
-                setCookie('address_state', address_state, 365);
-                setCookie('address_country', address_country, 365);
-                if (type == 'reload') {
-                    window.location.reload(true);
-                }
-            } else {
-                console.error("Place not found.");
-            }
-        }).fail(function() {
-            console.error("Error fetching data from Nominatim.");
-        });
-    }
-
-    function showError(error) {
-        switch (error.code) {
-            case error.PERMISSION_DENIED:
-                document.getElementById('user_locationnew').innerHTML = "User denied the request for Geolocation.";
-                break;
-            case error.POSITION_UNAVAILABLE:
-                document.getElementById('user_locationnew').innerHTML = "Location information is unavailable.";
-                break;
-            case error.TIMEOUT:
-                document.getElementById('user_locationnew').innerHTML = "The request to get user location timed out.";
-                break;
-            case error.UNKNOWN_ERROR:
-                document.getElementById('user_locationnew').innerHTML = "An unknown error occurred.";
-                break;
-        }
-    }
+    // showPosition and fetchNearbyPlaces functions removed - geolocation disabled
+    // showError function removed - no longer needed
 
 
     
-    // Set default location to Calabar, Cross River State if no location is set
+    // Set default location if no location is set (non-blocking)
     // This must run AFTER setCookie is defined
-    // If no location is set, prompt user to select one
+    // Location is now optional - app works without it
     if (!address_name || address_name === '' || address_name === 'null') {
-         jQuery(document).ready(function() {
-             var verify_location = "{{ trans('lang.please_select_location') }}";
-             
-             // Trigger modal
-             $('#locationModal').modal('show');
-             
-             // Optional: Show a small notification using Swal or similar if available, or just rely on the modal opening
-             if (typeof Swal !== 'undefined') {
-                /* Swal.fire({
-                     text: verify_location,
-                     icon: 'info',
-                     toast: true,
-                     position: 'top-end',
-                     showConfirmButton: false,
-                     timer: 3000
-                 }); */
-             }
-        });
+        // Set default location from config instead of blocking
+        var defaultAddress = {
+            name: '{{ config("app.default_address.name") }}',
+            lat: {{ config("app.default_address.lat") }},
+            lng: {{ config("app.default_address.lng") }},
+            city: '{{ config("app.default_address.city") }}',
+            state: '{{ config("app.default_address.state") }}',
+            country: '{{ config("app.default_address.country") }}'
+        };
+        
+        setCookie('address_name', defaultAddress.name, 365);
+        setCookie('address_lat', defaultAddress.lat, 365);
+        setCookie('address_lng', defaultAddress.lng, 365);
+        setCookie('address_city', defaultAddress.city, 365);
+        setCookie('address_state', defaultAddress.state, 365);
+        setCookie('address_country', defaultAddress.country, 365);
+        
+        // Update address_name variable for current session
+        address_name = defaultAddress.name;
+        address_lat = defaultAddress.lat;
+        address_lng = defaultAddress.lng;
+        address_city = defaultAddress.city;
+        address_state = defaultAddress.state;
+        address_country = defaultAddress.country;
     }
 
 

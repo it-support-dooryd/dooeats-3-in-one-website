@@ -61,65 +61,27 @@
 
   /**
    * Handle current location button click
+   * Geolocation functionality has been disabled - location is now optional
    */
   function handleCurrentLocationClick() {
     hideError();
-    showLoading(true);
-
-    if (!navigator.geolocation) {
-      showError(window.locationStrings?.notSupported || 'Geolocation is not supported by your browser');
-      showLoading(false);
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      handleGeolocationSuccess,
-      handleGeolocationError,
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
-      }
-    );
+    // Geolocation is disabled - show message to user
+    showError('Location access has been disabled. Please search for your location manually.');
+    showLoading(false);
   }
 
   /**
-   * Handle geolocation success
+   * Handle geolocation success - DISABLED
    */
   function handleGeolocationSuccess(position) {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-
-    // Use existing getCurrentLocation function
-    if (typeof getCurrentLocation === 'function') {
-      getCurrentLocation('reload');
-    } else {
-      // Fallback: manually set location
-      setLocationCoordinates(lat, lng);
-    }
+    // Function disabled - geolocation removed
   }
 
   /**
-   * Handle geolocation error
+   * Handle geolocation error - DISABLED
    */
   function handleGeolocationError(error) {
-    showLoading(false);
-
-    let errorMsg = window.locationStrings?.fetchError || 'Unable to fetch your location';
-
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        errorMsg = window.locationStrings?.permissionDenied || 'Location permission denied';
-        break;
-      case error.POSITION_UNAVAILABLE:
-        errorMsg = 'Location information is unavailable';
-        break;
-      case error.TIMEOUT:
-        errorMsg = 'Location request timed out';
-        break;
-    }
-
-    showError(errorMsg);
+    // Function disabled - geolocation removed
   }
 
   /**

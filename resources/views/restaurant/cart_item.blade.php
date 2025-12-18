@@ -173,7 +173,6 @@ if (@$cart['coupon_code']) {
     <?php $total_item_price = $total_price; ?>
 
 </div>
-<?php } ?>
 
 <?php if($item_count > 0){ ?>
 

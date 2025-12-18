@@ -1,0 +1,12 @@
+[15-Dec-2025 06:07:00 UTC] PHP Warning:  require(/home/doorvylq/app.dooeats.com/restaurant/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/doorvylq/app.dooeats.com/restaurant/public/index.php on line 39
+[15-Dec-2025 06:07:00 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/doorvylq/app.dooeats.com/restaurant/public/../vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/doorvylq/app.dooeats.com/restaurant/public/index.php:39
+Stack trace:
+#0 /home/doorvylq/app.dooeats.com/restaurant/server.php(21): require_once()
+#1 {main}
+  thrown in /home/doorvylq/app.dooeats.com/restaurant/public/index.php on line 39
+[15-Dec-2025 06:07:14 UTC] PHP Warning:  require(/home/doorvylq/app.dooeats.com/restaurant/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/doorvylq/app.dooeats.com/restaurant/public/index.php on line 39
+[15-Dec-2025 06:07:14 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/doorvylq/app.dooeats.com/restaurant/public/../vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/doorvylq/app.dooeats.com/restaurant/public/index.php:39
+Stack trace:
+#0 /home/doorvylq/app.dooeats.com/restaurant/server.php(21): require_once()
+#1 {main}
+  thrown in /home/doorvylq/app.dooeats.com/restaurant/public/index.php on line 39
