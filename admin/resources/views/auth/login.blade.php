@@ -25,8 +25,8 @@
                 
                 <!-- Header -->
                 <div class="auth-header" style="text-align: center;">
-                    <h1 class="auth-title">{{trans('Welcome Back')}}</h1>
-                    <p class="auth-subtitle">{{trans('lang.sign_in_to_continue')}}</p>
+                    <h1 class="auth-title">{{trans('Welcome to Dooeats')}}</h1>
+                    <p class="auth-subtitle">{{trans('Admin Panel')}}</p>
                 </div>
 
                 <!-- Login Form -->
@@ -69,9 +69,10 @@
 
                     <!-- Remember Me & Forgot Password -->
                     <div class="remember-me-wrapper">
-                        <label class="toggle-label">
-                            <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <span>{{ __('Remember Me') }}</span>
+                        <label class="toggle-switch-label">
+                            <input type="checkbox" name="remember" id="remember" class="toggle-switch-input" {{ old('remember') ? 'checked' : '' }}>
+                            <span class="toggle-switch-slider"></span>
+                            <span class="toggle-switch-text">{{ __('Remember Me') }}</span>
                         </label>
                         <!-- Check if route exists, otherwise just # -->
                          @if (Route::has('password.request'))
@@ -89,7 +90,7 @@
                 <!-- Footer -->
                 <div class="auth-footer">
                     <p class="auth-terms">
-                       For use by adults only (18 years of age and older). By logging in, you agree to our <a href="#">Terms of Service</a>.
+                       For use by Dooeats Staff Only, By logging in, you agree to our <a href="#">Terms of Service</a>.
                     </p>
                 </div>
             </div>
@@ -110,6 +111,15 @@
                 $(this).html('<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />');
             } else {
                 $(this).html('<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />');
+            }
+        });
+
+        // TOGGLE SWITCH FUNCTIONALITY
+        $('.toggle-switch-label').click(function(e) {
+            // Prevent double toggle if clicking directly on checkbox
+            if (e.target.type !== 'checkbox') {
+                const checkbox = $(this).find('.toggle-switch-input');
+                checkbox.prop('checked', !checkbox.prop('checked'));
             }
         });
 
