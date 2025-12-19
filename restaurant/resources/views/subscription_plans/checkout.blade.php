@@ -45,7 +45,23 @@
                                 <div class="pay-method-section pt-4">
                                     <h6 class="text-dark-2 h6 mb-3 pb-3">{{ trans('lang.pay_via_online') }}</h6>
                                     <div class="row">
-
+                                        <div class="col-md-4" id="paystack_box">
+                                            <div class="pay-method-box d-flex align-items-center">
+                                                <div class="pay-method-icon">
+                                                    <img src="{{ asset('images/paystack_ic.png') }}">
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="radio" id="paystack" name="payment_method" value="paystack" checked>
+                                                    {{ trans('lang.pay_stack') }} <label class="control-label mb-0" for="paystack"></label>
+                                                </div>
+                                                <div class="input-box">
+                                                    <input type="hidden" id="paystack_isEnabled">
+                                                    <input type="hidden" id="paystack_isSandbox">
+                                                    <input type="hidden" id="paystack_public_key">
+                                                    <input type="hidden" id="paystack_secret_key">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

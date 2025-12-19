@@ -55,9 +55,13 @@
                                 </div>
                             </div>
                             <div class="siddhi-card overflow-hidden checkout-payment-options">
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="cod_box">
-                                    <input type="radio" name="payment_method" id="cod" value="cod" class="custom-control-input" checked>
-                                    <label class="custom-control-label" for="cod">{{ trans('lang.cash_on_delivery') }}</label>
+                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="paystack_box">
+                                    <input type="radio" name="payment_method" id="paystack" value="paystack" class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="paystack">{{ trans('lang.pay_stack') }}</label>
+                                    <input type="hidden" id="paystack_isEnabled">
+                                    <input type="hidden" id="paystack_isSandbox">
+                                    <input type="hidden" id="paystack_public_key">
+                                    <input type="hidden" id="paystack_secret_key">
                                 </div>
 
 
