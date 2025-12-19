@@ -570,7 +570,7 @@
                     image = '{{ asset('images/marcado_pago.png') }}';
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Wallet" || val.payment_method == "wallet") {
-                    image = '{{ asset('images/foodie_wallet.png') }}';
+                    image = '{{ asset('images/dooeats_wallet.png') }}';
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Paytm" || val.payment_method == "paytm") {
                     image = '{{ asset('images/paytm.png') }}';

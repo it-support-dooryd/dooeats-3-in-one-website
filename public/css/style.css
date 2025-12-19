@@ -4488,7 +4488,7 @@ a.restaurant_direction {
 
 .category-listing-page .product-list .list-card .list-card-image .member-plan {}
 
-.foodies-detail-coupon .coupon-code label {
+.dooeats-detail-coupon .coupon-code label {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
@@ -4499,7 +4499,7 @@ a.restaurant_direction {
     margin-bottom: 15px;
 }
 
-.foodies-detail-coupon .copupon-list ul {
+.dooeats-detail-coupon .copupon-list ul {
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #D6E3EC;
@@ -4507,7 +4507,7 @@ a.restaurant_direction {
     margin-bottom: 30px !important;
 }
 
-.foodies-detail-coupon .copupon-list ul li {
+.dooeats-detail-coupon .copupon-list ul li {
     list-style-type: none;
     margin-right: 10px;
     display: inline-block;
@@ -4519,7 +4519,7 @@ a.restaurant_direction {
     cursor: pointer;
 }
 
-.foodies-detail-coupon .copupon-list ul li span {
+.dooeats-detail-coupon .copupon-list ul li span {
     font-weight: 600;
     color: #6d6d77;
     font-size: 13px;
@@ -4529,18 +4529,18 @@ a.restaurant_direction {
     margin-bottom: 0;
 }
 
-.foodies-detail-coupon .copupon-list ul li span.per-off {
+.dooeats-detail-coupon .copupon-list ul li span.per-off {
     font-size: 17px;
     margin-bottom: 10px;
     color: #676771;
 }
 
-.foodies-detail-coupon .copupon-list ul li:hover {
+.dooeats-detail-coupon .copupon-list ul li:hover {
     background: #f8f7fc;
     color: #8b8a93;
 }
 
-.foodies-detail-coupon .copupon-list ul li span.per-off:before {
+.dooeats-detail-coupon .copupon-list ul li span.per-off:before {
     content: "";
     background: url(/img/discount-icon.png) no-repeat center center;
     width: 22px;

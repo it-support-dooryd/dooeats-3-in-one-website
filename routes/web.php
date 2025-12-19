@@ -44,7 +44,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 
-Route::get('set-location', [App\Http\Controllers\HomeController::class, 'setLocation'])->name('set-location');
+
 
 
 

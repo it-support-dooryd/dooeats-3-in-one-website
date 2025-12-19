@@ -183,7 +183,7 @@
                     image = '{{ asset('images/marcado_pago.png') }}';
                     payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
                 } else if (data.payment_type.toString().toLowerCase() == "wallet") {
-                    image = '{{ asset('images/foodie_wallet.png') }}';
+                    image = '{{ asset('images/dooeats_wallet.png') }}';
                     payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
                 } else if (data.payment_type.toString().toLowerCase() == "paytm") {
                     image = '{{ asset('images/paytm.png') }}';

@@ -393,7 +393,7 @@
             var payment_method = '';
             if (val.payment_method) {
                  if (val.payment_method == "Wallet" || val.payment_method=="wallet") {
-                    image = '{{asset("images/foodie_wallet.png")}}';
+                    image = '{{asset("images/dooeats_wallet.png")}}';
                     payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
                  }else {
                     payment_method = val.payment_method;

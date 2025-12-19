@@ -20,9 +20,7 @@ class GiftCardController extends Controller
      */
     public function __construct()
     {
-        if (!isset($_COOKIE['address_name'])) {
-            \Redirect::to('set-location')->send();
-        }
+
         $this->middleware('auth');
     }
     /**
@@ -397,7 +395,7 @@ class GiftCardController extends Controller
                 $address_state = $input['address_state'];
                 $address_country = $input['address_country'];
                 $address_zipcode = $input['address_zipcode'];
-                $description = env('APP_NAME', 'Foodie') . ' Order';
+                $description = env('APP_NAME', 'Dooeats') . ' Order';
                 try {
                     $charge = $stripe->paymentIntents->create([
                         'amount' => ($cart['gift_cart_order']['total_pay'] * 1000),

@@ -59,97 +59,16 @@
                                     <input type="radio" name="payment_method" id="cod" value="cod" class="custom-control-input" checked>
                                     <label class="custom-control-label" for="cod">{{ trans('lang.cash_on_delivery') }}</label>
                                 </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="razorpay_box">
-                                    <input type="radio" name="payment_method" id="razorpay" value="razorpay" class="custom-control-input">
-                                    <label class="custom-control-label" for="razorpay">{{ trans('lang.razorpay') }}</label>
-                                    <input type="hidden" id="isEnabled">
-                                    <input type="hidden" id="isSandboxEnabled">
-                                    <input type="hidden" id="razorpayKey">
-                                    <input type="hidden" id="razorpaySecret">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="stripe_box">
-                                    <input type="radio" name="payment_method" id="stripe" value="stripe" class="custom-control-input">
-                                    <label class="custom-control-label" for="stripe">{{ trans('lang.stripe') }}</label>
-                                    <input type="hidden" id="isStripeSandboxEnabled">
-                                    <input type="hidden" id="stripeKey">
-                                    <input type="hidden" id="stripeSecret">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="paypal_box">
-                                    <input type="radio" name="payment_method" id="paypal" value="paypal" class="custom-control-input">
-                                    <label class="custom-control-label" for="paypal">{{ trans('lang.pay_pal') }}</label>
-                                    <input type="hidden" id="ispaypalSandboxEnabled">
-                                    <input type="hidden" id="paypalKey">
-                                    <input type="hidden" id="paypalSecret">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="payfast_box">
-                                    <input type="radio" name="payment_method" id="payfast" value="payfast" class="custom-control-input">
-                                    <label class="custom-control-label" for="payfast">{{ trans('lang.pay_fast') }}</label>
-                                    <input type="hidden" id="payfast_isEnabled">
-                                    <input type="hidden" id="payfast_isSandbox">
-                                    <input type="hidden" id="payfast_merchant_key">
-                                    <input type="hidden" id="payfast_merchant_id">
-                                    <input type="hidden" id="payfast_notify_url">
-                                    <input type="hidden" id="payfast_return_url">
-                                    <input type="hidden" id="payfast_cancel_url">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="paystack_box">
-                                    <input type="radio" name="payment_method" id="paystack" value="paystack" class="custom-control-input">
-                                    <label class="custom-control-label" for="paystack">{{ trans('lang.pay_stack') }}</label>
-                                    <input type="hidden" id="paystack_isEnabled">
-                                    <input type="hidden" id="paystack_isSandbox">
-                                    <input type="hidden" id="paystack_public_key">
-                                    <input type="hidden" id="paystack_secret_key">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="flutterWave_box">
-                                    <input type="radio" name="payment_method" id="flutterwave" value="flutterwave" class="custom-control-input">
-                                    <label class="custom-control-label" for="flutterwave">{{ trans('lang.flutter_wave') }}</label>
-                                    <input type="hidden" id="flutterWave_isEnabled">
-                                    <input type="hidden" id="flutterWave_isSandbox">
-                                    <input type="hidden" id="flutterWave_encryption_key">
-                                    <input type="hidden" id="flutterWave_public_key">
-                                    <input type="hidden" id="flutterWave_secret_key">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="mercadopago_box">
-                                    <input type="radio" name="payment_method" id="mercadopago" value="mercadopago" class="custom-control-input">
-                                    <label class="custom-control-label" for="mercadopago">{{ trans('lang.mercadopago') }}</label>
-                                    <input type="hidden" id="mercadopago_isEnabled">
-                                    <input type="hidden" id="mercadopago_isSandbox">
-                                    <input type="hidden" id="mercadopago_public_key">
-                                    <input type="hidden" id="mercadopago_access_token">
-                                    <input type="hidden" id="title">
-                                    <input type="hidden" id="quantity">
-                                    <input type="hidden" id="unit_price">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="xendit_box">
-                                    <input type="radio" name="payment_method" id="xendit" value="xendit" class="custom-control-input">
-                                    <label class="custom-control-label" for="xendit">{{ trans('lang.xendit') }}</label>
-                                    <input type="hidden" id="xendit_enable">
-                                    <input type="hidden" id="xendit_apiKey">
-                                    <input type="hidden" id="xendit_image">
-                                    <input type="hidden" id="xendit_isSandbox">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="midtrans_box">
-                                    <input type="radio" name="payment_method" id="midtrans" value="midtrans" class="custom-control-input">
-                                    <label class="custom-control-label" for="midtrans">{{ trans('lang.midtrans') }}</label>
-                                    <input type="hidden" id="midtrans_enable">
-                                    <input type="hidden" id="midtrans_serverKey">
-                                    <input type="hidden" id="midtrans_image">
-                                    <input type="hidden" id="midtrans_isSandbox">
-                                </div>
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="orangepay_box">
-                                    <input type="radio" name="payment_method" id="orangepay" value="orangepay" class="custom-control-input">
-                                    <label class="custom-control-label" for="orangepay">{{ trans('lang.orangepay') }}</label>
-                                    <input type="hidden" id="orangepay_auth">
-                                    <input type="hidden" id="orangepay_clientId">
-                                    <input type="hidden" id="orangepay_clientSecret">
-                                    <input type="hidden" id="orangepay_image">
-                                    <input type="hidden" id="orangepay_isSandbox">
-                                    <input type="hidden" id="orangepay_merchantKey">
-                                    <input type="hidden" id="orangepay_cancelUrl">
-                                    <input type="hidden" id="orangepay_notifyUrl">
-                                    <input type="hidden" id="orangepay_returnUrl">
-                                    <input type="hidden" id="orangepay_enable">
-                                </div>
+
+
+
+
+
+
+
+
+
+
                                 <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="wallet_box">
                                     <input type="radio" name="payment_method" disabled id="wallet" value="wallet" class="custom-control-input">
                                     <label class="custom-control-label" for="wallet">Wallet ( You have <span id="wallet_amount"></span> )</label>

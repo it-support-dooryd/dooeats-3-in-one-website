@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="container position-relative">
-        <div class="foodies-detail-coupon">
+        <div class="dooeats-detail-coupon">
             <div class="offers-coupons mb-4" id="offers_coupons"></div>
         </div>
         <div class="ecom-vendor-product-section">

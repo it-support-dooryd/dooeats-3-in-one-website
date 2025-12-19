@@ -121,7 +121,7 @@ return [
     'login_error_deactivate' => "Sorry your account is inactive and may not login.",
     'login_error_notfound' => "Sorry your account is not found in customers.",
     'Processing' => 'Processing...',
-    'foodie_online_food_os' => 'Foodie - Online Food Ordering System',
+    'foodie_online_food_os' => 'Dooeats - Online Food Ordering System',
     'login' => "Login",
     'sign_in_to_continue' => "Sign in",
     'log_in' => "Log In",
@@ -555,14 +555,8 @@ return [
     'no_recent_locations' => 'No recent locations found',
     
     // Login / Signup Redesign
-    'welcome_back' => 'Welcome Back',
-    'customer_login' => 'Customer Login',
-    'restaurant_login' => 'Restaurant Login',
-    'remember_me' => 'Remember Me',
-    'or_continue_with' => 'or continue with',
-    'dont_have_account' => "Don't have an account?",
-    'login_with_phone' => 'Login with Phone',
-    'back_to_login' => 'Back to Login',
+    'customer_login_title' => 'Customer Login',
+    'restaurant_login_title' => 'Restaurant Login',
     'not_a_vendor' => 'This account is not registered as a vendor.',
     'account_waiting_approval' => 'Your account is waiting for admin approval.',
     'user_not_found' => 'User not found.',
@@ -570,6 +564,7 @@ return [
     'enter_otp' => 'Please enter the OTP.',
     'otp_invalid' => 'Invalid OTP. Please try again.',
     'terms_accepted' => 'I accept the terms and conditions',
-    'please_select_location' => 'Please select your location to continue.', // Added key
+    'please_select_location' => 'Please select your location to continue.',
 
 ];
+

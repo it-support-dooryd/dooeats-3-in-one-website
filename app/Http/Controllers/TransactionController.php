@@ -380,7 +380,7 @@ class TransactionController extends Controller
                 $currency = @$user_wallet['data']['currency'] ?: 'usd';
                 $stripeSecret = $user_wallet['data']['stripeSecret'];
                 $stripe = new \Stripe\StripeClient($stripeSecret);
-                $description = env('APP_NAME', 'Foodie') . ' Order';
+                $description = env('APP_NAME', 'Dooeats') . ' Order';
                 try {
                     $charge = $stripe->paymentIntents->create([
                         'amount' => ($user_wallet['data']['amount'] * 1000),
