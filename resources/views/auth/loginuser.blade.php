@@ -3,7 +3,7 @@
 $filepath = public_path('countriesdata.json');
 $countries = file_get_contents($filepath);
 $countries = json_decode($countries);
-$countries = (array)$countries;
+$countries = (array) $countries;
 $newcountries = array();
 $newcountriesjs = array();
 foreach ($countries as $keycountry => $valuecountry) {
@@ -36,19 +36,23 @@ foreach ($countries as $keycountry => $valuecountry) {
             <form action="#" onsubmit="return loginClick()" id="login-box">
                 <div class="form-group-auth">
                     <label class="form-label-auth">{{trans('lang.user_email')}}</label>
-                    <input type="email" class="form-control-auth" id="email" name="email" placeholder="{{trans('lang.user_email_help_2')}}">
-                    <div class="error" id="email_required" style="display:none; color:red; font-size:12px; margin-top:5px;"></div>
+                    <input type="email" class="form-control-auth" id="email" name="email"
+                        placeholder="{{trans('lang.user_email_help_2')}}">
+                    <div class="error" id="email_required"
+                        style="display:none; color:red; font-size:12px; margin-top:5px;"></div>
                 </div>
 
                 <div class="form-group-auth">
                     <label class="form-label-auth">{{trans('lang.password')}}</label>
                     <div class="password-input-group">
-                        <input type="password" class="form-control-auth" id="password" name="password" placeholder="{{trans('lang.user_password_help_2')}}">
+                        <input type="password" class="form-control-auth" id="password" name="password"
+                            placeholder="{{trans('lang.user_password_help_2')}}">
                         <div class="password-toggle-icon" onclick="togglePassword()">
                             <i class="fa fa-eye"></i>
                         </div>
                     </div>
-                    <div class="error" id="password_required" style="display:none; color:red; font-size:12px; margin-top:5px;"></div>
+                    <div class="error" id="password_required"
+                        style="display:none; color:red; font-size:12px; margin-top:5px;"></div>
                 </div>
 
                 <div class="remember-me-group">
@@ -57,7 +61,8 @@ foreach ($countries as $keycountry => $valuecountry) {
                         <span class="slider-auth"></span>
                         <span>{{trans('lang.remember_me')}}</span>
                     </label>
-                    <a href="{{url('forgot-password')}}" class="forgot-password-link">{{trans('lang.forgot_password')}}?</a>
+                    <a href="{{url('forgot-password')}}"
+                        class="forgot-password-link">{{trans('lang.forgot_password')}}?</a>
                 </div>
 
                 <button type="submit" class="btn-auth-primary" id="login_btn">{{trans('lang.log_in')}}</button>
@@ -73,7 +78,16 @@ foreach ($countries as $keycountry => $valuecountry) {
 
                 <div class="social-login-group">
                     <div class="social-btn" onclick="googleAuth()" title="Google">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px">
+                            <path fill="#FFC107"
+                                d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                            <path fill="#FF3D00"
+                                d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                            <path fill="#4CAF50"
+                                d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                            <path fill="#1976D2"
+                                d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                        </svg>
                     </div>
                     <!-- Apple would go here if configured -->
                     <div class="social-btn" onclick="loginWithPhoneClick()" title="Phone">
@@ -92,33 +106,40 @@ foreach ($countries as $keycountry => $valuecountry) {
                 <div class="form-group-auth" id="phone-box">
                     <label class="form-label-auth">{{trans('lang.user_phone')}}</label>
                     <div style="display:flex;">
-                        <select name="country" id="country_selector" class="form-control-auth" style="width: 35%; margin-right: 5px;">
+                        <select name="country" id="country_selector" class="form-control-auth"
+                            style="width: 35%; margin-right: 5px;">
                             <?php foreach ($newcountries as $keycy => $valuecy) { ?>
-                            <?php $selected = ""; ?>
-                            <option <?php echo $selected; ?> code="<?php echo $valuecy->code; ?>" value="<?php echo $keycy; ?>">+<?php echo $valuecy->phoneCode; ?></option>
+                            <?php    $selected = ""; ?>
+                            <option <?php    echo $selected; ?> code="<?php    echo $valuecy->code; ?>"
+                                value="<?php    echo $keycy; ?>">+<?php    echo $valuecy->phoneCode; ?></option>
                             <?php } ?>
                         </select>
-                        <input placeholder="{{trans('lang.user_phone')}}" id="phone" type="number" class="form-control-auth" name="phone" required>
+                        <input placeholder="{{trans('lang.user_phone')}}" id="phone" type="number"
+                            class="form-control-auth" name="phone" required>
                     </div>
                     <div class="error" id="password_required_new1" style="display:none; color:red;"></div>
                 </div>
 
                 <div class="form-group-auth" id="otp-box" style="display:none;">
                     <label class="form-label-auth">{{trans('lang.otp')}}</label>
-                    <input class="form-control-auth" placeholder="{{trans('lang.otp')}}" id="verificationcode" type="text" name="otp">
+                    <input class="form-control-auth" placeholder="{{trans('lang.otp')}}" id="verificationcode"
+                        type="text" name="otp">
                 </div>
 
                 <div id="recaptcha-container" style="display:none;"></div>
 
-                <button type="button" style="display:none;" onclick="applicationVerifier()" id="verify_btn" class="btn-auth-primary">{{trans('lang.otp_verify')}}</button>
-                <button type="button" style="display:none;" onclick="sendOTP()" id="sendotp_btn" class="btn-auth-primary">{{trans('lang.otp_send')}}</button>
+                <button type="button" style="display:none;" onclick="applicationVerifier()" id="verify_btn"
+                    class="btn-auth-primary">{{trans('lang.otp_verify')}}</button>
+                <button type="button" style="display:none;" onclick="sendOTP()" id="sendotp_btn"
+                    class="btn-auth-primary">{{trans('lang.otp_send')}}</button>
 
                 <div class="text-center mt-3">
                     <a href="javascript:void(0)" onclick="loginBackClick()" class="forgot-password-link">
                         <i class="fa fa-arrow-left"></i> {{trans('lang.back_to_login')}}
                     </a>
                 </div>
-                <div class="error" id="password_required_new" style="color:red; text-align:center; margin-top:10px;"></div>
+                <div class="error" id="password_required_new" style="color:red; text-align:center; margin-top:10px;">
+                </div>
             </form>
 
         </div>
@@ -157,9 +178,9 @@ foreach ($countries as $keycountry => $valuecountry) {
     } catch (error) {
         console.error("Firebase initialization failed:", error);
     }
-    
+
     // Remember Me Logic
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (localStorage.getItem("remember_me") === "true") {
             $("#email").val(localStorage.getItem("email"));
             $("#password").val(localStorage.getItem("password"));
@@ -198,7 +219,7 @@ foreach ($countries as $keycountry => $valuecountry) {
             jQuery("#password_required").html("{{trans('lang.user_password_help_2')}}");
             return false;
         }
-        
+
         // Remember Me Save
         if ($("#remember_me").is(":checked")) {
             localStorage.setItem("remember_me", "true");
@@ -247,15 +268,15 @@ foreach ($countries as $keycountry => $valuecountry) {
                         });
                     }
                 } else {
-                     $("#password_required").css('display', 'block');
+                    $("#password_required").css('display', 'block');
                     $("#password_required").html("{{trans('lang.waiting_for_approval')}}");
                 }
             })
         })
-        .catch(function (error) {
-            $("#password_required").css('display', 'block');
-            $("#password_required").html("{{trans('lang.invalid_password_email')}}");
-        });
+            .catch(function (error) {
+                $("#password_required").css('display', 'block');
+                $("#password_required").html("{{trans('lang.invalid_password_email')}}");
+            });
         return false;
     }
 
@@ -267,7 +288,7 @@ foreach ($countries as $keycountry => $valuecountry) {
         jQuery("#sendotp_btn").show();
         window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
             'size': 'invisible',
-            'callback': (response) => {}
+            'callback': (response) => { }
         });
     }
 
@@ -275,13 +296,13 @@ foreach ($countries as $keycountry => $valuecountry) {
         jQuery("#login-box").show();
         jQuery("#login-with-phone-box").hide();
         jQuery("#otp-box").hide();
-        jQuery("#sendotp_btn").hide(); 
+        jQuery("#sendotp_btn").hide();
         jQuery("#verify_btn").hide();
     }
 
     function sendOTP() {
         $("#password_required_new1").hide();
-        if(jQuery("#phone").val() == "") {
+        if (jQuery("#phone").val() == "") {
             $("#password_required_new1").show();
             jQuery("#password_required_new1").html("{{trans('lang.enter_valid_phone')}}");
         } else if (jQuery("#phone").val() && jQuery("#country_selector").val()) {
@@ -300,12 +321,12 @@ foreach ($countries as $keycountry => $valuecountry) {
                                 jQuery("#otp-box").show();
                                 jQuery("#verify_btn").show();
                                 jQuery("#sendotp_btn").hide();
-                                $("#password_required_new1").css('display','none');
+                                $("#password_required_new1").css('display', 'none');
                             }
                         });
                 } else {
                     jQuery("#password_required_new1").show();
-                     jQuery("#password_required_new1").html("{{trans('lang.user_not_found')}}");
+                    jQuery("#password_required_new1").html("{{trans('lang.user_not_found')}}");
                 }
             });
         }
@@ -394,11 +415,11 @@ foreach ($countries as $keycountry => $valuecountry) {
         firebase.auth().signInWithPopup(provider).then(function (result) {
             var user = result.user;
             var userEmail = result.user.email;
-             database.collection("users").where("email", "==", userEmail).where('active', '==', true).get().then(async function (snapshots) {
+            database.collection("users").where("email", "==", userEmail).where('active', '==', true).get().then(async function (snapshots) {
                 if (snapshots.docs.length) {
                     var userData = snapshots.docs[0].data();
                     if (userData.role == "customer") {
-                         var uid = result.user.uid;
+                        var uid = result.user.uid;
                         var user = userData.id;
                         var firstName = userData.firstName;
                         var lastName = userData.lastName;
@@ -428,20 +449,20 @@ foreach ($countries as $keycountry => $valuecountry) {
                         });
                     } else {
                         $("#password_required").css('display', 'block');
-                        $("#password_required").html("{{trans('lang.waiting_for_approval')}}"); 
+                        $("#password_required").html("{{trans('lang.waiting_for_approval')}}");
                     }
                 } else {
-                     // Redirect to social signup
+                    // Redirect to social signup
                     var firstName = user.displayName ? user.displayName.split(' ')[0] : '';
                     var lastName = user.displayName ? (user.displayName.split(' ')[1] || '') : '';
                     var uuid = user.uid;
                     var email = user.email;
                     var photoURL = user.photoURL;
                     var phoneNumber = user.phoneNumber || '';
-                    var redirectUrl = "{{ url('socialsignup') }}?uuid="+uuid+"&firstName="+firstName+"&lastName="+lastName+"&email="+email+"&photoURL="+photoURL+"&phoneNumber="+phoneNumber;
+                    var redirectUrl = "{{ url('socialsignup') }}?uuid=" + uuid + "&firstName=" + firstName + "&lastName=" + lastName + "&email=" + email + "&photoURL=" + photoURL + "&phoneNumber=" + phoneNumber;
                     window.location.href = redirectUrl;
                 }
-             });
+            });
         }).catch(function (error) {
             console.log(error);
         });

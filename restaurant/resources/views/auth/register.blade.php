@@ -51,7 +51,7 @@
                     <button class="auth-tab active" data-tab="restaurant">
                         Restaurant Signup
                     </button>
-                    <a href="{{ url('signup') }}" class="auth-tab" data-tab="customer">
+                    <a href="http://127.0.0.1:8000/signup" class="auth-tab" data-tab="customer">
                         Customer Signup
                     </a>
                 </div>

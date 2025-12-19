@@ -263,6 +263,9 @@
     }
   }
 
+  // Expose globally
+  window.saveToRecentLocations = saveToRecentLocations;
+
   /**
    * Show loading state on current location button
    */

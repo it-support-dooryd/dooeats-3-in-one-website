@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title id="app_name"><?php echo @$_COOKIE['meta_title']; ?></title>
+    <title id="app_name">Admin Panel</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('images/logo-light-icon.png') }}">
     
     <!-- Fonts -->
@@ -115,10 +115,10 @@
 
         $(document).ready(function () {
              // Cookie logic for title/favicon if needed
-             var app_name = "<?php echo @$_COOKIE['meta_title']; ?>";
+/*             var app_name = "<?php echo @$_COOKIE['meta_title']; ?>";
              if(app_name){
                  document.title = app_name;
-             }
+             }*/
         });
     </script>
 </body>

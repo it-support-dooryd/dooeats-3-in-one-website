@@ -1,0 +1,148 @@
+@include('layouts.app')
+@include('layouts.header')
+<div class="siddhi-home-page">
+    <div class="bg-primary px-3 d-none mobile-filter pb-3 section-content">
+        <div class="row align-items-center">
+            <div class="input-group rounded shadow-sm overflow-hidden col-md-9 col-sm-9">
+                <div class="input-group-prepend">
+                    <button class="border-0 btn btn-outline-secondary text-dark bg-white btn-block">
+                        <i class="feather-search"></i>
+                    </button>
+                </div>
+                <input type="text" class="shadow-none border-0 form-control" placeholder="Search for vendors or dishes">
+            </div>
+            <div class="text-white col-md-3 col-sm-3">
+                <div class="title d-flex align-items-center">
+                    <a class="text-white font-weight-bold ml-auto" href="{{ url('search') }}">{{ trans('lang.filter') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ecommerce-banner multivendor-banner section-content">
+        <div class="ecommerce-inner">
+            <div class="" id="top_banner"></div>
+        </div>
+    </div>
+    <div class="ecommerce-content multi-vendore-content section-content">
+        <section class="restaurant_stories">
+            <div class="container swiper-stories">
+                <div id="stories" class="storiesWrapper swiper-wrapper"></div>
+            </div>
+        </section>
+        <section class="top-categories top-categories-section">
+            <div class="container">
+                <div class="title d-flex align-items-center">
+                    <h5>{{ trans('lang.top_categories') }}</h5>
+                    <span class="see-all ml-auto">
+                        <a href="{{ url('categories') }}">{{ trans('lang.see_all') }}</a>
+                    </span>
+                </div>
+                <div class="top_categories" id="top_categories"></div>
+            </div>
+        </section>
+        <section class="top-categories highlights-section d-none">
+            <div class="container">
+                <div class="highlights-section-inner">
+                    <div class="title d-flex align-items-center border-0 mb-0">
+                        <h5>{{ trans('lang.highlights_for_you') }}</h5>
+                    </div>
+                    <div class="row">
+                        <div class="highlights-slider highlights" id="highlights">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="most-popular-item-section">
+            <div class="container">
+                <div class="title d-flex align-items-center">
+                    <h5>{{ trans('lang.popular') }} {{ trans('lang.item') }}</h5>
+                    <span class="see-all ml-auto">
+                        <a href="{{ route('productlist.all') }}">{{ trans('lang.see_all') }}</a>
+                    </span>
+                </div>
+                <div id="most_popular_item"></div>
+            </div>
+        </section>
+        <section class="most-popular-store-section">
+            <div class="container">
+                <div class="title d-flex align-items-center">
+                    <h5>{{ trans('lang.popular') }} {{ trans('lang.restaurants') }}</h5>
+                    <span class="see-all ml-auto">
+                        <a href="{{ route('restaurants', 'popular=yes') }}">{{ trans('lang.see_all') }}</a>
+                    </span>
+                </div>
+                <div id="most_popular_store"></div>
+            </div>
+        </section>
+        <section class="new-arrivals-section">
+            <div class="container">
+                <div class="title d-flex align-items-center">
+                    <h5>{{ trans('lang.new_arrivals') }}</h5>
+                    <span class="see-all ml-auto">
+                        <a href="{{ route('productlist.all') }}">{{ trans('lang.see_all') }}</a>
+                    </span>
+                </div>
+                <div id="new_arrival"></div>
+            </div>
+        </section>
+        <section class="offers-coupons-section">
+            <div class="container">
+                <div class="title d-flex align-items-center">
+                    <h5>{{ trans('lang.offers') }} {{ trans('lang.for_you') }}</h5>
+                    <span class="see-all ml-auto">
+                        <a href="{{ route('offers') }}">{{ trans('lang.see_all') }}</a>
+                    </span>
+                </div>
+                <div style="display:none" class="coupon_code_copied_div mt-4 error_top text-center">
+                    <p>{{ trans('lang.coupon_code_copied') }}</p>
+                </div>
+                <div id="offers_coupons"></div>
+            </div>
+        </section>
+        <section class="middle-banners-section">
+            <div class="container">
+                <div id="middle_banner"></div>
+            </div>
+        </section>
+        <section class="home-categories-section">
+            <div class="container" id="home_categories"></div>
+        </section>
+        <section class="all-stores-section">
+            <div class="container">
+                <div class="title d-flex align-items-center">
+                    <h5>{{ trans('lang.all_stores') }}</h5>
+                    <span class="see-all ml-auto">
+                        <a href="{{ url('restaurants') }}">{{ trans('lang.see_all') }}</a>
+                    </span>
+                </div>
+                <div id="all_stores"></div>
+                <div class="row fu-loadmore-btn">
+                    <a class="page-link loadmore-btn" href="javascript:void(0);" onclick="moreload()" data-dt-idx="0" tabindex="0" id="loadmore" style="display:none">{{ trans('lang.see') }} {{ trans('lang.more') }}</a>
+                    <p class="text-danger" style="display:none;" id="noMoreCoupons">{{ trans('lang.no_results') }}</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="zone-error m-5 p-5" style="display: none;">
+        <div class="zone-image text-center">
+            <img onerror="this.onerror=null;this.src=\'' + placeholderImage + '\'" src="{{ asset('img/zone_logo.png') }}" width="100">
+        </div>
+        <div class="zone-content text-center text-center font-weight-bold text-danger">
+            <h3 class="title">{{ trans('lang.zone_error_title') }}</h3>
+            <h6 class="text">{{ trans('lang.zone_error_text') }}</h6>
+        </div>
+    </div>
+</div>
+@include('layouts.footer')
+
+<!-- lib styles -->
+<link rel="stylesheet" href="{{ asset('css/dist/zuck.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/dist/skins/snapssenger.css') }}">
+<script src="{{ asset('js/dist/zuck.min.js') }}"></script>
+<script src="{{ asset('js/geofirestore.js') }}"></script>
+<script src="https://cdn.firebase.com/libs/geofire/5.0.1/geofire.min.js"></script>
+<script type="text/javascript" src="{{ asset('vendor/swiper/swiper.min.js') }}"></script>
+
+@include('layouts.nav')

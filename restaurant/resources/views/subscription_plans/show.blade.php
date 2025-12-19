@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title id="app_name"><?php echo @$_COOKIE['meta_title']; ?></title>
+        <title id="app_name">Dooeatery</title>
         <link rel="icon" id="favicon" type="image/x-icon" href="<?php echo str_replace('images/', 'images%2F', @$_COOKIE['favicon']); ?>">
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -179,7 +179,7 @@
                     var globalSettings=snapshots.data();
                     store_panel_color=globalSettings.store_panel_color;
                     setCookie('meta_title',globalSettings.meta_title,365);
-                    document.title=globalSettings.meta_title;
+//                    document.title=globalSettings.meta_title;
                     setCookie('store_panel_color',store_panel_color,365);
                     setCookie('favicon',globalSettings.favicon,365);
                 })

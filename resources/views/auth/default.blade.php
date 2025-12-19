@@ -7,7 +7,7 @@
 <meta name="author" content="FOODIE">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="icon" type="image/png" href="{{asset('img/fav.png')}}">
-<title>{{trans('lang.foodie_online_food_os')}}</title>
+<title>Dooeats</title>
 
 <link rel="stylesheet" type="text/css" href="{{asset('vendor/slick/slick.min.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('vendor/slick/slick-theme.min.css')}}" />

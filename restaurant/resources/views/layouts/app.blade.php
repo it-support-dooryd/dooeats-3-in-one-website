@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title id="app_name"><?php echo @$_COOKIE['meta_title']; ?></title>
+        <title id="app_name">Dooeatery</title>
         <link rel="icon" id="favicon" type="image/x-icon" href="<?php echo str_replace('images/', 'images%2F', @$_COOKIE['favicon']); ?>">
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
         <link href="{{ asset('assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
         <!--  @yield('style')-->
@@ -567,11 +567,11 @@
                     database.collection('settings').doc('globalSettings').set({});
                 }
                 try {
-                    if (getCookie('meta_title') == undefined || getCookie('meta_title') == null || getCookie(
+/*                    if (getCookie('meta_title') == undefined || getCookie('meta_title') == null || getCookie(
                             'meta_title') == "") {
                         document.title = globalSettingsData.meta_title;
                         setCookie('meta_title', globalSettingsData.meta_title, 365);
-                    }
+                    }*/
                     if (getCookie('favicon') == undefined || getCookie('favicon') == null || getCookie('favicon') ==
                         "") {
                         setCookie('favicon', globalSettingsData.favicon, 365);

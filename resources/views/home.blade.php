@@ -13,7 +13,8 @@
             </div>
             <div class="text-white col-md-3 col-sm-3">
                 <div class="title d-flex align-items-center">
-                    <a class="text-white font-weight-bold ml-auto" href="{{ url('search') }}">{{ trans('lang.filter') }}</a>
+                    <a class="text-white font-weight-bold ml-auto"
+                        href="{{ url('search') }}">{{ trans('lang.filter') }}</a>
                 </div>
             </div>
         </div>
@@ -119,7 +120,9 @@
                 </div>
                 <div id="all_stores"></div>
                 <div class="row fu-loadmore-btn">
-                    <a class="page-link loadmore-btn" href="javascript:void(0);" onclick="moreload()" data-dt-idx="0" tabindex="0" id="loadmore" style="display:none">{{ trans('lang.see') }} {{ trans('lang.more') }}</a>
+                    <a class="page-link loadmore-btn" href="javascript:void(0);" onclick="moreload()" data-dt-idx="0"
+                        tabindex="0" id="loadmore" style="display:none">{{ trans('lang.see') }}
+                        {{ trans('lang.more') }}</a>
                     <p class="text-danger" style="display:none;" id="noMoreCoupons">{{ trans('lang.no_results') }}</p>
                 </div>
             </div>
@@ -127,7 +130,8 @@
     </div>
     <div class="zone-error m-5 p-5" style="display: none;">
         <div class="zone-image text-center">
-            <img onerror="this.onerror=null;this.src=\'' + placeholderImage + '\'" src="{{ asset('img/zone_logo.png') }}" width="100">
+            <img onerror="this.onerror=null;this.src='{{ asset('img/zone_logo.png') }}'"
+                src="{{ asset('img/zone_logo.png') }}" width="100" loading="lazy" alt="Location zone indicator">
         </div>
         <div class="zone-content text-center text-center font-weight-bold text-danger">
             <h3 class="title">{{ trans('lang.zone_error_title') }}</h3>
@@ -185,7 +189,7 @@
     var decimal_degits = 0;
     var isSelfDeliveryGlobally = false;
     var refGlobal = database.collection('settings').doc("globalSettings");
-    refGlobal.get().then(async function(
+    refGlobal.get().then(async function (
         settingSnapshots) {
         if (settingSnapshots.data()) {
             var settingData = settingSnapshots.data();
@@ -194,7 +198,7 @@
             }
         }
     })
-    refCurrency.get().then(async function(snapshots) {
+    refCurrency.get().then(async function (snapshots) {
         var currencyData = snapshots.docs[0].data();
         currentCurrency = currencyData.symbol;
         currencyAtRight = currencyData.symbolAtRight;
@@ -205,11 +209,11 @@
 
     var placeholderImageRef = database.collection('settings').doc('placeHolderImage');
     var placeholderImageSrc = '';
-    placeholderImageRef.get().then(async function(placeholderImageSnapshots) {
+    placeholderImageRef.get().then(async function (placeholderImageSnapshots) {
         var placeHolderImageData = placeholderImageSnapshots.data();
         placeholderImageSrc = placeHolderImageData.image;
     })
-    highlightsSetting.get().then(async function(settingSnapshots) {
+    highlightsSetting.get().then(async function (settingSnapshots) {
         if (settingSnapshots.data()) {
             var settingData = settingSnapshots.data();
             if (settingData.isEnableAdsFeature) {
@@ -217,7 +221,7 @@
             }
         }
     })
-    database.collection('settings').doc("story").get().then(async function(snapshots) {
+    database.collection('settings').doc("story").get().then(async function (snapshots) {
         var story_data = snapshots.data();
         if (story_data.isEnabled) {
             storyEnabled = true;
@@ -232,7 +236,7 @@
 
     function getBanners() {
         var available_stores = [];
-        geoFirestore.collection('vendors').where('zoneId', '==', user_zone_id).get().then(async function(snapshots) {
+        geoFirestore.collection('vendors').where('zoneId', '==', user_zone_id).get().then(async function (snapshots) {
             snapshots.docs.forEach((doc) => {
                 if (!inValidVendors.has(doc.id)) {
                     available_stores.push(doc.id);
@@ -241,7 +245,7 @@
         });
         var position1_banners = [];
         var position2_banners = [];
-        bannerref.get().then(async function(banners) {
+        bannerref.get().then(async function (banners) {
             banners.docs.forEach((banner) => {
                 var bannerData = banner.data();
                 var redirect_type = '';
@@ -329,7 +333,7 @@
             } else {
                 $('.middle-banners').remove();
             }
-            setTimeout(function() {
+            setTimeout(function () {
                 slickcatCarousel();
             }, 200)
         });
@@ -337,7 +341,7 @@
 
 
     var myInterval = '';
-    $(document).ready(async function() {
+    $(document).ready(async function () {
 
         // Retrieve all invalid vendors
 
@@ -370,7 +374,7 @@
             jQuery(".zone-error").find('.text').text('{{ trans('lang.select_location_desc') }}'); // Ensure this key exists or use a generic one
             return false;
         }
-        DriverNearByRef.get().then(async function(DriverNearByRefSnapshots) {
+        DriverNearByRef.get().then(async function (DriverNearByRefSnapshots) {
             var DriverNearByRefData = DriverNearByRefSnapshots.data();
             VendorNearBy = parseInt(DriverNearByRefData.radios);
             radiusUnit = DriverNearByRefData.distanceType;
@@ -414,23 +418,23 @@
                 dots: true,
                 arrows: true,
                 responsive: [{
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 3,
-                        }
-                    },
-                    {
-                        breakpoint: 767,
-                        settings: {
-                            slidesToShow: 2,
-                        }
-                    },
-                    {
-                        breakpoint: 650,
-                        settings: {
-                            slidesToShow: 1,
-                        }
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 3,
                     }
+                },
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 2,
+                    }
+                },
+                {
+                    breakpoint: 650,
+                    settings: {
+                        slidesToShow: 1,
+                    }
+                }
                 ]
             });
         } else {
@@ -447,7 +451,7 @@
         } else {
             var nearestRestauantRefnew = geoFirestore.collection('vendors').where('zoneId', '==', user_zone_id);
         }
-        nearestRestauantRefnew.get().then(async function(snapshots) {
+        nearestRestauantRefnew.get().then(async function (snapshots) {
             if (snapshots.docs.length > 0) {
                 var html = buildAllStoresHTML(snapshots);
                 var all_stores = document.getElementById('all_stores');
@@ -489,7 +493,7 @@
             alldata = alldata.slice(0, pagesize);
             //New arrivals products
             var newProductRef = database.collection('vendor_products').where('publish', '==', true);
-            newProductRef.get().then(async function(newProductSnapshot) {
+            newProductRef.get().then(async function (newProductSnapshot) {
                 if (newProductSnapshot.docs.length > 0) {
                     new_arrival = document.getElementById('new_arrival');
                     if (!new_arrival) {
@@ -512,7 +516,7 @@
                 if (val.hasOwnProperty('reviewsSum') && val.reviewsSum != 0 && val.reviewsSum != null && val
                     .reviewsSum != '' && val.hasOwnProperty(
                         'reviewsCount') && val.reviewsCount != 0 && val.reviewsCount != null && val
-                    .reviewsCount != '') {
+                            .reviewsCount != '') {
                     rating = (val.reviewsSum / val.reviewsCount);
                     rating = Math.round(rating * 10) / 10;
                     reviewsCount = val.reviewsCount;
@@ -581,7 +585,7 @@
         } else {
             $('#noMoreCoupons').show();
             $('#loadmore').hide();
-            setTimeout(function() {
+            setTimeout(function () {
                 $("#noMoreCoupons").hide();
             }, 4000);
         }
@@ -590,16 +594,16 @@
 
 
     async function getItemCategories() {
-        itemCategoriesref.get().then(async function(foodCategories) {
+        itemCategoriesref.get().then(async function (foodCategories) {
             top_categories = document.getElementById('top_categories');
-            
+
             // Check if element exists before trying to set innerHTML
             if (!top_categories) {
                 console.warn('Element with id "top_categories" not found in DOM');
                 jQuery("#data-table_processing").hide();
                 return;
             }
-            
+
             top_categories.innerHTML = '';
             foodCategorieshtml = await buildHTMLItemCategory(foodCategories);
             top_categories.innerHTML = foodCategorieshtml;
@@ -610,7 +614,7 @@
     async function getHomepageCategory() {
         var home_cat_ref = database.collection('vendor_categories').where("publish", "==", true).where(
             'show_in_homepage', '==', true).limit(5);
-        home_cat_ref.get().then(async function(homeCategories) {
+        home_cat_ref.get().then(async function (homeCategories) {
             home_categories = document.getElementById('home_categories');
             if (!home_categories) {
                 console.warn('Element with id "home_categories" not found in DOM');
@@ -695,7 +699,7 @@
                 if (val.hasOwnProperty('reviewsSum') && val.reviewsSum != 0 && val.reviewsSum != null && val
                     .reviewsSum != '' && val.hasOwnProperty(
                         'reviewsCount') && val.reviewsCount != 0 && val.reviewsCount != null && val
-                    .reviewsCount != '') {
+                            .reviewsCount != '') {
                     rating = (val.reviewsSum / val.reviewsCount);
                     rating = Math.round(rating * 10) / 10;
                     reviewsCount = val.reviewsCount;
@@ -822,7 +826,7 @@
                 if (popularStoresListnw.length) {
                     var refpopularItem = database.collection('vendor_products').where("vendorID", "in",
                         popularStoresListnw).where('publish', '==', true)
-                    refpopularItem.get().then(async function(snapshotsPopularItem) {
+                    refpopularItem.get().then(async function (snapshotsPopularItem) {
 
                         var trendingStorehtml = await buildHTMLPopularItem(snapshotsPopularItem);
                         most_popular_item.innerHTML = trendingStorehtml;
@@ -840,7 +844,7 @@
             radius: VendorNearBy
         }).limit(200).where('zoneId', '==', user_zone_id);
 
-        await popularRestauantRefnew.get().then(async function(popularRestauantSnapshot) {
+        await popularRestauantRefnew.get().then(async function (popularRestauantSnapshot) {
             if (popularRestauantSnapshot.docs.length > 0) {
                 var most_popular_store = document.getElementById('most_popular_store');
                 if (!most_popular_store) {
@@ -873,7 +877,7 @@
             var rating = 0;
             var reviewsCount = 0;
             if (datas.hasOwnProperty('reviewsSum') && datas.reviewsSum != 0 && datas.hasOwnProperty(
-                    'reviewsCount') && datas.reviewsCount != 0) {
+                'reviewsCount') && datas.reviewsCount != 0) {
                 rating = (datas.reviewsSum / datas.reviewsCount);
                 rating = Math.round(rating * 10) / 10;
             }
@@ -942,7 +946,7 @@
                 '<div class="list-card-body">' +
                 '<div class="list-card-top">' +
                 '<h6 class="mb-1 popul-title"><a href="' + view_vendor_details + '" class="text-black">' + val
-                .title + '</a></h6><h6>' + val.location + '</h6>';
+                    .title + '</a></h6><h6>' + val.location + '</h6>';
             html = html + '<span class="pro-price vendor_dis_' + val.id + ' " ></span>';
             html = html +
                 '<div class="star position-relative mt-3"><span class="badge badge-success "><i class="feather-star"></i>' +
@@ -1070,14 +1074,14 @@
             var rating = 0;
             var reviewsCount = 0;
             if (datas.hasOwnProperty('reviewsSum') && datas.reviewsSum != 0 && datas.reviewsSum != null && datas.hasOwnProperty(
-                    'reviewsCount') && datas.reviewsCount != 0 && datas.reviewsCount != null) {
+                'reviewsCount') && datas.reviewsCount != 0 && datas.reviewsCount != null) {
                 rating = (datas.reviewsSum / datas.reviewsCount);
                 rating = Math.round(rating * 10) / 10;
             }
             datas.rating = rating;
             if (datas.title != '' && !inValidVendors.has(datas.id)) {
                 alldata.push(datas);
-                if (nearByVendorsForStory.includes(datas.id)) {} else {
+                if (nearByVendorsForStory.includes(datas.id)) { } else {
                     nearByVendorsForStory.push(datas.id);
                 }
             }
@@ -1095,7 +1099,7 @@
                 if (val.hasOwnProperty('reviewsSum') && val.reviewsSum != 0 && val.reviewsSum != null && val
                     .reviewsSum != '' && val.hasOwnProperty(
                         'reviewsCount') && val.reviewsCount != 0 && val.reviewsCount != null && val
-                    .reviewsCount != '') {
+                            .reviewsCount != '') {
                     rating = (val.reviewsSum / val.reviewsCount);
                     rating = Math.round(rating * 10) / 10;
                     reviewsCount = val.reviewsCount;
@@ -1182,7 +1186,7 @@
             var rating = 0;
             var reviewsCount = 0;
             if (datas.hasOwnProperty('reviewsSum') && datas.reviewsSum != 0 && datas.reviewsSum != null && datas.hasOwnProperty(
-                    'reviewsCount') && datas.reviewsCount != 0 && datas.reviewsCount != null) {
+                'reviewsCount') && datas.reviewsCount != 0 && datas.reviewsCount != null) {
                 rating = (datas.reviewsSum / datas.reviewsCount);
                 rating = Math.round(rating * 10) / 10;
             }
@@ -1301,7 +1305,7 @@
 
     async function popularItemCategory(categoryId, foodId) {
         var popularItemCategory = '';
-        await database.collection('vendor_categories').where("id", "==", categoryId).get().then(async function(
+        await database.collection('vendor_categories').where("id", "==", categoryId).get().then(async function (
             categorySnapshots) {
             if (categorySnapshots.docs[0]) {
                 var categoryData = categorySnapshots.docs[0].data();
@@ -1338,7 +1342,7 @@
             var popularStoresList2 = popularStoresList.slice(0, 4);
             var couponsRef2 = database.collection('coupons').where('resturant_id', 'in', popularStoresList2).where(
                 'isEnabled', '==', true).where('isPublic', '==', true).where('expiresAt', '>=', new Date());
-            couponsRef2.get().then(async function(couponListSnapshot) {
+            couponsRef2.get().then(async function (couponListSnapshot) {
                 if (couponListSnapshot.docs.length > 0) {
                     offers_coupons = document.getElementById('offers_coupons');
                     if (!offers_coupons) {
@@ -1405,7 +1409,7 @@
     }
 
     async function getVendorName(vendorId) {
-        await database.collection('vendors').where("id", "==", vendorId).get().then(async function(
+        await database.collection('vendors').where("id", "==", vendorId).get().then(async function (
             categorySnapshots) {
             if (categorySnapshots.docs[0]) {
                 var categoryData = categorySnapshots.docs[0].data();
@@ -1517,7 +1521,7 @@
     }
     async function getVendorItemLimit(vendorID) {
         var itemLimit = 0;
-        await database.collection('vendors').where('id', '==', vendorID).get().then(async function(snapshots) {
+        await database.collection('vendors').where('id', '==', vendorID).get().then(async function (snapshots) {
             if (snapshots.docs.length > 0) {
                 var data = snapshots.docs[0].data();
                 if (data.hasOwnProperty('subscription_plan') && data.subscription_plan != null && data.subscription_plan != '') {
@@ -1534,7 +1538,7 @@
             .where('status', '==', 'approved')
             .where('paymentStatus', '==', true)
             .get()
-            .then(async function(snapshots) {
+            .then(async function (snapshots) {
                 if (snapshots.docs.length === 0) {
                     $('.highlights-section').addClass('d-none');
                     return;
@@ -1606,13 +1610,13 @@
                             </div>
                         </div>
                         <div class="profile-preview-content">
-                            <?php if (Auth::check()) : ?>
+                            <?php if (Auth::check()): ?>
                             <div class="profile-preview-wishlist">
                                 <a href="javascript:void(0)" id="${data.vendorId}" class="preview-wishlist-icon addToFavorite">
                                     <i class="fa fa-heart-o"></i>
                                 </a>
                             </div>
-                            <?php else : ?>
+                            <?php else: ?>
                             <div class="profile-preview-wishlist">
                                 <a href="javascript:void(0)" class="preview-wishlist-icon loginAlert"><i class="fa fa-heart-o"></i></a>
                             </div>
@@ -1664,8 +1668,8 @@
 
 
 
-                <?php if (Auth::check()) : ?>
-                $('.addToFavorite').each(function() {
+                <?php if (Auth::check()): ?>
+                $('.addToFavorite').each(function () {
                     var vendorId = $(this).attr('id');
                     checkFavVendor(vendorId);
                 });
@@ -1684,42 +1688,42 @@
         }
         if (highlightCount <= 1) return;
         $('.highlights-slider').slick({
-            slidesToShow: (advlength<=3) ? advlength - 1 : 3,
+            slidesToShow: (advlength <= 3) ? advlength - 1 : 3,
             arrows: true,
             responsive: [{
-                    breakpoint: 1199,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: (advlength<=3) ? advlength - 1 : 3,
-                    }
-                }, {
-                    breakpoint: 992,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: (advlength<=3) ? advlength - 1 : 3,
-                    }
-                }, {
-                    breakpoint: 768,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: (advlength<=3) ? advlength - 1 : 3,
-                    }
-                },
-                {
-                    breakpoint: 560,
-                    settings: {
-                        arrows: false,
-                        centerMode: true,
-                        centerPadding: '20px',
-                        slidesToShow: 1,
-                    }
+                breakpoint: 1199,
+                settings: {
+                    arrows: true,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: (advlength <= 3) ? advlength - 1 : 3,
                 }
+            }, {
+                breakpoint: 992,
+                settings: {
+                    arrows: true,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: (advlength <= 3) ? advlength - 1 : 3,
+                }
+            }, {
+                breakpoint: 768,
+                settings: {
+                    arrows: true,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: (advlength <= 3) ? advlength - 1 : 3,
+                }
+            },
+            {
+                breakpoint: 560,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '20px',
+                    slidesToShow: 1,
+                }
+            }
             ]
         });
 
@@ -1727,7 +1731,7 @@
 
     async function checkFavVendor(vendorId) {
         var user_id = user_uuid;
-        database.collection('favorite_restaurant').where('restaurant_id', '==', vendorId).where('user_id', '==', user_id).get().then(async function(favoritevendorsnapshots) {
+        database.collection('favorite_restaurant').where('restaurant_id', '==', vendorId).where('user_id', '==', user_id).get().then(async function (favoritevendorsnapshots) {
             if (favoritevendorsnapshots.docs.length > 0) {
                 $('.addToFavorite[id="' + vendorId + '"]').html(
                     '<i class="font-weight-bold fa fa-heart" style="color:red"></i>');
@@ -1736,44 +1740,44 @@
             }
         });
     }
-    $(document).on('click', '.loginAlert', function() {
+    $(document).on('click', '.loginAlert', function () {
         Swal.fire({
             text: "{{ trans('lang.login_to_favorite') }}",
             icon: "error"
         });
     });
 
-    $(document).on('click', '.addToFavorite', function() {
+    $(document).on('click', '.addToFavorite', function () {
 
         var user_id = user_uuid;
         var vendorId = this.id;
         database.collection('favorite_restaurant').where('restaurant_id', '==', vendorId).where(
-            'user_id', '==', user_id).get().then(async function(favoritevendorsnapshots) {
-            if (favoritevendorsnapshots.docs.length > 0) {
-                var id = favoritevendorsnapshots.docs[0].id;
-                database.collection('favorite_restaurant').doc(id).delete().then(
-                    function() {
+            'user_id', '==', user_id).get().then(async function (favoritevendorsnapshots) {
+                if (favoritevendorsnapshots.docs.length > 0) {
+                    var id = favoritevendorsnapshots.docs[0].id;
+                    database.collection('favorite_restaurant').doc(id).delete().then(
+                        function () {
+                            $('.addToFavorite[id="' + vendorId + '"]').html(
+                                '<i class="font-weight-bold feather-heart" ></i>'
+                            );
+                        });
+                } else {
+                    var id = database.collection('tmp').doc().id;
+                    database.collection('favorite_restaurant').doc(id).set({
+                        'restaurant_id': vendorId,
+                        'user_id': user_id
+                    }).then(function (result) {
                         $('.addToFavorite[id="' + vendorId + '"]').html(
-                            '<i class="font-weight-bold feather-heart" ></i>'
+                            '<i class="font-weight-bold fa fa-heart" style="color:red"></i>'
                         );
                     });
-            } else {
-                var id = database.collection('tmp').doc().id;
-                database.collection('favorite_restaurant').doc(id).set({
-                    'restaurant_id': vendorId,
-                    'user_id': user_id
-                }).then(function(result) {
-                    $('.addToFavorite[id="' + vendorId + '"]').html(
-                        '<i class="font-weight-bold fa fa-heart" style="color:red"></i>'
-                    );
-                });
-            }
-        });
+                }
+            });
     });
 
     function checkSelfDeliveryForVendor(vendorId) {
-        setTimeout(function() {
-            database.collection('vendors').doc(vendorId).get().then(async function(snapshots) {
+        setTimeout(function () {
+            database.collection('vendors').doc(vendorId).get().then(async function (snapshots) {
                 if (snapshots.exists) {
                     var data = snapshots.data();
                     if (data.hasOwnProperty('isSelfDelivery') && data.isSelfDelivery != null && data.isSelfDelivery != '') {

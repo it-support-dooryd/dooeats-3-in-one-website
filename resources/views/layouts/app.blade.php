@@ -4,10 +4,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="<?php echo @$_COOKIE['application_name']; ?>">
-<meta name="author" content="<?php echo @$_COOKIE['application_name']; ?>">
+<meta name="description" content="<?php echo @$_COOKIE['meta_description'] ?: 'Order food online from your favorite restaurants with ' . @$_COOKIE['application_name']; ?>">
+<meta name="author" content="<?php echo @$_COOKIE['application_name'] ?: config('app.name'); ?>">
+<meta property="og:title" content="<?php echo @$_COOKIE['meta_title'] ?: config('app.name'); ?>">
+<meta property="og:description" content="<?php echo @$_COOKIE['meta_description'] ?: 'Order food online from your favorite restaurants'; ?>">
+<meta property="og:type" content="website">
+<meta property="og:url" content="<?php echo url()->current(); ?>">
+<meta property="og:image" content="<?php echo @$_COOKIE['favicon'] ?: asset('img/logo.png'); ?>">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="<?php echo str_replace('images/','images%2F',@$_COOKIE['favicon']); ?>">
-<title><?php echo @$_COOKIE['meta_title']; ?></title>
+<title>Dooeats</title>
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/slick/slick.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/slick/slick-theme.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('vendor/slick/slick-lightbox.css')}}"/>
@@ -28,7 +34,7 @@
         var application_name = '<?php echo @$_COOKIE['application_name']; ?>';
         var meta_title = '<?php echo @$_COOKIE['meta_title']; ?>';
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="{{ asset('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet">

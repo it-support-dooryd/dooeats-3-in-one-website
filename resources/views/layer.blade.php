@@ -26,7 +26,7 @@
             setCookie('application_name', globalSettingsData.applicationName, 365);
             setCookie('meta_title', globalSettingsData.meta_title, 365);
             setCookie('favicon', globalSettingsData.favicon, 365);
-            document.title = globalSettingsData.meta_title;
+//            document.title = globalSettingsData.meta_title;
         });
         if(mapType == 'google'){
             initialize();

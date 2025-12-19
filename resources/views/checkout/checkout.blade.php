@@ -285,24 +285,25 @@
         database.collection('settings').doc('AdminCommission').get().then(async function(AdminCommissionSnapshots) {
             if (AdminCommissionSnapshots.exists) {
                 var AdminCommissionRes = AdminCommissionSnapshots.data();
-                var AdminCommissionValueBase = AdminCommissionRes.fix_commission;
-                var AdminCommissionTypeBase = AdminCommissionRes.commissionType;
                 if (AdminCommissionRes.isEnabled && main_restaurant_id) {
-                    await database.collection('vendors').where('id', '==', main_restaurant_id).get()
-                        .then(async function(
-                            snapshot) {
-                            var data = snapshot.docs[0].data();
-                            if (data.hasOwnProperty('adminCommission') && data
-                                .adminCommission != null &&
-                                data.adminCommission != '') {
-                                $("#adminCommission").val(data.adminCommission.fix_commission);
-                                $("#adminCommissionType").val(data.adminCommission
-                                    .commissionType);
-                            } else {
-                                $("#adminCommission").val(AdminCommissionValueBase);
-                                $("#adminCommissionType").val(AdminCommissionTypeBase);
-                            }
-                        })
+                    var totalCommission = 0;
+                    $(".product-item").each(function() {
+                        var id = $(this).attr("data-id");
+                        var quantity = parseInt($("#quantity_" + id).val());
+                        if (isNaN(quantity)) {
+                            quantity = 0;
+                        }
+
+                        // Commission for Main Dish: 500
+                        totalCommission += 500 * quantity;
+
+                        // Commission for Side Dish (Add-ons): 200
+                        var extras_count = $(".extras_" + id).length;
+                        totalCommission += 200 * extras_count * quantity;
+                    });
+
+                    $("#adminCommission").val(totalCommission);
+                    $("#adminCommissionType").val('Fixed');
                 } else {
                     $("#adminCommission").val(0);
                     $("#adminCommissionType").val('Fixed');

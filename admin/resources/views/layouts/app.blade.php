@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
-    <title id="app_name"><?php echo @$_COOKIE['meta_title']; ?></title>
+    <title id="app_name">Admin Panel</title>
     <link rel="icon" id="favicon" type="image/x-icon"
           href="<?php echo str_replace('images/', 'images%2F', @$_COOKIE['favicon']); ?>">
     <!-- Fonts -->
@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     
     <?php if (isset($_COOKIE['admin_panel_color'])) { ?>
@@ -366,11 +366,11 @@
             var globalSettings = snapshots.data();
             $("#logo_web").attr('src', globalSettings.appLogo);
 
-            if (getCookie('meta_title') == undefined || getCookie('meta_title') == null || getCookie('meta_title') == "") {
+/*            if (getCookie('meta_title') == undefined || getCookie('meta_title') == null || getCookie('meta_title') == "") {
                 document.title = globalSettings.meta_title;
 
                 setCookie('meta_title', globalSettings.meta_title, 365);
-            }
+            }*/
 
         } catch (error) {
 

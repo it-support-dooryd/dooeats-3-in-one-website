@@ -362,46 +362,89 @@ use Illuminate\Support\Facades\Route;
 
     function initialize() {
         if (address_name != '') {
-            document.getElementById('user_locationnew').value = address_name;
+            if (document.getElementById('user_locationnew')) {
+                document.getElementById('user_locationnew').value = address_name;
+            }
+            if (document.getElementById('locationSearchInput')) {
+                document.getElementById('locationSearchInput').value = address_name;
+            }
         }
+        
         var input = document.getElementById('user_locationnew');
-        autocomplete = new google.maps.places.Autocomplete(input);
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-            var place = autocomplete.getPlace();
-            address_name = place.name;
-            address_lat = place.geometry.location.lat();
-            address_lng = place.geometry.location.lng();
-            $.each(place.address_components, function(i, address_component) {
-                address_name1 = '';
-                if (address_component.types[0] == "premise") {
-                    if (address_name1 == '') {
-                        address_name1 = address_component.long_name;
-                    } else {
-                        address_name2 = address_component.long_name;
-                    }
-                } else if (address_component.types[0] == "postal_code") {
-                    address_zip = address_component.long_name;
-                } else if (address_component.types[0] == "locality") {
-                    address_city = address_component.long_name;
-                } else if (address_component.types[0] == "administrative_area_level_1") {
-                    var address_state = address_component.long_name;
-                } else if (address_component.types[0] == "country") {
-                    var address_country = address_component.long_name;
-                }
+        if (input) {
+            autocomplete = new google.maps.places.Autocomplete(input);
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                var place = autocomplete.getPlace();
+                handlePlaceSelected(place);
             });
-            <?php if (@Route::current()->getName() != 'checkout') { ?>
-            setCookie('address_name1', address_name1, 365);
-            setCookie('address_name2', address_name2, 365);
-            setCookie('address_name', address_name, 365);
-            setCookie('address_lat', address_lat, 365);
-            setCookie('address_lng', address_lng, 365);
-            setCookie('address_zip', address_zip, 365);
-            setCookie('address_city', address_city, 365);
-            setCookie('address_state', address_state, 365);
-            setCookie('address_country', address_country, 365);
-            <?php } ?>
-            window.location.reload();
+        }
+
+        var modalInput = document.getElementById('locationSearchInput');
+        if (modalInput) {
+            modalAutocomplete = new google.maps.places.Autocomplete(modalInput);
+            google.maps.event.addListener(modalAutocomplete, 'place_changed', function() {
+                var place = modalAutocomplete.getPlace();
+                handlePlaceSelected(place);
+            });
+        }
+    }
+
+    function handlePlaceSelected(place) {
+        if (!place.geometry) return;
+
+        address_name = place.name || '';
+        address_lat = place.geometry.location.lat();
+        address_lng = place.geometry.location.lng();
+        
+        address_name1 = '';
+        address_name2 = '';
+        address_zip = '';
+        address_city = '';
+        address_state = '';
+        address_country = '';
+
+        $.each(place.address_components, function(i, address_component) {
+            if (address_component.types[0] == "premise" || address_component.types[0] == "street_number" || address_component.types[0] == "route") {
+                if (address_name1 == '') {
+                    address_name1 = address_component.long_name;
+                } else {
+                    address_name1 += ' ' + address_component.long_name;
+                }
+            } else if (address_component.types[0] == "postal_code") {
+                address_zip = address_component.long_name;
+            } else if (address_component.types[0] == "locality") {
+                address_city = address_component.long_name;
+            } else if (address_component.types[0] == "administrative_area_level_1") {
+                address_state = address_component.long_name;
+            } else if (address_component.types[0] == "country") {
+                address_country = address_component.long_name;
+            }
         });
+
+        <?php if (@Route::current()->getName() != 'checkout') { ?>
+        setCookie('address_name1', address_name1, 365);
+        setCookie('address_name2', address_name2, 365);
+        setCookie('address_name', place.formatted_address || address_name, 365);
+        setCookie('address_lat', address_lat, 365);
+        setCookie('address_lng', address_lng, 365);
+        setCookie('address_zip', address_zip, 365);
+        setCookie('address_city', address_city, 365);
+        setCookie('address_state', address_state, 365);
+        setCookie('address_country', address_country, 365);
+        
+        // Save to recent locations if selector script is loaded
+        if (window.saveToRecentLocations) {
+            window.saveToRecentLocations({
+                name: place.formatted_address || address_name,
+                lat: address_lat,
+                lng: address_lng,
+                city: address_city,
+                state: address_state,
+                country: address_country
+            });
+        }
+        <?php } ?>
+        window.location.reload();
     }
 
     function init() {

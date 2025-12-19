@@ -7,7 +7,7 @@
 <meta name="author" content="Dooeats">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="icon" type="image/png" href="{{asset('img/fav.png')}}">
-<title>Dooeats Restaurant</title>
+<title>Dooeatery</title>
 
 <link rel="icon" type="image/x-icon" href="{{ asset('images/logo-light-icon.png') }}">
     <!-- Fonts -->
