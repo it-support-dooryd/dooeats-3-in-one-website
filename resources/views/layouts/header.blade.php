@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-3 d-flex align-items-center m-none head-search">
                     <!-- Location Selector Trigger -->
-                    <div class="header-location-trigger d-flex align-items-center" onclick="openLocationModal()">
+                    <div class="header-location-trigger d-flex align-items-center" data-toggle="modal" data-target="#headerLocationModal">
                         <div class="location-icon">
                             <i class="feather-map-pin"></i>
                         </div>

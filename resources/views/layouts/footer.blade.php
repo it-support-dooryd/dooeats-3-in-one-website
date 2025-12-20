@@ -3,46 +3,106 @@
         <img src="{{ asset('img/spinner.gif') }}" style="width: 500px; height: 500px; object-fit: contain;">
     </div>
 </div>
-<button type="button" id="locationModal" data-toggle="modal" data-target="#locationModalAddress" hidden>submit</button>
-<div class="modal fade" id="locationModalAddress" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered location_modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title locationModalTitle">{{ trans('lang.delivery_address') }}</h5>
+@include('layouts.welcome_location_modal')
+<!-- Sleek Header Location Search Modal -->
+<div class="modal fade" id="headerLocationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px; border: none; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+            <div class="modal-header" style="border: none; padding: 25px 25px 10px;">
+                <h5 class="modal-title font-weight-bold" style="color: var(--primary-text);">Change Delivery Location</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <form class="">
-                    <div class="form-row">
-                        <div class="col-md-12 form-group">
-                            <label class="form-label">{{ trans('lang.street_1') }}</label>
-                            <div class="input-group">
-                                <input placeholder="Delivery Area" type="text" id="address_line1" class="form-control">
-                                <div class="input-group-append">
-                                    <button onclick="getCurrentLocationAddress1()" type="button" class="btn btn-outline-secondary"><i class="feather-map-pin"></i></button>
-                                </div>
-                            </div>
+            <div class="modal-body" style="padding: 20px 25px 35px;">
+                <div class="location-search-wrapper" style="position: relative;">
+                    <div class="input-group" style="background: #F6F8F7; border: 1.5px solid #E3E8E5; border-radius: 14px; overflow: hidden; transition: all 0.3s ease;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="background: transparent; border: none; color: var(--deep-green);"><i class="feather-map-pin"></i></span>
                         </div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.landmark') }}</label><input placeholder="{{ trans('lang.footer') }}" value="" id="address_line2" type="text" class="form-control"></div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.zip_code') }}</label><input placeholder="Zip Code" id="address_zipcode" type="text" class="form-control">
-                        </div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.city') }}</label><input placeholder="{{ trans('lang.city') }}" id="address_city" type="text" class="form-control"></div>
-                        <div class="col-md-12 form-group"><label class="form-label">{{ trans('lang.country') }}</label><input placeholder="Country" id="address_country" type="text" class="form-control">
-                        </div>
-                        <input type="hidden" name="address_lat" id="address_lat">
-                        <input type="hidden" name="address_lng" id="address_lng">
+                        <input type="text" id="header_location_search_input" class="form-control" style="background: transparent; border: none; padding: 12px 10px; font-weight: 500;" placeholder="Search for your area, street...">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer p-0 border-0">
-                <div class="col-12 m-0 p-0">
-                    <button type="button" id="close_button" class="close" data-dismiss="modal" aria-label="Close" hidden>
-                        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="saveShippingAddress()">{{ trans('lang.save_changes') }}
-                        </button>
+                </div>
+                
+                <div class="mt-4" id="headerRecentLocations" style="display: none;">
+                    <h6 class="small text-muted text-uppercase font-weight-bold mb-3" style="letter-spacing: 0.5px;">Recent Locations</h6>
+                    <div class="list-group list-group-flush" id="recent_locations_list">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <div class="current-location-item mt-3 py-2" style="cursor: pointer; color: var(--deep-green); display: flex; align-items: center; gap: 10px; font-weight: 600;" onclick="useCurrentLocation()">
+                    <i class="feather-navigation"></i>
+                    <span>Use Current Location</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        // Initialize Google Autocomplete for High-End Modal
+        $('#headerLocationModal').on('shown.bs.modal', function() {
+            loadHeaderRecentLocations();
+            
+            if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+                const input = document.getElementById('header_location_search_input');
+                const autocomplete = new google.maps.places.Autocomplete(input);
+                
+                autocomplete.addListener('place_changed', function() {
+                    const place = autocomplete.getPlace();
+                    if (!place.geometry) return;
+                    
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+                    let addressName = place.name || place.formatted_address;
+                    
+                    if (typeof saveLocationAndContinue === 'function') {
+                        saveLocationAndContinue(place.formatted_address, lat, lng, addressName);
+                    }
+                });
+            }
+        });
+
+        function loadHeaderRecentLocations() {
+            try {
+                let recent = localStorage.getItem('recent_locations');
+                recent = recent ? JSON.parse(recent) : [];
+                
+                const list = $('#recent_locations_list');
+                const container = $('#headerRecentLocations');
+                
+                if (recent.length > 0) {
+                    list.empty();
+                    recent.forEach(loc => {
+                        const item = $(`
+                            <a href="#" class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center mb-2" style="background: transparent;">
+                                <div style="width: 36px; height: 36px; background: #F6F8F7; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" class="mr-3">
+                                    <i class="feather-clock text-muted"></i>
+                                </div>
+                                <div style="overflow: hidden; flex: 1;">
+                                    <div class="font-weight-600 text-dark text-truncate" style="font-size: 14px;">${loc.name}</div>
+                                    <div class="small text-muted text-truncate">${loc.address}</div>
+                                </div>
+                            </a>
+                        `);
+                        item.on('click', function(e) {
+                            e.preventDefault();
+                            saveLocationAndContinue(loc.address, loc.lat, loc.lng, loc.name);
+                        });
+                        list.append(item);
+                    });
+                    container.show();
+                } else {
+                    container.hide();
+                }
+            } catch (e) {
+                console.error('Error loading recent locations', e);
+            }
+        }
+    });
+</script>
 <span style="display: none;">
     <button type="button" class="btn btn-primary" id="notification_accepted_order_by_restaurant_id" data-toggle="modal" data-target="#notification_accepted_order_by_restaurant">{{ trans('lang.large_modal') }}</button>
 </span>

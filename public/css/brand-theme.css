@@ -1,0 +1,253 @@
+:root {
+    /* 🟢 Primary Brand Colors (Green-Led) */
+    --deep-green: #0B6B3A; /* main UI color */
+    --brand-green: #0FA958;
+    --soft-green: #1FCC78;
+    --green-tint-bg: #E9FFF4;
+    
+    /* 🔴 Accent Colors (Use Sparingly) */
+    --accent-red: #E10600;
+    --soft-red-bg: #FFE6E6;
+    --hover-red: #FF2A2A;
+    
+    /* 🌤️ Background Colors (Light & Clean) */
+    --main-bg: #FFFFFF;
+    --secondary-bg: #F6F8F7;
+    --section-bg: #FAFBFA;
+    --card-bg: #FFFFFF;
+    --card-border: #E3E8E5;
+    --divider-lines: #E9ECEB;
+    
+    /* 📝 Text Colors (Balanced for Green UI) */
+    --primary-text: #102A1C;
+    --secondary-text: #355E45;
+    --body-text: #4F6F5C;
+    --muted-text: #8FA59A;
+    --disabled-text: #BFCFC7;
+    
+    /* 🔘 Buttons & CTAs */
+    --btn-primary-bg: #0B6B3A;
+    --btn-primary-hover: #0FA958;
+    --btn-primary-shadow: rgba(11, 107, 58, 0.25);
+    
+    --btn-secondary-bg: #E9FFF4;
+    --btn-secondary-text: #0B6B3A;
+    --btn-secondary-border: #0FA958;
+    --btn-secondary-hover: #DFF7EC;
+    
+    /* 🧾 Forms & Inputs */
+    --input-bg: #FFFFFF;
+    --input-border: #CEDBD4;
+    --input-focus: #0B6B3A;
+    --input-active-bg: #F1FBF6;
+    --input-placeholder: #9DB6AA;
+    
+    /* ✅ Status & Feedback */
+    --success-bg: #E9FFF4;
+    --success-text: #0FA958;
+    --warning-bg: #FFF4E5;
+    --warning-text: #FF9800;
+    --error-bg: #FFE6E6;
+    --error-text: #E10600;
+    
+    /* ⭐ Ratings */
+    --star-active: #F5B301;
+    --star-inactive: #D6D6D6;
+    
+    /* 🌫 Shadows (Soft & Premium) */
+    --card-shadow: rgba(0, 0, 0, 0.06);
+    --elevated-shadow: rgba(0, 0, 0, 0.12);
+    --floating-button-shadow: rgba(11, 107, 58, 0.3);
+}
+
+/* Global Styles */
+body {
+    background-color: var(--main-bg);
+    color: var(--body-text);
+    font-family: 'Outfit', 'Inter', 'Nunito', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-text);
+    font-weight: 700;
+}
+
+/* Primary Color Overrides */
+.bg-primary, .bg-danger.rounded-circle.mt-n0.shadow, .header-main .bg-primary {
+    background-color: var(--deep-green) !important;
+    background: var(--deep-green) !important;
+}
+
+.text-primary, .text-danger, .btn-link, .osahan-credits h5 {
+    color: var(--deep-green) !important;
+}
+
+.border-primary {
+    border-color: var(--deep-green) !important;
+}
+
+a {
+    color: var(--deep-green);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--brand-green);
+    text-decoration: none;
+}
+
+/* Header & Nav */
+.section-header, .header-main {
+    background-color: var(--main-bg) !important;
+    box-shadow: 0 2px 15px var(--navbar-shadow, rgba(0,0,0,0.05)) !important;
+}
+
+.hc-nav-trigger span, .hc-nav-trigger span::before, .hc-nav-trigger span::after {
+    background: var(--deep-green) !important;
+}
+
+/* Search bar on home */
+.siddhi-home-page .bg-primary, .mobile-filter.bg-primary {
+    background: linear-gradient(135deg, var(--deep-green) 0%, var(--brand-green) 100%) !important;
+}
+
+.siddhi-home-page .input-group, .search_location .input-group {
+    border-radius: 12px !important;
+    border: 1px solid var(--card-border) !important;
+    overflow: hidden;
+}
+
+/* Buttons */
+.btn-primary, .btn-danger {
+    background-color: var(--btn-primary-bg) !important;
+    border-color: var(--btn-primary-bg) !important;
+    color: #FFFFFF !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px var(--btn-primary-shadow) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary:hover, .btn-danger:hover {
+    background-color: var(--btn-primary-hover) !important;
+    border-color: var(--btn-primary-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--btn-primary-shadow) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-outline-primary, .btn-outline-danger {
+    color: var(--deep-green) !important;
+    border-color: var(--deep-green) !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-danger:hover {
+    background-color: var(--green-tint-bg) !important;
+    color: var(--deep-green) !important;
+    border-color: var(--brand-green) !important;
+}
+
+/* Cards */
+.card, .list-card, .box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px var(--card-shadow) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    overflow: hidden;
+}
+
+.card:hover, .list-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px var(--elevated-shadow) !important;
+}
+
+/* Tabs & Pills */
+.nav-tabs .nav-link.active, .nav-pills .nav-link.active {
+    color: #FFFFFF !important;
+    background-color: var(--deep-green) !important;
+    border-radius: 10px;
+}
+
+.nav-tabs .nav-link, .nav-pills .nav-link {
+    color: var(--secondary-text) !important;
+    font-weight: 500;
+}
+
+/* Badges & Status */
+.badge-success {
+    background-color: var(--success-bg) !important;
+    color: var(--success-text) !important;
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+}
+
+.badge-danger {
+    background-color: var(--error-bg) !important;
+    color: var(--error-text) !important;
+    border-radius: 8px !important;
+}
+
+/* Ratings */
+.feather-star, .fa-star, .rating-star {
+    color: var(--star-inactive);
+}
+
+.feather-star.text-warning, .fa-star.text-warning, .rating-star.active, .badge-success .feather-star {
+    color: var(--star-active) !important;
+}
+
+/* Sidebar & Navigation Selection */
+.siddhi-menu-fotter .col.selected a, .siddhi-menu-fotter .col.selected p {
+    color: var(--deep-green) !important;
+}
+
+.c-t-order li a.active i {
+    background: var(--deep-green) !important;
+    color: #fff !important;
+}
+
+/* Form Styling */
+.form-control {
+    background-color: var(--input-bg) !important;
+    border: 1.5px solid var(--input-border) !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    color: var(--primary-text) !important;
+}
+
+.form-control:focus {
+    border-color: var(--input-focus) !important;
+    background-color: var(--input-active-bg) !important;
+    box-shadow: 0 0 0 4px var(--green-tint-bg) !important;
+}
+
+/* Footer Improvements */
+.section-footer {
+    background-color: #102A1C !important; /* Deep Green Text Color as BG */
+}
+
+.section-footer .title {
+    color: #FFFFFF !important;
+}
+
+.section-footer a.text-muted {
+    color: var(--muted-text) !important;
+}
+
+.section-footer a.text-muted:hover {
+    color: #FFFFFF !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-content, .product-list, .list-card {
+    animation: fadeIn 0.5s ease-out forwards;
+}

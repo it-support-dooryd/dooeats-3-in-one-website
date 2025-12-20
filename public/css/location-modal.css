@@ -1,393 +1,319 @@
 /* ========================================
-   Location Selection Modal Styles
+   High-End Location Selection Modal Styles
    ======================================== */
 
-/* Modal Content */
-.location-modal-content {
-  border-radius: 12px;
-  border: none;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+.welcome-location-modal .modal-content {
+    border-radius: 24px;
+    border: none;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
 }
 
-.location-modal-content .modal-header {
-  padding: 20px 24px;
-  background: linear-gradient(135deg, #EC9378 0%, #FF6637 100%);
-  color: #ffffff;
-  border-radius: 12px 12px 0 0;
+.welcome-location-modal .modal-header {
+    background: linear-gradient(135deg, var(--deep-green, #0B6B3A) 0%, var(--brand-green, #0FA958) 100%);
+    padding: 40px 30px;
+    text-align: center;
+    border: none;
+    display: block;
 }
 
-.location-modal-content .modal-header .modal-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
+.welcome-location-modal .modal-title {
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    font-family: 'Outfit', sans-serif;
 }
 
-.location-modal-content .modal-header .close {
-  color: #ffffff;
-  opacity: 1;
-  text-shadow: none;
-  font-size: 28px;
-  font-weight: 300;
+.welcome-location-modal .header-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    font-weight: 400;
 }
 
-.location-modal-content .modal-header .close:hover {
-  opacity: 0.8;
+.welcome-location-modal .modal-body {
+    padding: 40px 30px;
+    background: #FFFFFF;
 }
 
-/* Current Location Button */
-.use-current-location-btn {
-  border-radius: 8px;
-  padding: 14px 20px;
-  font-weight: 600;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  position: relative;
+.welcome-location-modal .welcome-text {
+    color: var(--primary-text, #102A1C);
+    margin-bottom: 30px;
+    font-size: 15px;
+    line-height: 1.6;
 }
 
-.use-current-location-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 102, 55, 0.3);
+.welcome-location-modal .welcome-text p {
+    margin-bottom: 0;
 }
 
-.use-current-location-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+/* Search Wrapper Improvements */
+.welcome-location-modal .location-search-wrapper {
+    position: relative;
+    margin-bottom: 25px;
 }
 
-.use-current-location-btn .spinner-border {
-  width: 16px;
-  height: 16px;
-  border-width: 2px;
+.welcome-location-modal .input-group {
+    background: #F6F8F7;
+    border: 2px solid #E3E8E5;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding: 5px;
 }
 
-/* Search Wrapper */
-.location-search-wrapper {
-  position: relative;
+.welcome-location-modal .input-group:focus-within {
+    border-color: var(--deep-green, #0B6B3A);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(11, 107, 58, 0.1);
 }
 
-.location-search-wrapper .input-group-text {
-  border: 1px solid #e4e7ea;
-  padding: 10px 12px;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+.welcome-location-modal .input-group-prepend .input-group-text {
+    background: transparent;
+    border: none;
+    color: var(--deep-green, #0B6B3A);
+    padding-left: 15px;
 }
 
-.location-search-input {
-  border: 1px solid #e4e7ea;
-  border-left: none;
-  padding: 10px 12px;
-  font-size: 14px;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-  transition: all 0.3s ease;
+.welcome-location-modal .location-search-input {
+    background: transparent;
+    border: none !important;
+    padding: 12px 15px;
+    font-size: 16px;
+    color: var(--primary-text, #102A1C);
+    font-weight: 500;
 }
 
-.location-search-input:focus {
-  border-color: #FF6637;
-  box-shadow: 0 0 0 0.2rem rgba(255, 102, 55, 0.15);
+.welcome-location-modal .location-search-input:focus {
+    box-shadow: none !important;
 }
 
-.location-search-input:focus+.input-group-prepend .input-group-text {
-  border-color: #FF6637;
+/* CTA Button */
+.welcome-location-modal .btn-set-location {
+    background: var(--deep-green, #0B6B3A);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 16px;
+    padding: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(11, 107, 58, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-/* Autocomplete Results */
-.location-autocomplete-results {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  border: 1px solid #e4e7ea;
-  border-radius: 8px;
-  margin-top: 4px;
-  max-height: 250px;
-  overflow-y: auto;
-  z-index: 1050;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: none;
+.welcome-location-modal .btn-set-location:hover {
+    background: var(--brand-green, #0FA958);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(11, 107, 58, 0.3);
 }
 
-.location-autocomplete-results.show {
-  display: block;
+.welcome-location-modal .btn-set-location:active {
+    transform: translateY(0);
 }
 
-.autocomplete-item {
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  border-bottom: 1px solid #f5f5f5;
-}
-
-.autocomplete-item:last-child {
-  border-bottom: none;
-}
-
-.autocomplete-item:hover {
-  background-color: #fff5f2;
-}
-
-.autocomplete-item i {
-  color: #FF6637;
-  margin-right: 10px;
-}
-
-/* Divider */
-.location-divider {
-  text-align: center;
-  position: relative;
-  margin: 20px 0;
-}
-
-.location-divider::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
-  height: 1px;
-  background: #e4e7ea;
-}
-
-.divider-text {
-  position: relative;
-  background: #ffffff;
-  padding: 0 15px;
-  color: #999;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-/* Recent Locations */
-.recent-locations-wrapper h6 {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.recent-locations-list {
-  margin-top: 10px;
-}
-
-.recent-location-item {
-  display: flex;
-  align-items: center;
-  padding: 12px 16px;
-  background: #ffffff;
-  border: 1px solid #e4e7ea;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.recent-location-item:hover {
-  background: #fff5f2;
-  border-color: #FF6637;
-  transform: translateX(4px);
-}
-
-.recent-location-item:last-child {
-  margin-bottom: 0;
-}
-
-.recent-location-item i.feather-map-pin {
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.recent-location-item i.feather-chevron-right {
-  font-size: 16px;
-  color: #999;
-  flex-shrink: 0;
-}
-
-.location-details {
-  flex: 1;
-}
-
-.location-name {
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 2px;
-}
-
-.location-address {
-  font-size: 12px;
-  color: #999;
-}
-
-/* Info Box */
-.location-info-box {
-  background: linear-gradient(135deg, #fff5f2 0%, #fff9f7 100%);
-  border: 1px solid #ffe8e0;
-  border-radius: 8px;
-}
-
-.location-info-box small {
-  display: block;
-  line-height: 1.6;
-}
-
-.location-info-box i {
-  color: #FF6637;
-}
-
-/* Header Location Trigger */
-.header-location-trigger {
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  background: #f8f9fa;
-  border: 1px solid #e4e7ea;
-}
-
-.header-location-trigger:hover {
-  background: #fff5f2;
-  border-color: #FF6637;
-}
-
-.header-location-trigger .location-icon {
-  width: 36px;
-  height: 36px;
-  background: #ffffff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-}
-
-.header-location-trigger .location-icon i {
-  color: #FF6637;
-  font-size: 18px;
-}
-
-.header-location-text {
-  flex: 1;
-  margin-left: 12px;
-}
-
-.header-location-text .location-label {
-  font-size: 11px;
-  color: #999;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-  display: block;
-}
-
-.header-location-text .location-value {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-}
-
-.header-location-caret {
-  margin-left: 8px;
-  color: #999;
-  font-size: 14px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .location-modal-content .modal-header {
-    padding: 16px 20px;
-  }
-
-  .location-modal-content .modal-body {
-    padding: 20px 16px;
-  }
-
-  .header-location-text .location-value {
-    max-width: 150px;
-  }
-
-  .use-current-location-btn {
+/* Current Location Link */
+.welcome-location-modal .current-location-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--deep-green, #0B6B3A);
+    font-weight: 600;
     font-size: 14px;
-    padding: 12px 16px;
-  }
+    margin-top: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
 }
 
+.welcome-location-modal .current-location-link:hover {
+    color: var(--brand-green, #0FA958);
+}
+
+/* Animation */
+.welcome-location-modal.fade .modal-dialog {
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.welcome-location-modal.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Responsive */
 @media (max-width: 576px) {
-  .header-location-trigger {
-    padding: 6px 10px;
-  }
-
-  .header-location-trigger .location-icon {
-    width: 32px;
-    height: 32px;
-  }
-
-  .header-location-text {
-    margin-left: 8px;
-  }
-
-  .header-location-text .location-label {
-    font-size: 10px;
-  }
-
-  .header-location-text .location-value {
-    font-size: 13px;
-    max-width: 120px;
-  }
+    .welcome-location-modal .modal-header {
+        padding: 30px 20px;
+    }
+    .welcome-location-modal .modal-title {
+        font-size: 22px;
+    }
+    .welcome-location-modal .modal-body {
+        padding: 30px 20px;
+    }
 }
 
-/* Google Maps Autocomplete Styling */
+/* Header Search Modal Extensions */
+#headerLocationModal .modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+#headerLocationModal .modal-header {
+    border: none;
+    padding: 30px 25px 15px;
+}
+
+#headerLocationModal .modal-body {
+    padding: 15px 25px 40px;
+}
+
+#headerLocationModal .input-group {
+    background: #F6F8F7;
+    border: 2px solid #E3E8E5 !important;
+    border-radius: 16px;
+    padding: 6px;
+    transition: all 0.3s ease;
+}
+
+#headerLocationModal .input-group:focus-within {
+    border-color: var(--deep-green) !important;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(11, 107, 58, 0.1);
+}
+
+#headerLocationModal .form-control {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-weight: 500;
+}
+
+#headerLocationModal .current-location-item {
+    transition: all 0.2s;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+#headerLocationModal .current-location-item:hover {
+    background: #F1FBF6;
+    color: var(--brand-green);
+}
+
+/* Google Autocomplete matches */
 .pac-container {
-  z-index: 9999 !important; /* High z-index to show above Bootstrap modal */
-  border-radius: 8px;
-  border: 1px solid #e4e7ea;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  margin-top: 8px;
-  font-family: inherit;
-  padding-bottom: 5px;
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+    font-family: 'Outfit', sans-serif !important;
+    margin-top: 5px !important;
+    background-color: #fff !important;
+    padding: 8px 0 !important;
+    z-index: 9999 !important;
+    position: fixed !important;
 }
 
 .pac-item {
-  padding: 12px 16px;
-  cursor: pointer;
-  display: flex !important;
-  align-items: center;
-  border-top: none;
-  border-bottom: 1px solid #f5f5f5;
-  transition: all 0.2s ease;
-}
-
-.pac-item:hover {
-  background-color: #fff5f2;
-}
-
-.pac-item:last-child {
-  border-bottom: none;
-}
-
-.pac-icon {
-  margin-right: 12px;
-  margin-top: 0;
+    padding: 12px 20px !important;
+    border-top: 1px solid #f0f0f0 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: all 0.2s ease !important;
 }
 
 .pac-item-query {
-  font-size: 14px;
-  color: #333;
-  padding-right: 5px;
+    font-size: 15px !important;
+    color: #102A1C !important;
 }
 
 .pac-matched {
-  font-weight: 700;
-  color: #FF6637;
+    color: #0B6B3A !important;
 }
 
-.pac-placeholder {
-  color: #999;
-  font-size: 13px;
+/* Header Location Trigger Improvements */
+.header-location-trigger {
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #FFFFFF;
+    border: 1.5px solid #F1FBF6;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-location-trigger:hover {
+    background: #F1FBF6;
+    border-color: var(--deep-green);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(11, 107, 58, 0.08);
+}
+
+.header-location-trigger .location-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--green-tint-bg);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.header-location-trigger:hover .location-icon {
+    background: var(--deep-green);
+}
+
+.header-location-trigger .location-icon i {
+    color: var(--deep-green);
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.header-location-trigger:hover .location-icon i {
+    color: #FFFFFF;
+}
+
+.header-location-text {
+    flex: 1;
+    overflow: hidden;
+}
+
+.header-location-text .location-label {
+    font-size: 11px;
+    color: var(--muted-text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    display: block;
+}
+
+.header-location-text .location-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.header-location-caret {
+    color: var(--muted-text);
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.header-location-trigger:hover .header-location-caret {
+    transform: rotate(180deg);
+    color: var(--deep-green);
 }

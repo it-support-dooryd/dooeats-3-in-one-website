@@ -25,8 +25,8 @@ foreach ($countries as $keycountry => $valuecountry) {
 
             <!-- Tab Bar -->
             <div class="auth-tabs">
-                <a href="{{ route('login') }}" class="auth-tab-link active">{{trans('lang.customer_login')}}</a>
-                <a href="http://127.0.0.1:8001/login" class="auth-tab-link">{{trans('lang.restaurant_login')}}</a>
+                <a href="{{ route('login') }}" class="auth-tab-link active">Customer</a>
+                <a href="http://127.0.0.1:8002/login" class="auth-tab-link">Restaurant</a>
             </div>
 
             <h4 class="text-center mb-4" style="font-weight: 600; color: #333;">{{trans('lang.welcome_back')}}</h4>
@@ -35,7 +35,6 @@ foreach ($countries as $keycountry => $valuecountry) {
             <!-- Login Form -->
             <form action="#" onsubmit="return loginClick()" id="login-box">
                 <div class="form-group-auth">
-                    <label class="form-label-auth">{{trans('lang.user_email')}}</label>
                     <input type="email" class="form-control-auth" id="email" name="email"
                         placeholder="{{trans('lang.user_email_help_2')}}">
                     <div class="error" id="email_required"
@@ -43,7 +42,6 @@ foreach ($countries as $keycountry => $valuecountry) {
                 </div>
 
                 <div class="form-group-auth">
-                    <label class="form-label-auth">{{trans('lang.password')}}</label>
                     <div class="password-input-group">
                         <input type="password" class="form-control-auth" id="password" name="password"
                             placeholder="{{trans('lang.user_password_help_2')}}">
@@ -91,7 +89,7 @@ foreach ($countries as $keycountry => $valuecountry) {
                     </div>
                     <!-- Apple would go here if configured -->
                     <div class="social-btn" onclick="loginWithPhoneClick()" title="Phone">
-                        <i class="fa fa-phone" style="font-size: 20px; color: #333;"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     </div>
                 </div>
             </form>
@@ -104,10 +102,9 @@ foreach ($countries as $keycountry => $valuecountry) {
                 </div>
 
                 <div class="form-group-auth" id="phone-box">
-                    <label class="form-label-auth">{{trans('lang.user_phone')}}</label>
-                    <div style="display:flex;">
+                    <div class="phone-input-wrapper" style="display:flex; gap: 8px;">
                         <select name="country" id="country_selector" class="form-control-auth"
-                            style="width: 35%; margin-right: 5px;">
+                            style="width: 120px; padding-left: 10px;">
                             <?php foreach ($newcountries as $keycy => $valuecy) { ?>
                             <?php    $selected = ""; ?>
                             <option <?php    echo $selected; ?> code="<?php    echo $valuecy->code; ?>"
@@ -115,7 +112,7 @@ foreach ($countries as $keycountry => $valuecountry) {
                             <?php } ?>
                         </select>
                         <input placeholder="{{trans('lang.user_phone')}}" id="phone" type="number"
-                            class="form-control-auth" name="phone" required>
+                            class="form-control-auth" name="phone" required style="flex: 1;">
                     </div>
                     <div class="error" id="password_required_new1" style="display:none; color:red;"></div>
                 </div>
@@ -190,15 +187,13 @@ foreach ($countries as $keycountry => $valuecountry) {
 
     function togglePassword() {
         var x = document.getElementById("password");
-        var icon = document.querySelector(".password-toggle-icon i");
+        var iconContainer = document.querySelector(".password-toggle-icon");
         if (x.type === "password") {
             x.type = "text";
-            icon.classList.remove("fa-eye");
-            icon.classList.add("fa-eye-slash");
+            iconContainer.classList.add("active");
         } else {
             x.type = "password";
-            icon.classList.remove("fa-eye-slash");
-            icon.classList.add("fa-eye");
+            iconContainer.classList.remove("active");
         }
     }
 
@@ -394,7 +389,7 @@ foreach ($countries as $keycountry => $valuecountry) {
         if (!state.id) {
             return state.text;
         }
-        var baseUrl = "<?php echo \URL::to('/'); ?>/flags/120/"
+        var baseUrl = "<?php echo url('/'); ?>/flags/120/";
         var $state = $(
             '<span><img class="img-flag" /> <span></span></span>'
         );

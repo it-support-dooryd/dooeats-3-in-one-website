@@ -269,40 +269,40 @@
             html.push('<td>' + val.subscription_plan.name +' '+ activeClass+'</td>');
             html.push('<td>' + val.price + '</td>');
             if (val.payment_type.toString().toLowerCase() == "stripe") {
-                image = '{{ asset('images/stripe.png') }}';
+                image = "{{ asset('images/stripe.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "razorpay") {
-                image = '{{ asset('images/razorpay.png') }}';
+                image = "{{ asset('images/razorpay.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "paypal") {
-                image = '{{ asset('images/paypal.png') }}';
+                image = "{{ asset('images/paypal.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase()== "payfast") {
-                image = '{{ asset('images/payfast.png') }}';
+                image = "{{ asset('images/payfast.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase()== "paystack") {
-                image = '{{ asset('images/paystack.png') }}';
+                image = "{{ asset('images/paystack.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "flutterwave") {
-                image = '{{ asset('images/flutter_wave.png') }}';
+                image = "{{ asset('images/flutter_wave.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "mercadopago") {
-                image = '{{ asset('images/marcado_pago.png') }}';
+                image = "{{ asset('images/marcado_pago.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase()== "wallet") {
-                image = '{{ asset('images/dooeats_wallet.png') }}';
+                image = "{{ asset('images/dooeats_wallet.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "paytm") {
-                image = '{{ asset('images/paytm.png') }}';
+                image = "{{ asset('images/paytm.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "xendit") {
-                image = '{{ asset('images/Xendit.png') }}';
+                image = "{{ asset('images/Xendit.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "orangepay") {
-                image = '{{ asset('images/orangeMoney.png') }}';
+                image = "{{ asset('images/orangeMoney.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "midtrans") {
-                image = '{{ asset('images/midtrans.png') }}';
+                image = "{{ asset('images/midtrans.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else {
                 payment_method = val.payment_type;

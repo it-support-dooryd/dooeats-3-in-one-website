@@ -34,8 +34,8 @@
 
             <!-- Tab Bar -->
             <div class="auth-tabs">
-                <a href="{{ route('signup') }}" class="auth-tab-link active">{{trans('lang.sign_up')}} (User)</a>
-                <a href="http://127.0.0.1:8001/register" class="auth-tab-link">{{trans('lang.sign_up')}} (Restaurant)</a>
+                <a href="{{ route('login') }}" class="auth-tab-link active">Customer</a>
+                <a href="http://127.0.0.1:8002/login" class="auth-tab-link">Restaurant</a>
             </div>
 
             <h4 class="text-center mb-4" style="font-weight: 600; color: #333;">{{trans('lang.sign_up_with_us')}}</h4>
@@ -46,40 +46,37 @@
             <form class="auth-form" action="javascript:void(0)" onsubmit="return signupClick()">
                 
                 <div id="signup-fields">
-                    <div class="form-group-auth" id="firstName_div">
-                        <label class="form-label-auth">{{trans('lang.first_name')}}</label>
-                        <input type="text" class="form-control-auth" id="firstName" placeholder="Enter FirstName" required oninput="validateFName(this)">
-                        <input type="hidden" id="hidden_fName" />
-                    </div>
+                    <div class="form-row-auth">
+                        <div class="form-group-auth" id="firstName_div">
+                            <input type="text" class="form-control-auth" id="firstName" placeholder="Enter FirstName" required oninput="validateFName(this)">
+                            <input type="hidden" id="hidden_fName" />
+                        </div>
 
-                    <div class="form-group-auth" id="lastName_div">
-                        <label class="form-label-auth">{{trans('lang.last_name')}}</label>
-                        <input type="text" class="form-control-auth" id="lastName" placeholder="Enter LastName" required oninput="validateLName(this)">
-                        <input type="hidden" id="hidden_lName" />
+                        <div class="form-group-auth" id="lastName_div">
+                            <input type="text" class="form-control-auth" id="lastName" placeholder="Enter LastName" required oninput="validateLName(this)">
+                            <input type="hidden" id="hidden_lName" />
+                        </div>
                     </div>
 
                     <div class="form-group-auth" id="email_div">
-                        <label class="form-label-auth">{{trans('lang.email_address')}}</label>
                         <input type="email" class="form-control-auth" id="email" placeholder="Enter Email Address" autocomplete="new-password" required>
                         <input type="hidden" id="hidden_email" />
                     </div>
 
                     <div class="form-group-auth" id="phone-box">
-                        <label class="form-label-auth">{{trans('lang.user_phone')}}</label>
-                        <div style="display: flex;">
-                            <select name="country" id="country_selector" class="form-control-auth" style="width: 35%; margin-right: 5px;">
+                        <div class="phone-input-wrapper" style="display: flex; gap: 8px;">
+                            <select name="country" id="country_selector" class="form-control-auth" style="width: 120px; padding-left: 10px;">
                                 <?php foreach ($newcountries as $keycy => $valuecy) { ?>
                                     <option code="<?php echo $valuecy->code; ?>" value="<?php echo $keycy; ?>">+<?php echo $valuecy->phoneCode; ?></option>
                                 <?php } ?>
                             </select>
-                            <input class="form-control-auth" placeholder="{{trans('lang.user_phone')}}" id="mobileNumber" type="number" name="mobileNumber" required>
+                            <input class="form-control-auth" placeholder="{{trans('lang.user_phone')}}" id="mobileNumber" type="number" name="mobileNumber" required style="flex: 1;">
                         </div>
                         <input type="hidden" id="hidden_countrycode" />
                         <input type="hidden" id="hidden_phone" />
                     </div>
 
                     <div class="form-group-auth" id="pass_div">
-                        <label class="form-label-auth">{{trans('lang.password')}}</label>
                         <div class="password-input-group">
                             <input type="password" class="form-control-auth" id="password" placeholder="Enter Password" minlength="8" required autocomplete="new-password">
                             <div class="password-toggle-icon" onclick="togglePassword()">
@@ -89,9 +86,8 @@
                     </div>
 
                     <div class="form-group-auth" id="referral_div">
-                        <label class="form-label-auth">{{trans('lang.referral_code')}} ({{trans('lang.optional')}})</label>
-                        <input type="text" class="form-control-auth" id="referral_code" placeholder="Enter Referral Code">
-                         <input type="hidden" id="hidden_referral" />
+                        <input type="text" class="form-control-auth" id="referral_code" placeholder="Enter Referral Code (Optional)">
+                        <input type="hidden" id="hidden_referral" />
                     </div>
                 </div>
 
@@ -117,12 +113,12 @@
 
                 <div class="social-login-group">
                     <div class="social-btn" onclick="signupWithPhone()" id="btn-signup-phone" title="{{trans('lang.sinup_with_phone')}}" style="width: 100%; border-radius: 12px; gap: 10px;">
-                        <i class="fa fa-phone" style="font-size: 20px; color: #333;"></i> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                         <span style="font-weight: 500;">{{trans('lang.sinup_with_phone')}}</span>
                     </div>
 
                     <div class="social-btn" onclick="signupWithEmail()" id="btn-signup-email" style="display:none; width: 100%; border-radius: 12px; gap: 10px;">
-                         <i class="fa fa-envelope" style="font-size: 20px; color: #333;"></i>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                          <span style="font-weight: 500;">{{trans('lang.signup_with_email')}}</span>
                     </div>
                 </div>
@@ -178,15 +174,13 @@
 
         function togglePassword() {
             var x = document.getElementById("password");
-            var icon = document.querySelector(".password-toggle-icon i");
+            var iconContainer = document.querySelector(".password-toggle-icon");
             if (x.type === "password") {
                 x.type = "text";
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
+                iconContainer.classList.add("active");
             } else {
                 x.type = "password";
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
+                iconContainer.classList.remove("active");
             }
         }
 
@@ -299,7 +293,7 @@
             if (!state.id) {
                 return state.text;
             }
-            var baseUrl = "<?php echo \URL::to('/'); ?>/flags/120/";
+            var baseUrl = "<?php echo url('/'); ?>/flags/120/";
             var $state = $(
                 '<span><img src="' + baseUrl + '/' + newcountriesjs[state.element.value].toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
             );
@@ -309,7 +303,7 @@
             if (!state.id) {
                 return state.text;
             }
-            var baseUrl = "<?php echo \URL::to('/'); ?>/flags/120/"
+            var baseUrl = "<?php echo url('/'); ?>/flags/120/";
             var $state = $(
                 '<span><img class="img-flag" /> <span></span></span>'
             );

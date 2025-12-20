@@ -25,183 +25,135 @@
         <?php } ?>
     </style>
 </head>
-<body>
+@include('auth.default')
+<body class="auth-body">
     <?php
-    // Load countries data for phone authentication
-    $countries = file_get_contents(public_path('countriesdata.json'));
-    $countries = json_decode($countries);
-    $countries = (array) $countries;
-    $newcountries = [];
-    $newcountriesjs = [];
-    foreach ($countries as $keycountry => $valuecountry) {
-        $newcountries[$valuecountry->phoneCode] = $valuecountry;
-        $newcountriesjs[$valuecountry->phoneCode] = $valuecountry->code;
-    }
+        $filepath = public_path('countriesdata.json');
+        if (file_exists($filepath)) {
+            $countries = file_get_contents($filepath);
+            $countries = json_decode($countries);
+            $countries = (array) $countries;
+            $newcountries = array();
+            $newcountriesjs = array();
+            foreach ($countries as $keycountry => $valuecountry) {
+                $newcountries[$valuecountry->phoneCode] = $valuecountry;
+                $newcountriesjs[$valuecountry->phoneCode] = $valuecountry->code;
+            }
+        } else {
+            $newcountries = array();
+            $newcountriesjs = array();
+        }
+
+        $newcountriesjs_json = json_encode($newcountriesjs);
     ?>
-
-    <!-- Main Auth Page Container -->
-    <div class="auth-page">
-        <div class="auth-container">
-            
-            <!-- Left Panel: Signup Form -->
-            <div class="auth-form-panel">
-                
-                <!-- Tab Switcher: Restaurant / Customer -->
-                <div class="auth-tabs show-tabs">
-                    <button class="auth-tab active" data-tab="restaurant">
-                        Restaurant Signup
-                    </button>
-                    <a href="http://127.0.0.1:8000/signup" class="auth-tab" data-tab="customer">
-                        Customer Signup
-                    </a>
-                </div>
-
-                <!-- Header -->
-                <div class="auth-header" style="text-align: center;">
-                    <h1 class="auth-title">{{trans('lang.sign_up_with_us')}}</h1>
-                    <p class="auth-subtitle">{{trans('lang.sign_up_to_continue')}}</p>
-                </div>
-
-                <!-- Success/Error Messages -->
-                <div id="success-message" class="hidden" style="background: #d1fae5; border: 1px solid #10b981; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <p style="color: #047857; margin: 0; font-size: 0.875rem;" id="success-text"></p>
-                </div>
-                
-                <div id="error-message" class="hidden" style="background: #fee2e2; border: 1px solid #dc2626; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                    <p style="color: #dc2626; margin: 0; font-size: 0.875rem;" id="error-text"></p>
-                </div>
-
-                <!-- Signup Form -->
-                <form id="signup-form" class="auth-form">
-                    @csrf
-                    
-                    <!-- First Name -->
-                    <div class="form-group">
-                        <label class="form-label">{{ trans('lang.first_name') }}</label>
-                        <div class="form-input-wrapper">
-                            <input type="text" id="first-name" name="first_name" class="form-input" placeholder="Enter your first name" required>
-                        </div>
-                        <div class="error-message" id="first-name-error"></div>
-                    </div>
-
-                    <!-- Last Name -->
-                    <div class="form-group">
-                        <label class="form-label">{{ trans('lang.last_name') }}</label>
-                        <div class="form-input-wrapper">
-                            <input type="text" id="last-name" name="last_name" class="form-input" placeholder="Enter your last name" required>
-                        </div>
-                        <div class="error-message" id="last-name-error"></div>
-                    </div>
-
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label class="form-label">{{ trans('lang.email') }}</label>
-                        <div class="form-input-wrapper">
-                            <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
-                        </div>
-                        <div class="error-message" id="email-error"></div>
-                    </div>
-
-                    <!-- Country Selector -->
-                    <div class="form-group">
-                        <label class="form-label">Country</label>
-                        <select name="country" id="country-selector" class="country-selector">
-                            <?php foreach ($newcountries as $keycy => $valuecy) { ?>
-                                <option code="<?php echo $valuecy->code; ?>" value="<?php echo $keycy; ?>">
-                                    +<?php echo $valuecy->phoneCode; ?> {{ $valuecy->countryName }}
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <!-- Phone Number -->
-                    <div class="form-group">
-                        <label class="form-label">{{ trans('lang.user_phone') }}</label>
-                        <div class="form-input-wrapper">
-                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter phone number" required>
-                        </div>
-                        <div class="error-message" id="phone-error"></div>
-                    </div>
-
-                    <!-- Password with Toggle -->
-                    <div class="form-group">
-                        <label class="form-label">{{ trans('lang.password') }}</label>
-                        <div class="form-input-wrapper">
-                            <input type="password" id="password" name="password" class="form-input" placeholder="Create a password" required>
-                            <!-- Show/Hide Password Toggle -->
-                            <svg class="password-toggle" id="toggle-password" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                        </div>
-                        <div class="error-message" id="password-error"></div>
-                    </div>
-
-                    <!-- Confirm Password with Toggle -->
-                    <div class="form-group">
-                        <label class="form-label">Confirm Password</label>
-                        <div class="form-input-wrapper">
-                            <input type="password" id="confirm-password" name="confirm_password" class="form-input" placeholder="Confirm your password" required>
-                            <!-- Show/Hide Password Toggle -->
-                            <svg class="password-toggle" id="toggle-confirm-password" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                        </div>
-                        <div class="error-message" id="confirm-password-error"></div>
-                    </div>
-
-                    <!-- Terms & Conditions Checkbox -->
-                    <div class="form-group">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; cursor: pointer;">
-                            <input type="checkbox" id="terms" name="terms" style="width: 18px; height: 18px; cursor: pointer;" required>
-                            <span>I agree to the <a href="#" class="auth-link">Terms & Conditions</a></span>
-                        </label>
-                        <div class="error-message" id="terms-error"></div>
-                    </div>
-
-                    <!-- Signup Button -->
-                    <button type="submit" class="btn btn-primary" id="signup-btn">
-                        <span id="signup-btn-text" style="flex: 1; text-align: center;">SIGN UP</span>
-                    </button>
-
-                    <!-- Social Auth Buttons -->
-                    <div class="social-auth-buttons" style="margin-top: 1.5rem;">
-                        <button type="button" class="social-btn" id="google-signup-btn">
-                            <div class="social-btn-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-                                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
-                                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
-                                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
-                                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
-                                </svg>
-                            </div>
-                            Google
-                        </button>
-                        <button type="button" class="social-btn" id="apple-signup-btn">
-                            <div class="social-btn-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                                </svg>
-                            </div>
-                            Apple
-                        </button>
-                    </div>
-                </form>
-
-                <!-- Footer -->
-                <div class="auth-footer">
-                    Already have an account? <a href="{{ route('login') }}" class="auth-link">Login</a>
-                </div>
+    <div class="auth-overlay"></div>
+    <div class="auth-container">
+        <div class="auth-card" style="max-width: 500px;">
+            <div class="auth-logo">
+                <img src="{{ asset('images/logo_web.png') }}" alt="Dooeats Logo">
             </div>
 
+            <!-- Tab Bar -->
+            <div class="auth-tabs">
+                <a href="http://127.0.0.1:8000/signup" class="auth-tab-link">{{trans('lang.sign_up')}} (User)</a>
+                <a href="{{ route('register') }}" class="auth-tab-link active">{{trans('lang.sign_up')}} (Restaurant)</a>
+            </div>
 
+            <h4 class="text-center mb-1" style="font-weight: 700; color: #333;">{{trans('lang.sign_up_with_us')}}</h4>
+            <span class="auth-subtitle text-center mb-4">{{trans('lang.sign_up_to_continue')}}</span>
 
+            <!-- Success/Error Messages -->
+            <div id="success-message" class="alert alert-success d-none mb-3">
+                <p class="m-0" id="success-text" style="font-size: 14px;"></p>
+            </div>
+            
+            <div id="error-message" class="alert alert-danger d-none mb-3">
+                <p class="m-0" id="error-text" style="font-size: 14px;"></p>
+            </div>
+
+            <form id="signup-form" class="text-left">
+                @csrf
+                
+                <div class="row">
+                    <div class="col-md-6 pr-md-1">
+                        <div class="form-group-auth">
+                            <input type="text" id="first-name" name="first_name" class="form-control-auth" placeholder="{{ trans('lang.first_name') }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-md-1">
+                        <div class="form-group-auth">
+                            <input type="text" id="last-name" name="last_name" class="form-control-auth" placeholder="{{ trans('lang.last_name') }}" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-auth">
+                    <input type="email" id="email" name="email" class="form-control-auth" placeholder="{{ trans('lang.email') }}" required>
+                </div>
+
+                <div class="form-group-auth d-flex gap-2">
+                    <select name="country" id="country-selector" class="form-control-auth" style="width: 120px; padding-left: 10px; flex-shrink: 0; margin-right: 5px;">
+                        <?php foreach ($newcountries as $keycy => $valuecy) { ?>
+                            <option code="<?php echo $valuecy->code; ?>" value="<?php echo $keycy; ?>">
+                                +<?php echo $valuecy->phoneCode; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                    <input type="tel" id="phone" name="phone" class="form-control-auth" placeholder="{{ trans('lang.user_phone') }}" required>
+                </div>
+
+                <div class="form-group-auth">
+                    <div class="password-input-group">
+                        <input type="password" id="password" name="password" class="form-control-auth" placeholder="{{ trans('lang.password') }}" required>
+                        <div class="password-toggle-icon" id="toggle-password">
+                            <i class="fa fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group-auth">
+                    <div class="password-input-group">
+                        <input type="password" id="confirm-password" name="confirm_password" class="form-control-auth" placeholder="Confirm Password" required>
+                        <div class="password-toggle-icon" id="toggle-confirm-password">
+                            <i class="fa fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="remember-me-group mb-4">
+                    <label class="custom-switch-auth mb-0">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span class="slider-auth"></span>
+                        <span style="font-size: 12px;">I agree to the <a href="#" class="forgot-password-link">Terms & Conditions</a></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-auth-primary" id="signup-btn">
+                    <span>SIGN UP</span>
+                </button>
+
+                <div class="or-divider mt-4 mb-3 d-flex align-items-center justify-content-center">
+                    <span style="background: white; padding: 0 10px; color: #999; font-size: 12px;">OR CONTINUE WITH</span>
+                </div>
+
+                <div class="social-login-group">
+                    <div class="social-btn" id="google-signup-btn" title="Google" style="cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px">
+                            <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <span style="color:#888;">Already have an account? </span>
+                    <a href="{{ route('login') }}" class="forgot-password-link">Login</a>
+                </div>
+            </form>
         </div>
     </div>
 
     <!-- Loading Overlay -->
-    <div id="loading-overlay" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+    <div id="loading-overlay" class="d-none" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 9999;">
         <div style="background: white; padding: 2rem; border-radius: 12px; text-align: center;">
             <div class="spinner" style="width: 40px; height: 40px; margin: 0 auto 1rem;"></div>
             <p style="color: var(--text-dark); font-weight: 600;">Creating your account...</p>
@@ -325,8 +277,8 @@
 
             // Clear previous errors
             $('.error-message').removeClass('show').html('');
-            $('#error-message').addClass('hidden');
-            $('#success-message').addClass('hidden');
+            $('#error-message').addClass('d-none');
+            $('#success-message').addClass('d-none');
 
             // Validation
             var hasError = false;
@@ -381,7 +333,7 @@
             }
 
             // Show loading
-            $('#loading-overlay').removeClass('hidden');
+            $('#loading-overlay').removeClass('d-none');
             $('#signup-btn').prop('disabled', true);
 
             try {
@@ -436,29 +388,29 @@
                 }
 
                 // Hide loading
-                $('#loading-overlay').addClass('hidden');
+                $('#loading-overlay').addClass('d-none');
                 $('#signup-btn').prop('disabled', false);
 
                 // Show success message and redirect
                 if (restaurant_active) {
                     $('#success-text').html('{{ trans("lang.thank_you_signup_msg") }}');
-                    $('#success-message').removeClass('hidden');
+                    $('#success-message').removeClass('d-none');
                     setTimeout(function() {
                         window.location.href = "{{ route('subscription-plan.show') }}";
                     }, 3000);
                 } else {
                     $('#success-text').html('{{ trans("lang.signup_waiting_approval") }}');
-                    $('#success-message').removeClass('hidden');
+                    $('#success-message').removeClass('d-none');
                     setTimeout(function() {
                         window.location.href = "{{ route('login') }}";
                     }, 3000);
                 }
 
             } catch (error) {
-                $('#loading-overlay').addClass('hidden');
+                $('#loading-overlay').addClass('d-none');
                 $('#signup-btn').prop('disabled', false);
                 $('#error-text').html(error.message || 'An error occurred during signup');
-                $('#error-message').removeClass('hidden');
+                $('#error-message').removeClass('d-none');
                 window.scrollTo(0, 0);
             }
         }
@@ -508,7 +460,7 @@
         });
 
         async function handleSocialSignup(user, provider) {
-            $('#loading-overlay').removeClass('hidden');
+            $('#loading-overlay').removeClass('d-none');
 
             try {
                 // Check if user already exists
@@ -551,22 +503,22 @@
                     'provider': provider
                 });
 
-                $('#loading-overlay').addClass('hidden');
+                $('#loading-overlay').addClass('d-none');
 
                 if (restaurant_active) {
                     window.location.href = "{{ route('subscription-plan.show') }}";
                 } else {
                     $('#success-text').html('{{ trans("lang.signup_waiting_approval") }}');
-                    $('#success-message').removeClass('hidden');
+                    $('#success-message').removeClass('d-none');
                     setTimeout(function() {
                         window.location.href = "{{ route('login') }}";
                     }, 3000);
                 }
 
             } catch (error) {
-                $('#loading-overlay').addClass('hidden');
+                $('#loading-overlay').addClass('d-none');
                 $('#error-text').html(error.message || 'An error occurred during signup');
-                $('#error-message').removeClass('hidden');
+                $('#error-message').removeClass('d-none');
             }
         }
 

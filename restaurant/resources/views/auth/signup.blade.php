@@ -42,21 +42,21 @@ if ($phoneNumber) {
                         <div class="form-group row width-50">
                             <label class="col-3 control-label">{{ trans('lang.first_name') }}</label>
                             <div class="col-7">
-                                <input type="text" class="form-control user_first_name" required placeholder="{{ trans('lang.user_first_name_help') }}"
+                                <input type="text" class="form-control-auth user_first_name" required placeholder="{{ trans('lang.user_first_name_help') }}"
                                     value="{{ request('firstName') ? request('firstName') : '' }}">
                             </div>
                         </div>
                         <div class="form-group row width-50">
                             <label class="col-3 control-label">{{ trans('lang.last_name') }}</label>
                             <div class="col-7">
-                                <input type="text" class="form-control user_last_name" placeholder="{{ trans('lang.user_last_name_help') }}"
+                                <input type="text" class="form-control-auth user_last_name" placeholder="{{ trans('lang.user_last_name_help') }}"
                                     value="{{ request('lastName') && request('lastName') != 'undefined' ? request('lastName') : '' }}">
                             </div>
                         </div>
                         <div class="form-group row width-50">
                             <label class="col-3 control-label">{{ trans('lang.email') }}</label>
                             <div class="col-7">
-                                <input type="email" class="form-control user_email" required placeholder="{{ trans('lang.user_email_help') }}"
+                                <input type="email" class="form-control-auth user_email" required placeholder="{{ trans('lang.user_email_help') }}"
                                        value="{{ request('email') ? request('email') : '' }}"  @if(request('loginType') === 'social') disabled @endif>
                             </div>
                         </div>
@@ -64,7 +64,7 @@ if ($phoneNumber) {
                             <label class="col-3 control-label">{{ trans('lang.user_phone') }}</label>
                             <div class="col-12">
                                 <div class="phone-box position-relative" id="phone-box"> 
-                                <select name="country" id="country_selector" class="form-control" @if(request('loginType') === 'phone') disabled @endif>
+                                <select name="country" id="country_selector" class="form-control-auth" @if(request('loginType') === 'phone') disabled @endif>
                                     @foreach($newcountries as $keycy => $valuecy)
                                         <option code="{{ $valuecy->code }}" value="{{ $keycy }}"
                                             @if($selectedCountryCode == $keycy) selected @endif>
@@ -72,7 +72,7 @@ if ($phoneNumber) {
                                         </option>
                                     @endforeach
                                 </select>
-                                <input class="form-control mt-2" placeholder="{{ trans('lang.user_phone') }}" id="phone" type="text"
+                                <input class="form-control-auth mt-2" placeholder="{{ trans('lang.user_phone') }}" id="phone" type="text"
                                     name="phone" value="{{ $phone }}" required autocomplete="phone" @if(request('loginType') === 'phone') disabled @endif autofocus>
                                 <div id="error2" class="err"></div>
                                 </div>

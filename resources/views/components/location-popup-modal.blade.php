@@ -55,11 +55,7 @@
                     </div>
                 </div>
 
-                <!-- Error Message -->
-                <div class="alert alert-danger mt-3 d-none" id="locationErrorAlert" role="alert">
-                    <i class="feather-alert-circle mr-2"></i>
-                    <span id="locationErrorMessage"></span>
-                </div>
+
 
                 <!-- Geolocation Info -->
                 <div class="location-info-box mt-3 p-3 bg-light rounded">

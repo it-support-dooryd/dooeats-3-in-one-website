@@ -490,14 +490,14 @@
                 var user_name = val.user;
                 var routeuser = "Javascript:void(0)";
                 if (user_role == "customer") {
-                    routeuser = '{{ route('users.view', ':id') }}';
+                    routeuser = "{{ route('users.view', ':id') }}";
                     routeuser = routeuser.replace(':id', val.user_id);
                 } else if (user_role == "driver") {
-                    routeuser = '{{ route('drivers.view', ':id') }}';
+                    routeuser = "{{ route('drivers.view', ':id') }}";
                     routeuser = routeuser.replace(':id', val.user_id);
                 } else if (user_role == "vendor") {
                     if (val.payoutuser.vendorID != '') {
-                        routeuser = '{{ route('restaurants.view', ':id') }}';
+                        routeuser = "{{ route('restaurants.view', ':id') }}";
                         routeuser = routeuser.replace(':id', val.payoutuser.vendorID);
                     }
                 }
@@ -549,49 +549,49 @@
             var payment_method = '';
             if (val.payment_method) {
                 if (val.payment_method == "Stripe" || val.payment_method == "stripe") {
-                    image = '{{ asset('images/stripe.png') }}';
+                    image = "{{ asset('images/stripe.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "RazorPay" || val.payment_method == "razorPay") {
-                    image = '{{ asset('images/razorepay.png') }}';
+                    image = "{{ asset('images/razorepay.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Paypal" || val.payment_method == "paypal") {
-                    image = '{{ asset('images/paypal.png') }}';
+                    image = "{{ asset('images/paypal.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "PayFast" || val.payment_method == "payFast") {
-                    image = '{{ asset('images/payfast.png') }}';
+                    image = "{{ asset('images/payfast.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "PayStack" || val.payment_method == "payStack") {
-                    image = '{{ asset('images/paystack.png') }}';
+                    image = "{{ asset('images/paystack.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "FlutterWave" || val.payment_method == "flutterWave") {
-                    image = '{{ asset('images/flutter_wave.png') }}';
+                    image = "{{ asset('images/flutter_wave.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Mercado Pago" || val.payment_method == "mercado Pago") {
-                    image = '{{ asset('images/marcado_pago.png') }}';
+                    image = "{{ asset('images/marcado_pago.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Wallet" || val.payment_method == "wallet") {
-                    image = '{{ asset('images/dooeats_wallet.png') }}';
+                    image = "{{ asset('images/dooeats_wallet.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Paytm" || val.payment_method == "paytm") {
-                    image = '{{ asset('images/paytm.png') }}';
+                    image = "{{ asset('images/paytm.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Xendit" || val.payment_method == "xendit") {
-                    image = '{{ asset('images/xendit.png') }}';
+                    image = "{{ asset('images/xendit.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "OrangePay" || val.payment_method == "orangepay") {
-                    image = '{{ asset('images/orangeMoney.png') }}';
+                    image = "{{ asset('images/orangeMoney.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "MidTrans" || val.payment_method == "midtrans") {
-                    image = '{{ asset('images/midtrans.png') }}';
+                    image = "{{ asset('images/midtrans.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Cancelled Order Payment") {
-                    image = '{{ asset('images/cancel_order.png') }}';
+                    image = "{{ asset('images/cancel_order.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Refund Amount") {
-                    image = '{{ asset('images/refund_amount.png') }}';
+                    image = "{{ asset('images/refund_amount.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else if (val.payment_method == "Referral Amount") {
-                    image = '{{ asset('images/reffral_amount.png') }}';
+                    image = "{{ asset('images/reffral_amount.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
                 } else {
                     payment_method = val.payment_method;

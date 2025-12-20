@@ -3985,9 +3985,23 @@ a:hover {
     right: 35px;
 }
 
+/* Banner alignment with main body content */
+.ecommerce-banner.multivendor-banner {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.ecommerce-banner.multivendor-banner .ecommerce-inner {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
 .ecommerce-banner.multivendor-banner .banner-img img {
     height: 450px;
     object-fit: cover;
+    width: 100%;
+    border-radius: 15px;
 }
 
 .top-cat-list .cat-link span {
@@ -6131,7 +6145,12 @@ a.restaurant_direction {
 
     .ecommerce-banner .banner-img img,
     .ecommerce-banner.multivendor-banner .banner-img img {
-        height: 450px;
+        height: 350px;
+        border-radius: 10px;
+    }
+
+    .ecommerce-banner.multivendor-banner {
+        padding: 0 15px;
     }
 
     .col-md-2.top-cat-list,
@@ -6384,6 +6403,11 @@ a.restaurant_direction {
     .ecommerce-banner .banner-img img,
     .ecommerce-banner.multivendor-banner .banner-img img {
         height: 250px;
+        border-radius: 10px;
+    }
+
+    .ecommerce-banner.multivendor-banner {
+        padding: 0 15px;
     }
 
     .col-md-2.top-cat-list,
@@ -6705,6 +6729,11 @@ a.restaurant_direction {
     .ecommerce-banner .banner-img img,
     .ecommerce-banner.multivendor-banner .banner-img img {
         height: 200px;
+        border-radius: 10px;
+    }
+
+    .ecommerce-banner.multivendor-banner {
+        padding: 0 15px;
     }
 
     .col-md-2.top-cat-list,

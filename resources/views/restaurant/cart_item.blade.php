@@ -173,7 +173,7 @@ if (@$cart['coupon_code']) {
     <?php $total_item_price = $total_price; ?>
 
 </div>
-<?php } ?>
+
 
 <?php if($item_count > 0){ ?>
 
@@ -209,8 +209,7 @@ if (@$cart['coupon_code']) {
             $delivery_option = $cart['delivery_option'];
         } else {
             $delivery_option = @$cart['delivery_option'];
-            Session::get('takeawayOption');
-            if (Session::get('takeawayOption') == 'true') {
+            if (session('takeawayOption') == 'true') {
                 $delivery_option = 'takeaway';
             } else {
                 $delivery_option = 'delivery';
@@ -504,7 +503,6 @@ if (@$cart['coupon_code']) {
 <?php } ?>
 
 <?php }else{ ?>
-
 <div class="bg-white border-bottom py-2">
     <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
         <span>{{ trans('lang.your_cart_is_empty') }}</span>

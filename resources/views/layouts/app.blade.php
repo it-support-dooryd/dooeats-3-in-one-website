@@ -23,6 +23,8 @@
     <link href="{{asset('vendor/bootstrap/css/bootstrap-rtl.min.css')}}" rel="stylesheet">
     <?php } ?>
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/brand-theme.css')}}" rel="stylesheet">
+    <link href="{{asset('css/location-modal.css')}}" rel="stylesheet">
     <?php if(str_replace('_', '-', app()->getLocale()) == 'ar' || @$_COOKIE['is_rtl'] == 'true'){ ?>
     <link href="{{asset('css/style_rtl.css')}}" rel="stylesheet">
     <?php } ?>
@@ -34,7 +36,7 @@
         var application_name = '<?php echo @$_COOKIE['application_name']; ?>';
         var meta_title = '<?php echo @$_COOKIE['meta_title']; ?>';
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="{{ asset('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet">
