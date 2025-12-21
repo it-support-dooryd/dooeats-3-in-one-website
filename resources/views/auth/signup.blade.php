@@ -40,10 +40,10 @@
 
             <h4 class="text-center mb-4" style="font-weight: 600; color: #333;">{{trans('lang.sign_up_with_us')}}</h4>
             
-            <div class="error" style="color: red; text-align: center;" id="field_error"></div>
-            <div class="error" id="field_error1" style="color:red; display:none; text-align: center;"></div>
+            <div class="error" style="color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 14px; font-weight: 500;" id="field_error"></div>
+            <div class="error" id="field_error1" style="color:#dc2626; display:none; text-align: center; margin-bottom: 15px; font-size: 14px; font-weight: 500;"></div>
 
-            <form class="auth-form" action="javascript:void(0)" onsubmit="return signupClick()">
+            <form class="auth-form" action="javascript:void(0)" onsubmit="return signupClick()"
                 
                 <div id="signup-fields">
                     <div class="form-row-auth">

@@ -44,7 +44,7 @@
         var id_order = database.collection('tmp').doc().id;
         var userId = "<?php echo $id; ?>";
         var userDetailsRef = database.collection('users').where('id', "==", userId);
-        var razorpaySettings = database.collection('settings').doc('razorpaySettings');
+
         <?php if(@$cart['payment_status'] == true && !empty(@$cart['gift_cart_order']['order_json'])){ ?>
         $("#data-table_processing_order").show();
         var order_json = '<?php echo json_encode($cart['gift_cart_order']['order_json']); ?>';

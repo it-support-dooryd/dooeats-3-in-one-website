@@ -1322,9 +1322,7 @@ return [
 
     'website_color_settings' => 'Website Color',
 
-    'flutterWave' => 'FlutterWave',
-
-    'app_setting_flutterWave' => 'Setting flutterWave',
+    
 
     'app_setting_enable_payment' => 'Active',
 
@@ -2094,7 +2092,7 @@ return [
 
     'withdraw_setting'=>'Withdrawal Settings',
 
-    'withdraw_setting_enable_stripe_help'=>'Enable this option to allow Stripe as a payment method for restaurant/driver withdrawals.',
+    
 
     'withdraw_setting_enable_razorpay_help'=>'Enable this option to allow Razorpay as a payment method for restaurant/driver withdrawals.',
 
@@ -2106,15 +2104,13 @@ return [
 
     'withdraw_setting_enable_paystack_help'=>'Enable this option to allow Paystack as a payment method for restaurant/driver withdrawals.',
 
-    'withdraw_setting_enable_flutterwave_help'=>'Enable this option to allow Flutterwave as a payment method for restaurant/driver withdrawals.',
-
-    'withdraw_setting_enable_mercadopago_help'=>'Enable this option to allow Mercadopago as a payment method for restaurant/driver withdrawals.',
+    option to allow Mercadopago as a payment method for restaurant/driver withdrawals.',
 
     'withdraw_method'=>'Withdraw Method',
 
     'app_setting_enable_paystack'=>'Enable Paystack',
 
-    'app_setting_enable_flutterwave'=>'Enable FlutterWave',
+
 
     'check_atleast_one_side_of_document_from_front_or_back'=>'Check atleast one side of document either front or back side',
 

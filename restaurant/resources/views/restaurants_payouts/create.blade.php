@@ -112,14 +112,7 @@
             paypalWithdrawEnabled = true;
         }
     });
-    var flutterWaveWithdrawEnabled = false;
-    var flutterWaveSettings = database.collection('settings').doc('flutterWave');
-    flutterWaveSettings.get().then(async function (snapshots) {
-        var flutterWaveData = snapshots.data();
-        if (flutterWaveData.isWithdrawEnabled) {
-            flutterWaveWithdrawEnabled = true;
-        }
-    });
+    
     var stripeWithdrawEnabled = false;
     var stripeSettings = database.collection('settings').doc('stripeSettings');
     stripeSettings.get().then(async function (snapshots) {
@@ -160,9 +153,7 @@
                 if (data.paypal && data.paypal.enable && paypalWithdrawEnabled) {
                     paymentMethodArr.push({ 'text': data.paypal.name, 'value': 'paypal' });
                 }
-                if (data.flutterwave && data.flutterwave.enable && flutterWaveWithdrawEnabled) {
-                    paymentMethodArr.push({ 'text': data.flutterwave.name, 'value': 'flutterwave' });
-                }
+                
                 $('#withdraw_method').append($("<option></option>")
                         .attr("value", 'bank')
                         .text('Bank Transfer'));

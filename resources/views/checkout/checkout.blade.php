@@ -237,10 +237,7 @@
             }
         });
     }
-    var razorpaySettings = database.collection('settings').doc('razorpaySettings');
     var codSettings = database.collection('settings').doc('CODSettings');
-    var stripeSettings = database.collection('settings').doc('stripeSettings');
-    var paypalSettings = database.collection('settings').doc('paypalSettings');
     var walletSettings = database.collection('settings').doc('walletSettings');
     taxSetting = [];
     var reftaxSetting = database.collection('tax').where('country', '==', userCountry).where('enable', '==', true);
@@ -454,50 +451,9 @@
                 $("#cod_box").remove();
             }
         });
-        razorpaySettings.get().then(async function(razorpaySettingsSnapshots) {
-            razorpaySetting = razorpaySettingsSnapshots.data();
-            if (razorpaySetting.isEnabled) {
-                var isEnabled = razorpaySetting.isEnabled;
-                $("#isEnabled").val(isEnabled);
-                var isSandboxEnabled = razorpaySetting.isSandboxEnabled;
-                $("#isSandboxEnabled").val(isSandboxEnabled);
-                var razorpayKey = razorpaySetting.razorpayKey;
-                $("#razorpayKey").val(razorpayKey);
-                var razorpaySecret = razorpaySetting.razorpaySecret;
-                $("#razorpaySecret").val(razorpaySecret);
-                $("#razorpay_box").show();
-            }
-        });
-        stripeSettings.get().then(async function(stripeSettingsSnapshots) {
-            stripeSetting = stripeSettingsSnapshots.data();
-            if (stripeSetting.isEnabled) {
-                var isEnabled = stripeSetting.isEnabled;
-                var isSandboxEnabled = stripeSetting.isSandboxEnabled;
-                $("#isStripeSandboxEnabled").val(isSandboxEnabled);
-                var stripeKey = stripeSetting.stripeKey;
-                $("#stripeKey").val(stripeKey);
-                var stripeSecret = stripeSetting.stripeSecret;
-                $("#stripeSecret").val(stripeSecret);
-                $("#stripe_box").show();
-            }
-        });
-        paypalSettings.get().then(async function(paypalSettingsSnapshots) {
-            paypalSetting = paypalSettingsSnapshots.data();
-            if (paypalSetting.isEnabled) {
-                var isEnabled = paypalSetting.isEnabled;
-                var isLive = paypalSetting.isLive;
-                if (isLive) {
-                    $("#ispaypalSandboxEnabled").val(false);
-                } else {
-                    $("#ispaypalSandboxEnabled").val(true);
-                }
-                var paypalAppId = paypalSetting.paypalAppId;
-                $("#paypalKey").val(paypalAppId);
-                var paypalSecret = paypalSetting.paypalSecret;
-                $("#paypalSecret").val(paypalSecret);
-                $("#paypal_box").show();
-            }
-        });
+
+
+
         walletSettings.get().then(async function(walletSettingsSnapshots) {
             walletSetting = walletSettingsSnapshots.data();
             if (walletSetting.isEnabled) {
@@ -897,63 +853,7 @@
                                 window.location.href = "<?php echo route('pay'); ?>";
                             }
                         });
-                    } else if (payment_method == "mercadopago") {
-                        var mercadopago_public_key = $("#mercadopago_public_key").val();
-                        var mercadopago_access_token = $("#mercadopago_access_token").val();
-                        var mercadopago_isSandbox = $("#mercadopago_isSandbox").val();
-                        var mercadopago_isEnabled = $("#mercadopago_isEnabled").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            quantity: quantity,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                mercadopago_public_key: mercadopago_public_key,
-                                mercadopago_access_token: mercadopago_access_token,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                id: id_order,
-                                quantity: quantity,
-                                total_pay: total_pay,
-                                mercadopago_isSandbox: mercadopago_isSandbox,
-                                mercadopago_isEnabled: mercadopago_isEnabled,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
+
                     } else if (payment_method == "stripe") {
                         var stripeKey = $("#stripeKey").val();
                         var stripeSecret = $("#stripeSecret").val();
@@ -1006,58 +906,7 @@
                                 window.location.href = "<?php echo route('pay'); ?>";
                             }
                         });
-                    } else if (payment_method == "paypal") {
-                        var paypalKey = $("#paypalKey").val();
-                        var paypalSecret = $("#paypalSecret").val();
-                        var ispaypalSandboxEnabled = $("#ispaypalSandboxEnabled").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                paypalKey: paypalKey,
-                                paypalSecret: paypalSecret,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                ispaypalSandboxEnabled: ispaypalSandboxEnabled,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
+
                     } else if (payment_method == "payfast") {
                         var payfast_merchant_key = $("#payfast_merchant_key").val();
                         var payfast_merchant_id = $("#payfast_merchant_id").val();

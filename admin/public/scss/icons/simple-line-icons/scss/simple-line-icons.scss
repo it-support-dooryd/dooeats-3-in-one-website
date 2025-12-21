@@ -183,7 +183,6 @@ $simple-line-icon-prefix: "icon-" !default;
   &symbol-male,
   &target,
   &credit-card,
-  &paypal,
   &social-tumblr,
   &social-twitter,
   &social-facebook,
@@ -872,9 +871,6 @@ $simple-line-icon-prefix: "icon-" !default;
   content: "\e025";
 }
 
-.#{$simple-line-icon-prefix}paypal:before {
-  content: "\e608";
-}
 
 .#{$simple-line-icon-prefix}social-tumblr:before {
   content: "\e00a";

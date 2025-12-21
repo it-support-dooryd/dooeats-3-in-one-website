@@ -40,7 +40,51 @@
           rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="{{ asset('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet">
+    <style>
+        /* Page Loading Overlay */
+        #page-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        #page-loading-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #page-loading-overlay img {
+            width: 500px;
+            height: 500px;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body class="fixed-bottom-bar">
+    <!-- Page Loading Overlay -->
+    <div id="page-loading-overlay">
+        <img src="{{ asset('img/spinner.gif') }}" alt="Loading...">
+    </div>
+
+    <script>
+        // Hide loading overlay when page is fully loaded
+        window.addEventListener('load', function() {
+            const overlay = document.getElementById('page-loading-overlay');
+            if (overlay) {
+                overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    overlay.style.display = 'none';
+                }, 500); // Match transition duration
+            }
+        });
+    </script>
 </body>
 </html>

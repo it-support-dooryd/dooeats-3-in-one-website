@@ -62,7 +62,6 @@
     var stripeObj = '';
     var razorpayObj = '';
     var paypalObj = '';
-    var flutterwaveObj = '';
     var razorpayWithdrawEnabled = false;
     var razorpaySettings = database.collection('settings').doc('razorpaySettings');
     razorpaySettings.get().then(async function (snapshots) {
@@ -77,14 +76,6 @@
         var paypalData = snapshots.data();
         if (paypalData.isWithdrawEnabled) {
             paypalWithdrawEnabled = true;
-        }
-    });
-    var flutterWaveWithdrawEnabled = false;
-    var flutterWaveSettings = database.collection('settings').doc('flutterWave');
-    flutterWaveSettings.get().then(async function (snapshots) {
-        var flutterWaveData = snapshots.data();
-        if (flutterWaveData.isWithdrawEnabled) {
-            flutterWaveWithdrawEnabled = true;
         }
     });
     var stripeWithdrawEnabled = false;
@@ -125,7 +116,7 @@
     async function getListData(snapshots) {
         var data = snapshots.docs[0].data();
         docId = data.id;
-        if (!data.hasOwnProperty('stripe') && !data.hasOwnProperty('razorpay') && !data.hasOwnProperty('paypal') && !data.hasOwnProperty('flutterwave')) {
+        if (!data.hasOwnProperty('stripe') && !data.hasOwnProperty('razorpay') && !data.hasOwnProperty('paypal')) {
             return '<p class="text-center font-weight-bold">{{trans("lang.no_record_found")}}</p>';
         }
         var paymentMethodArr = {};
@@ -141,11 +132,7 @@
             paymentMethodArr['paypal'] = data.paypal;
             paypalObj = data.paypal;
         }
-        if (data.hasOwnProperty('flutterwave') && flutterWaveWithdrawEnabled) {
-            paymentMethodArr['flutterwave'] = data.flutterwave;
-            flutterwaveObj = data.flutterwave;
-        }
-        html = '';
+           html = '';
         $.each(paymentMethodArr, function(key, data) {
             html = html + '<div class="method '+data.name+' d-flex border-bottom pb-3 mb-3 justify-content-between align-items-center">';
                 html = html + '<div class="image d-flex align-items-center col-md-4 pl-0"><img src="{!! asset("images/'+key+'.png") !!}" style="width: 90px;"><h4 class="d-block text-center mt-2 text-dark ml-3">' + data.name + '</h4></div>';
@@ -171,13 +158,7 @@
                     window.location.href = '{{ route("withdraw-method")}}';
                 })
             }
-            if (name == 'FlutterWave') {
-                database.collection('withdraw_method').doc(docId).update({
-                    'flutterwave': firebase.firestore.FieldValue.delete(),
-                }).then(function (result) {
-                    window.location.href = '{{ route("withdraw-method")}}';
-                })
-            }
+
             if (name == 'RazorPay') {
                 database.collection('withdraw_method').doc(docId).update({
                     'razorpay': firebase.firestore.FieldValue.delete(),
@@ -232,28 +213,7 @@
                     html = html + '</div>';
                 html = html + '</div>';
             html = html + '</div>';
-        }else if (paymentMethod == 'FlutterWave') {
-            var html = '';
-            html = html + '<input type="hidden" value="'+paymentMethod+'" id="method_name">';
-            html = html + '<div class="form-group row width-100">';
-                html = html + '<label class="col-5 control-label">{{trans('lang.app_setting_flutterwave_accountnumber')}}</label>';
-                html = html + '<div class="col-12">';
-                    html = html + '<input type="text" class=" form-control flutterwave_accountNumber" value="' + flutterwaveObj.accountNumber + '">';
-                    html = html + '<div class="form-text text-muted">';
-                        html = html + '{!! trans('lang.app_setting_flutterwave_accountnumber_help') !!}';
-                    html = html + '</div>';
-                html = html + '</div>';
-            html = html + '</div>';
-            html = html + '<div class="form-group row width-100">';
-                html = html + '<label class="col-5 control-label">{{trans('lang.app_setting_flutterwave_bankcode')}}</label>';
-                html = html + '<div class="col-12">';
-                    html = html + '<input type="text" class=" form-control flutterwave_bankCode" value="' + flutterwaveObj.bankCode + '">';
-                    html = html + '<div class="form-text text-muted">';
-                        html = html + '{!! trans('lang.app_setting_flutterwave_bankcode_help') !!}';
-                    html = html + '</div>';
-                html = html + '</div>';
-            html = html + '</div>';
-        }
+
         $('#addMethodModal').find("#method_title").text(paymentMethod);
         $('#append_fields').html(html);
         $('#addMethodModal').modal('show');
@@ -306,32 +266,7 @@
                     window.location.href = '{{ route("withdraw-method")}}';
                 })
             }
-        } else if (methodName == 'FlutterWave') {
-            var accountNumber = $('.flutterwave_accountNumber').val();
-            var bankCode = $('.flutterwave_bankCode').val();
-            if (accountNumber == '') {
-                $(".error_top").show();
-                $(".error_top").html("");
-                $(".error_top").append("<p>{{trans('lang.app_setting_flutterwave_accountnumber_help')}}</p>");
-                window.scrollTo(0, 0);
-            } else if (bankCode == '') {
-                $(".error_top").show();
-                $(".error_top").html("");
-                $(".error_top").append("<p>{{trans('lang.app_setting_flutterwave_bankcode_help')}}</p>");
-                window.scrollTo(0, 0);
-            } else {
-                var flutterwaveObj = {
-                    'name': methodName,
-                    'accountNumber': accountNumber,
-                    'bankCode': bankCode,
-                }
-                database.collection('withdraw_method').doc(id).update({
-                    'flutterwave': flutterwaveObj,
-                }).then(function (result) {
-                    window.location.href = '{{ route("withdraw-method")}}';
-                })
-            }
-        }
+
     })
 </script>
 @endsection

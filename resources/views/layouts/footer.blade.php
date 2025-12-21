@@ -239,11 +239,15 @@
 </div>
 <div class="error-container" id="error-container"></div>
 
+<!-- Location Selection Modal -->
+@include('components.location-popup-modal')
+
 <footer class="section-footer border-top bg-dark">
     <div class="footerTemplate"></div>
 </footer>
 
-
+<!-- Location Modal Styles -->
+<link rel="stylesheet" href="{{ asset('css/location-modal.css') }}">
 <script type="text/javascript" src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -270,7 +274,7 @@ use Illuminate\Support\Facades\Route;
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="{{ asset('vendor/select2/dist/js/select2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/sweetalert2.js') }}"></script>
-
+<script type="text/javascript" src="{{ asset('js/location-selector.js') }}"></script>
 <script type="text/javascript">
     function setCookie(name, value, days) {
         var expires = "";
@@ -766,7 +770,26 @@ use Illuminate\Support\Facades\Route;
     // Set default location to Calabar, Cross River State if no location is set
     // This must run AFTER setCookie is defined
     // If no location is set, prompt user to select one
-
+    if (!address_name || address_name === '' || address_name === 'null') {
+         jQuery(document).ready(function() {
+             var verify_location = "{{ trans('lang.please_select_location') }}";
+             
+             // Trigger modal
+             $('#locationModal').modal('show');
+             
+             // Optional: Show a small notification using Swal or similar if available, or just rely on the modal opening
+             if (typeof Swal !== 'undefined') {
+                /* Swal.fire({
+                     text: verify_location,
+                     icon: 'info',
+                     toast: true,
+                     position: 'top-end',
+                     showConfirmButton: false,
+                     timer: 3000
+                 }); */
+             }
+        });
+    }
 
 
     const BATCH_SIZE = 100;

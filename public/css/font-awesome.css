@@ -1601,9 +1601,6 @@
 .fa-calculator:before {
   content: "\f1ec";
 }
-.fa-paypal:before {
-  content: "\f1ed";
-}
 .fa-google-wallet:before {
   content: "\f1ee";
 }
@@ -1618,12 +1615,6 @@
 }
 .fa-cc-amex:before {
   content: "\f1f3";
-}
-.fa-cc-paypal:before {
-  content: "\f1f4";
-}
-.fa-cc-stripe:before {
-  content: "\f1f5";
 }
 .fa-bell-slash:before {
   content: "\f1f6";

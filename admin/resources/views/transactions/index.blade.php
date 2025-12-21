@@ -563,9 +563,8 @@
                 } else if (val.payment_method == "PayStack" || val.payment_method == "payStack") {
                     image = "{{ asset('images/paystack.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';
-                } else if (val.payment_method == "FlutterWave" || val.payment_method == "flutterWave") {
-                    image = "{{ asset('images/flutter_wave.png') }}";
-                    payment_method = '<img alt="image" src="' + image + '" >';
+               
+
                 } else if (val.payment_method == "Mercado Pago" || val.payment_method == "mercado Pago") {
                     image = "{{ asset('images/marcado_pago.png') }}";
                     payment_method = '<img alt="image" src="' + image + '" >';

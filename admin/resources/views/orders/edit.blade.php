@@ -672,8 +672,8 @@
                         image = '{{ asset('images/paystack.png') }}';
                         payment_method = '<img alt="image" src="' + image +
                             '"  width="30%" height="30%">';
-                    } else if (order.payment_method == "flutterwave") {
-                        image = '{{ asset('images/flutter_wave.png') }}';
+                    
+                        
                         payment_method = '<img alt="image" src="' + image +
                             '"  width="30%" height="30%">';
                     } else if (order.payment_method == "mercado pago") {

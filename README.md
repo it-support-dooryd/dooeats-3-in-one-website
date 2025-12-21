@@ -284,8 +284,7 @@ Below is a list of Blade template files (`.blade.php`) found in the `resources/v
         *   `paypal.blade.php`
         *   `paystack.blade.php`
         *   `paytm.blade.php`
-        *   `razorpay.blade.php`
-        *   `stripe.blade.php`
+        
         *   `users.blade.php`
         *   `wallet.blade.php`
         *   `xendit.blade.php`

@@ -225,10 +225,7 @@ class UserController extends Controller
             
                 $response = $this->payWithRazorpay($data);  
 
-            }else if($data['method'] == "flutterwave"){
-            
-                $response = $this->payWithFlutterwave($data);  
-            }
+                     }
             
         }else{
             $response['success'] = false;
@@ -393,56 +390,7 @@ class UserController extends Controller
         return $payout_response;
     }
 
-    public function payWithFlutterwave($data){
-        
-        $payout_response = array();
 
-        if(!empty($data['user']['withdrawMethod']['flutterwave'])){
-    
-            $bankCode = $data['user']['withdrawMethod']['flutterwave']['bankCode'];
-            $accountNumber = $data['user']['withdrawMethod']['flutterwave']['accountNumber'];
-            $amount = bcmul($data["amount"],10);
-            $secretKey = $data['settings']['flutterwave']['secretKey'];
-            
-            $fields = [
-                "account_bank" => $bankCode,
-                "account_number" => $accountNumber,
-                "amount" => $amount,
-                "narration" => "Payment Request: ".$data["payoutId"]."",
-                "currency" => "NGN",
-                "reference" => $data["payoutId"],
-            ];
-
-            $ch = curl_init();
-            curl_setopt($ch,CURLOPT_URL,"https://api.flutterwave.com/v3/transfers");
-            curl_setopt($ch,CURLOPT_POST, true);
-            curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($fields));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                "Authorization: Bearer ".$secretKey,
-                "Cache-Control: no-cache",
-                "Content-Type: application/json",
-            ));
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-            $result = curl_exec($ch);
-            $response = json_decode($result,true);
-
-            if($response['status'] == "success"){
-                $payout_response['success'] = true;
-                $payout_response['message'] = 'We successfully processed your payout request';
-                $payout_response['result'] = $response;
-                $payout_response['status'] = "In Process";
-            }else{
-                $payout_response['success'] = false;
-                $payout_response['message'] = $response['message'];    
-            }
-        
-        }else{
-            $payout_response['success'] = false;
-            $payout_response['message'] = 'Flutterwave account detail is required';
-        }
-        
-        return $payout_response;
-    }
 
     public function checkPayoutStatus(Request $request){
         
@@ -461,10 +409,7 @@ class UserController extends Controller
             
                 $response = $this->checkStatusRazorpay($data);  
 
-            }else if($data['method'] == "flutterwave"){
-            
-                $response = $this->checkStatusFlutterwave($data);  
-            }
+                     }
             
         }else{
             $response['success'] = false;
@@ -601,50 +546,5 @@ class UserController extends Controller
         return $payout_response;
     }   
 
-    public function checkStatusFlutterwave($data){
 
-        $payout_response = array();
-        
-        if(isset($data['payoutDetail']['payoutResponse']) && !empty($data['payoutDetail']['payoutResponse'])){
-    
-            $transfer_id = $data['payoutDetail']['payoutResponse']['data']['id'];
-            
-            if(!empty($transfer_id)){
-
-                $secretKey = $data['settings']['flutterwave']['secretKey'];
-
-                $ch = curl_init();
-                curl_setopt($ch,CURLOPT_URL,"https://api.flutterwave.com/v3/transfers/".$transfer_id);
-                curl_setopt($ch,CURLOPT_CUSTOMREQUEST, "GET"); 
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    "Authorization: Bearer ".$secretKey,
-                    "Cache-Control: no-cache",
-                    "Content-Type: application/json",
-                ));
-                curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
-                $result = curl_exec($ch);
-                $response = json_decode($result,true);
-                
-                if($response['status'] == "success"){
-                    $payout_response['success'] = true;
-                    $payout_response['message'] = 'We successfully processed your transaction';
-                    $payout_response['result'] = $response;
-                    $payout_response['status'] = "Success";
-                }else{
-                    $payout_response['success'] = false;
-                    $payout_response['message'] = $response['message'];    
-                }
-
-            }else{
-                $payout_response['success'] = false;
-                $payout_response['message'] = 'Invalid transfer id';    
-            }
-            
-        }else{
-            $payout_response['success'] = false;
-            $payout_response['message'] = 'Invalid payout response';
-        }
-        
-        return $payout_response;
-    }
 }

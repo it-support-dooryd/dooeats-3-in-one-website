@@ -283,7 +283,7 @@
             } else if (val.payment_type.toString().toLowerCase()== "paystack") {
                 image = "{{ asset('images/paystack.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
-            } else if (val.payment_type.toString().toLowerCase() == "flutterwave") {
+            
                 image = "{{ asset('images/flutter_wave.png') }}";
                 payment_method = '<img style="width:100px" alt="image" src="' + image + '" >';
             } else if (val.payment_type.toString().toLowerCase() == "mercadopago") {

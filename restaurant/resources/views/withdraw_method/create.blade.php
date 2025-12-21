@@ -63,7 +63,7 @@
     var razorpaySetupDone = false;
     var paypalSetupDone = false;
     var stripeSetupDone = false;
-    var flutterwaveSetupDone = false;
+
     database.collection('withdraw_method').where('userId', '==', vendorUserId).get().then(async function (Snapshot) {
         if (Snapshot.docs.length > 0) {
             checkAlreadyExist = true;
@@ -78,15 +78,13 @@
             if (data.paypal) {
                 paypalSetupDone = true;
             }
-            if (data.flutterwave) {
-                flutterwaveSetupDone = true;
-            }
+
         }
     })
     var ref = database.collection('settings').doc('stripeSettings');
     var razorpayData = database.collection('settings').doc('razorpaySettings');
     var paypalData = database.collection('settings').doc('paypalSettings');
-    var flutterWaveSettings = database.collection('settings').doc('flutterWave');
+    
     var stripeSettings = database.collection('settings').doc('stripeSettings');
     $(document).ready(function () {
         jQuery("#data-table_processing").show();
@@ -141,24 +139,7 @@
                 $('#available_method').append(html);
             }
         });
-        flutterWaveSettings.get().then(async function (Snapshot) {
-            var flutterwave = Snapshot.data();
-            var html = '';
-            if (flutterwave.isWithdrawEnabled) {
-                html = html + '<div class="d-flex align-items-center mb-3 border-bottom pb-3">';
-                html = html + '<div class="image d-flex align-items-center"><img src="{!! asset("images/flutterwave.png") !!}" style="width: 90px;"><h4 class="d-block text-center mt-2 text-dark ml-3">{{trans('lang.flutterwave')}}</h4></div>';
-                html = html + '<div class="ml-auto">';
-                if (flutterwaveSetupDone) {
-                    html = html + '<span class="badge badge-success p-3"><i class="fa fa-check-circle"></i> {{trans('lang.setup_done')}}</span>';
-                } else {
-                    html = html + '<a href="javascript:void(0)"  data-method="FlutterWave" class="btn btn-danger" name="setup_btn" >{{trans('lang.setup')}}</a>';
-                }
-                html = html + '</div>';
-                html = html + '</div>';
-                $('#available_method').append(html);
-            }
-            jQuery("#data-table_processing").hide();
-        });
+
     });
     $(document).on("click", "a[name='setup_btn']", function (e) {
         var paymentMethod = $(this).attr('data-method');
@@ -198,28 +179,7 @@
                     html = html + '</div>';
                 html = html + '</div>';
             html = html + '</div>';
-        } else if (paymentMethod == 'FlutterWave') {
-            var html = '';
-            html = html + '<input type="hidden" value="'+paymentMethod+'" id="method_name">';
-            html = html + '<div class="form-group row width-100">';
-                html = html + '<label class="col-5 control-label">{{trans('lang.app_setting_flutterwave_accountnumber')}}</label>';
-                html = html + '<div class="col-12">';
-                    html = html + '<input type="text" class=" form-control flutterwave_accountNumber" value="">';
-                    html = html + '<div class="form-text text-muted">';
-                        html = html + '{!! trans('lang.app_setting_flutterwave_accountnumber_help') !!}';
-                    html = html + '</div>';
-                html = html + '</div>';
-            html = html + '</div>';
-            html = html + '<div class="form-group row width-100">';
-                html = html + '<label class="col-5 control-label">{{trans('lang.app_setting_flutterwave_bankcode')}}</label>';
-                html = html + '<div class="col-12">';
-                    html = html + '<input type="text" class=" form-control flutterwave_bankCode" value="">';
-                    html = html + '<div class="form-text text-muted">';
-                        html = html + '{!! trans('lang.app_setting_flutterwave_bankcode_help') !!}';
-                    html = html + '</div>';
-                html = html + '</div>';
-            html = html + '</div>';
-        }
+
         $('#addMethodModal').find("#method_title").text(paymentMethod);
         $('#append_fields').html(html);
         $('#addMethodModal').modal('show');
@@ -308,44 +268,7 @@
                 })
                 )
             }
-        } else if (methodName == 'FlutterWave') {
-            var accountNumber = $('.flutterwave_accountNumber').val();
-            var bankCode = $('.flutterwave_bankCode').val();
-            if (accountNumber == '') {
-                $(".error_top").show();
-                $(".error_top").html("");
-                $(".error_top").append("<p>{{trans('lang.app_setting_flutterwave_accountnumber_help')}}</p>");
-                window.scrollTo(0, 0);
-            } else if (bankCode == '') {
-                $(".error_top").show();
-                $(".error_top").html("");
-                $(".error_top").append("<p>{{trans('lang.app_setting_flutterwave_bankcode_help')}}</p>");
-                window.scrollTo(0, 0);
-            } else {
-                var flutterwaveObj = {
-                    'name': methodName,
-                    'enable' : true,
-                    'accountNumber': accountNumber,
-                    'bankCode': bankCode,
-                }
-                checkAlreadyExist == true ?
-                    (database.collection('withdraw_method').doc(id).update({
-                        'flutterwave': flutterwaveObj,
-                    }).then(function (result) {
-                        window.location.href = '{{ route("withdraw-method")}}';
-                    })
-                    )
-                    :
-                    (database.collection('withdraw_method').doc(id).set({
-                        'flutterwave': flutterwaveObj,
-                        'id': id,
-                        'userId': vendorUserId
-                    }).then(function (result) {
-                        window.location.href = '{{ route("withdraw-method")}}';
-                    })
-                )
-            }
-        }
+
      })
 </script>
 @endsection

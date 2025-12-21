@@ -163,7 +163,7 @@ body.auth-body {
 .form-control-auth {
     width: 100%;
     height: 56px;
-    padding: 0 3rem 0 3rem;
+    padding: 0 1rem 0 2.5rem;
     border-radius: 16px;
     border: 2px solid transparent;
     background: rgba(255, 255, 255, 0.9);
@@ -172,8 +172,8 @@ body.auth-body {
     transition: all 0.2s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     background-repeat: no-repeat;
-    background-position: 1rem center;
-    background-size: 18px;
+    background-position: 0.8rem center;
+    background-size: 20px;
     font-weight: 500;
     box-sizing: border-box;
     overflow: hidden;
@@ -183,7 +183,7 @@ body.auth-body {
 /* Specific Input Icons */
 input[type="email"],
 input#email {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333333' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207'/%3E%3C/svg%3E");
 }
 
 input[type="password"],

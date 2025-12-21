@@ -757,9 +757,7 @@
             var settings = {};
             await database.collection('settings').get().then(async function(snapshots) {
                 snapshots.forEach((doc) => {
-                    if (doc.id == "flutterWave") {
-                        settings["flutterwave"] = doc.data();
-                    }
+                    
                     if (doc.id == "paypalSettings") {
                         settings["paypal"] = doc.data();
                     }

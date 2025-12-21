@@ -106,25 +106,7 @@ class GiftCardController extends Controller
                     echo $script;
                     exit;
                 }
-            } else if ($cart['gift_cart_order']['payment_method'] == 'flutterwave') {
-                $currency = "USD";
-                if (@$cart['gift_cart_order']['currencyData']['code']) {
-                    $currency = $cart['gift_cart_order']['currencyData']['code'];
-                }
-                $flutterWave_secret_key = $cart['gift_cart_order']['flutterWave_secret_key'];
-                $flutterWave_public_key = $cart['gift_cart_order']['flutterWave_public_key'];
-                $flutterWave_isSandbox = $cart['gift_cart_order']['flutterWave_isSandbox'];
-                $flutterWave_encryption_key = $cart['gift_cart_order']['flutterWave_encryption_key'];
-                $authorName = $cart['gift_cart_order']['authorName'];
-                $total_pay = $cart['gift_cart_order']['total_pay'];
-                $formatted_price =  $cart['gift_cart_order']['currencyData']['symbol'].number_format($total_pay,$cart['gift_cart_order']['currencyData']['decimal_degits']) ;
-                Session::put('flutterwave_pay', 1);
-                Session::save();
-                $token = uniqid();
-                Session::put('flutterwave_pay_tx_ref', $token);
-                Session::save();
-                return view('gift_card.flutterwave', ['is_checkout' => 1, 'cart' => $cart, 'id' => $user->uuid, 'email' => $email, 'authorName' => $authorName, 'amount' => $total_pay, 'flutterWave_secret_key' => $flutterWave_secret_key, 'flutterWave_public_key' => $flutterWave_public_key, 'flutterWave_isSandbox' => $flutterWave_isSandbox, 'flutterWave_encryption_key' => $flutterWave_encryption_key, 'token' => $token, 'gift_cart_order' => $cart['gift_cart_order'], 'currency' => $currency, 'formatted_price' => $formatted_price]);
-            }else if($cart['gift_cart_order']['payment_method']=='xendit'){
+else if($cart['gift_cart_order']['payment_method']=='xendit'){
                 $xendit_enable=$cart['gift_cart_order']['xendit_enable'];
                 $xendit_apiKey=$cart['gift_cart_order']['xendit_apiKey'];
                 if (isset($xendit_enable) && $xendit_enable == true) {
@@ -545,8 +527,7 @@ class GiftCardController extends Controller
             }
         }
         if (isset($_GET['transaction_id']) && isset($_GET['tx_ref']) && isset($_GET['status'])) {
-            $flutterwave_pay_tx_ref = Session::get('flutterwave_pay_tx_ref');
-            if ($_GET['status'] == 'successful' && $flutterwave_pay_tx_ref == $_GET['tx_ref']) {
+            
                 $cart['payment_status'] = true;
                 Session::put('gift_cart', $cart);
                 Session::put('success', 'Payment successful');
