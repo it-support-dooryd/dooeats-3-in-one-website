@@ -56,10 +56,15 @@ class SubscriptionController extends Controller
                 $amount = 0;
                 $fail_url = route('subscription-plan.show');
                 $success_url = route('success');
+                $currency = 'NGN';
+                if (@$cart['cart_order']['currencyData']['code']) {
+                    $currency = $cart['cart_order']['currencyData']['code'];
+                }
                 \Paystack\Paystack::init($paystack_secret_key);
                 $payment = \Paystack\Transaction::initialize([
                     'email' => $email,
                     'amount' => (int) ($total_pay * 100),
+                    'currency' => $currency,
                     'callback_url' => $success_url, 
                     'metadata' => [
                         'custom_fields' => [

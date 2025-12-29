@@ -306,7 +306,7 @@
                         <li><a href="{!! url('settings/currencies') !!}">{{ trans('lang.currency_plural') }}</a></li>
                     @endif
                     @if (in_array('payment-method', $role_has_permission))
-                        <li><a href="{!! url('settings/payment/stripe') !!}">{{ trans('lang.payment_methods') }}</a></li>
+                        <li><a href="{!! url('settings/payment/paystack') !!}">{{ trans('lang.payment_methods') }}</a></li>
                     @endif
                     @if (in_array('admin-commission', $role_has_permission))
                         <li>

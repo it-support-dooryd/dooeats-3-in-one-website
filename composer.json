@@ -19,8 +19,7 @@
     "laravel/ui": "^4.2.2",
     "midtrans/midtrans-php": "^2.5",
     "paytm/paytmchecksum": "^1.1",
-    "perfectmak/paystack-php": "dev-master",
-
+    "perfectmak/paystack-php": "dev-master"
   },
   "require-dev": {
     "fakerphp/faker": "^1.9.1",

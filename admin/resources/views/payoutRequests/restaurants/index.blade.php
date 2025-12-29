@@ -178,6 +178,24 @@
                                         <input type="text" name="other_information" class="form-control" id="otherDetails">
                                     </div>
                                 </div>
+                                <div class="form-group row width-100">
+                                    <label class="col-12 control-label">{{ trans('lang.bank_code') }}</label>
+                                    <div class="col-12">
+                                        <input type="text" name="bank_code" class="form-control" id="bankCode" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row width-100">
+                                    <label class="col-12 control-label">{{ trans('lang.otp_verification') }}</label>
+                                    <div class="col-12">
+                                        <input type="text" name="is_verified" class="form-control" id="isVerified" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row width-100">
+                                    <label class="col-12 control-label">{{ trans('lang.admin_note') }}</label>
+                                    <div class="col-12">
+                                        <textarea name="admin_note_bank" class="form-control" id="adminNoteBank" cols="5" rows="5"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -601,6 +619,16 @@
                         $('#holderName').val(user_data.userBankDetails.holderName);
                         $('#accountNumber').val(user_data.userBankDetails.accountNumber);
                         $('#otherDetails').val(user_data.userBankDetails.otherDetails);
+                        $('#bankCode').val(user_data.userBankDetails.bankCode || '');
+                        if (user_data.userBankDetails.isVerified) {
+                            $('#isVerified').val("Verified");
+                            $('#isVerified').css('color', 'green');
+                            $('#isVerified').css('font-weight', 'bold');
+                        } else {
+                            $('#isVerified').val("Not Verified");
+                            $('#isVerified').css('color', 'red');
+                            $('#isVerified').css('font-weight', 'bold');
+                        }
                     }
                 }
             });
@@ -611,6 +639,7 @@
             $('#holderName').val("");
             $('#accountNumber').val("");
             $('#otherDetails').val("");
+            $('#adminNoteBank').val("");
             var id = this.id;
             var auth = $(this).attr('data-auth');
             var amount = $(this).attr('data-amount');
@@ -851,9 +880,11 @@
             var auth = $(this).data('auth');
             var user = await getUserData(auth);
             var amount = $(this).data('amount');
+            var admin_note = $("#adminNoteBank").val();
             jQuery("#data-table_processing").show();
             database.collection('payouts').doc(id).update({
-                'paymentStatus': 'Success'
+                'paymentStatus': 'Success',
+                'adminNote': admin_note
             }).then(async function(result) {
                 if (user && user != undefined) {
                     var emailData = await sendMailToRestaurant(user, id, 'Approved', amount);

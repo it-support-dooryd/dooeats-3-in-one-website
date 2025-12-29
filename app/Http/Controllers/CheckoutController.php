@@ -285,10 +285,15 @@ class CheckoutController extends Controller
                 $authorName = $cart['cart_order']['authorName'];
                 $total_pay = $cart['cart_order']['total_pay'];
                 $amount = 0;
+                $currency = 'NGN';
+                if (@$cart['cart_order']['currencyData']['code']) {
+                    $currency = $cart['cart_order']['currencyData']['code'];
+                }
                 \Paystack\Paystack::init($paystack_secret_key);
                 $payment = \Paystack\Transaction::initialize([
                     'email' => $email,
                     'amount' => (int) ($total_pay * 100),
+                    'currency' => $currency,
                 ]);
                 Session::put('paystack_authorization_url', $payment->authorization_url);
                 Session::put('paystack_access_code', $payment->access_code);

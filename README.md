@@ -1,14 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
 # Project Documentation
-
 This document provides an overview of the project's file structure, API endpoints, core functionality, and a list of pages for each application.
 
 ## Project File Structure
@@ -270,24 +260,15 @@ Below is a list of Blade template files (`.blade.php`) found in the `resources/v
     *   `index.blade.php`
 *   `settings/`
     *   `app/`
-        *   `cod.blade.php`
         *   `currencies.blade.php`
         *   `email.blade.php`
         *   `index.blade.php`
         *   `languages.blade.php`
-        *   `mercadopago.blade.php`
         *   `menu_items.blade.php`
-        *   `midtrans.blade.php`
         *   `mobile.blade.php`
-        *   `orangepay.blade.php`
-        *   `payfast.blade.php`
-        *   `paypal.blade.php`
         *   `paystack.blade.php`
-        *   `paytm.blade.php`
-        
         *   `users.blade.php`
         *   `wallet.blade.php`
-        *   `xendit.blade.php`
     *   `index.blade.php`
 *   `subscription_plans/`
     *   `create.blade.php`
@@ -365,35 +346,15 @@ Below is a list of Blade template files (`.blade.php`) found in the `resources/v
     *   `index.blade.php`
 
 ## AI-Powered Feature Suggestions
-
 This section outlines potential AI-powered features for each application, aimed at enhancing user experience, operational efficiency, and business growth. Each suggestion includes a description, estimated development effort, potential impact, and implementation priority.
 
 ### General AI Recommendation System Requirements (Across all applications)
-
 To effectively implement and manage AI-powered features, the following infrastructure and processes are recommended:
-
-*   **Admin Interface for AI Recommendations**:
-    *   Review and approve AI-generated suggestions.
-    *   Track the implementation status of approved features.
-    *   Measure the actual impact and ROI post-implementation.
-*   **Backend Services for AI**:
-    *   Continuously analyze app usage data to identify patterns and opportunities.
-    *   Update and refine suggestions based on new data and evolving user behavior.
-    *   Store a history of suggestions, their metrics, and performance.
-*   **Testing Requirements**:
-    *   **Relevance Validation**: Ensure AI suggestions are contextually appropriate and valuable.
-    *   **Algorithm Testing**: Rigorous testing of recommendation algorithms for accuracy and bias.
-    *   **UI/UX Verification**: Test the display of AI features across various devices and user roles.
-    *   **Performance Testing**: Evaluate system performance under load with AI services integrated.
-
 ### Main Application AI Feature Suggestions
-
 *   **Personalized Food Recommendations**
     *   **Description**: An AI model that suggests food items and restaurants to users based on their past orders, browsing history, ratings, dietary preferences, and time of day.
     *   **Effort/Complexity**: High (requires data collection, model training, integration with UI and backend).
     *   **Potential Impact**: Increased order frequency, higher average order value, improved user satisfaction.
-    *   **Priority**: High
-
 *   **Dynamic Pricing for Delivery**
     *   **Description**: AI-driven adjustment of delivery fees based on real-time factors like demand, driver availability, weather conditions, and traffic.
     *   **Effort/Complexity**: Medium to High (requires real-time data feeds, complex algorithms, integration with checkout).
