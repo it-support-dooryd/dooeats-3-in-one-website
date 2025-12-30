@@ -59,7 +59,28 @@
                         <img alt="#" class="img-fluid" src="{{asset('img/logo_web.png')}}" id="logo_web">
                     </a>
                 </div>
-                <div class="col-10 header-right">
+                <div class="col-3 d-flex align-items-center m-none head-search">
+                    <!-- Location Selector Trigger -->
+                    <div class="header-location-trigger d-flex align-items-center" data-toggle="modal" data-target="#headerLocationModal">
+                        <div class="location-icon">
+                            <i class="feather-map-pin"></i>
+                        </div>
+                        <div class="header-location-text">
+                            <span class="location-label">{{ trans('lang.location') }}</span>
+                            <span class="location-value" id="headerLocationDisplay">
+                                @if(!empty(request()->cookie('address_name')))
+                                    {{ request()->cookie('address_name') }}
+                                @else
+                                    Calabar, Cross River State
+                                @endif
+                            </span>
+                        </div>
+                        <i class="feather-chevron-down header-location-caret"></i>
+                    </div>
+                    <!-- Hidden input for autocomplete compatibility -->
+                    <input type="hidden" id="user_locationnew" class="pac-target-input">
+                </div>
+                <div class="col-7 header-right">
                     <div class="d-flex align-items-center justify-content-end pr-5">
                         <a href="{{url('search')}}" class="widget-header mr-4 text-dark">
                             <div class="icon d-flex align-items-center">

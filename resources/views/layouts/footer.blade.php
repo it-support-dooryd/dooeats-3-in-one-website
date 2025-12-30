@@ -6,6 +6,40 @@
 
 @include('layouts.welcome_location_modal')
 <!-- Sleek Header Location Search Modal -->
+<div class="modal fade" id="headerLocationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px; border: none; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
+            <div class="modal-header" style="border: none; padding: 25px 25px 10px;">
+                <h5 class="modal-title font-weight-bold" style="color: var(--primary-text);">Change Delivery Location</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 20px 25px 35px;">
+                <div class="location-search-wrapper" style="position: relative;">
+                    <div class="input-group" style="background: #F6F8F7; border: 1.5px solid #E3E8E5; border-radius: 14px; overflow: hidden; transition: all 0.3s ease;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="background: transparent; border: none; color: var(--deep-green);"><i class="feather-map-pin"></i></span>
+                        </div>
+                        <input type="text" id="header_location_search_input" class="form-control" style="background: transparent; border: none; padding: 12px 10px; font-weight: 500;" placeholder="Search for your area, street...">
+                    </div>
+                </div>
+                
+                <div class="mt-4" id="headerRecentLocations" style="display: none;">
+                    <h6 class="small text-muted text-uppercase font-weight-bold mb-3" style="letter-spacing: 0.5px;">Recent Locations</h6>
+                    <div class="list-group list-group-flush" id="recent_locations_list">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <div class="current-location-item mt-3 py-2" style="cursor: pointer; color: var(--deep-green); display: flex; align-items: center; gap: 10px; font-weight: 600;" onclick="useCurrentLocation()">
+                    <i class="feather-navigation"></i>
+                    <span>Use Current Location</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
