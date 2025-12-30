@@ -126,6 +126,41 @@
             $(".btn-login").text('Please wait...');
             var email = $("#email").val();
             var password = $("#password").val();
+
+            try {
+                await new Promise((resolve, reject) => {
+                    grecaptcha.enterprise.ready(async () => {
+                        try {
+                            const token = await grecaptcha.enterprise.execute('6LcKSzosAAAAADS4s80I4QKaDK0ub7tkwRuwSrLd', {action: 'LOGIN'});
+                            
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{ route('verify-recaptcha') }}",
+                                data: { token: token, action: 'LOGIN' },
+                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                                success: function(data) {
+                                    if (data.success) {
+                                        resolve(true); 
+                                    } else {
+                                        console.error('reCAPTCHA Failed:', data);
+                                        reject('Security verification failed. Please try again.');
+                                    }
+                                },
+                                error: function(err) {
+                                    console.error('reCAPTCHA Error:', err);
+                                    reject('Unable to verify security token.');
+                                }
+                            });
+                        } catch(e) {
+                            reject(e);
+                        }
+                    });
+                });
+            } catch (err) {
+                $("#field_error").html(err).show();
+                $(".btn-login").text("{{trans('lang.sign_in')}}");
+                return false;
+            }
             
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {

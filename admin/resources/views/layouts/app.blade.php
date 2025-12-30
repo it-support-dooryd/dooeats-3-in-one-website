@@ -221,10 +221,6 @@
                 display: block;
             }
         }
-    </style>
-    <?php } ?>
-
-</head>
 <body>
 
 <div id="app" class="fix-header fix-sidebar card-no-border">

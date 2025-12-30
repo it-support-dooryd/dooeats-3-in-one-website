@@ -128,16 +128,7 @@
             </div>
         </section>
     </div>
-    <div class="zone-error m-5 p-5" style="display: none;">
-        <div class="zone-image text-center">
-            <img onerror="this.onerror=null;this.src='{{ asset('img/zone_logo.png') }}'"
-                src="{{ asset('img/zone_logo.png') }}" width="100" loading="lazy" alt="Location zone indicator">
-        </div>
-        <div class="zone-content text-center text-center font-weight-bold text-danger">
-            <h3 class="title">{{ trans('lang.zone_error_title') }}</h3>
-            <h6 class="text">{{ trans('lang.zone_error_text') }}</h6>
-        </div>
-    </div>
+
 </div>
 @include('layouts.footer')
 
@@ -369,9 +360,9 @@
             null || address_lng == null) {
             jQuery("#data-table_processing").hide();
             jQuery(".section-content").remove();
-            jQuery(".zone-error").show();
-            jQuery(".zone-error").find('.title').text('{{ trans('lang.select_location') }}');
-            jQuery(".zone-error").find('.text').text('{{ trans('lang.select_location_desc') }}'); // Ensure this key exists or use a generic one
+            /* jQuery(".zone-error").show(); */
+            /* jQuery(".zone-error").find('.title').text('{{ trans('lang.select_location') }}'); */
+            /* jQuery(".zone-error").find('.text').text('{{ trans('lang.select_location_desc') }}'); */
             return false;
         }
         DriverNearByRef.get().then(async function (DriverNearByRefSnapshots) {
@@ -469,10 +460,10 @@
                 $(".all-stores-section").remove();
                 $(".new-arrivals-section").remove();
                 $(".section-content").remove();
-                jQuery(".zone-error").show();
-                jQuery(".zone-error").find('.title').text(
+                /* jQuery(".zone-error").show(); */
+                /* jQuery(".zone-error").find('.title').text(
                     '{{ trans('lang.restaurant_error_title') }}');
-                jQuery(".zone-error").find('.text').text('{{ trans('lang.restaurant_error_text') }}');
+                jQuery(".zone-error").find('.text').text('{{ trans('lang.restaurant_error_text') }}'); */
             }
         });
     }

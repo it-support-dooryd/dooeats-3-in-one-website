@@ -256,6 +256,49 @@ class AjaxController extends Controller
 
     }
 
+    public function verifyRecaptcha(Request $request)
+    {
+        $token = $request->input('token');
+        $action = $request->input('action', 'LOGIN');
+        $apiKey = env('RECAPTCHA_API_KEY', config('firebase.api_key'));
+        $projectId = config('firebase.project_id', 'dooeats-c690f');
+        $siteKey = '6LcKSzosAAAAADS4s80I4QKaDK0ub7tkwRuwSrLd';
+
+        $url = "https://recaptchaenterprise.googleapis.com/v1/projects/{$projectId}/assessments?key={$apiKey}";
+
+        $data = [
+            'event' => [
+                'token' => $token,
+                'expectedAction' => $action,
+                'siteKey' => $siteKey,
+            ]
+        ];
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode >= 200 && $httpCode < 300) {
+            $result = json_decode($response, true);
+            // Check if token is valid and score is acceptable (if score based)
+            // Enterprise returns 'tokenProperties' => ['valid' => true, ...]
+            
+            if (isset($result['tokenProperties']['valid']) && $result['tokenProperties']['valid'] === true) {
+                // You can also check score here : $result['riskAnalysis']['score']
+                return response()->json(['success' => true, 'score' => $result['riskAnalysis']['score'] ?? null]);
+            } else {
+                return response()->json(['success' => false, 'error' => 'Invalid Token', 'details' => $result], 200);
+            }
+        } else {
+             return response()->json(['success' => false, 'error' => 'API Error', 'details' => $response], 500);
+        }
+    }
+
 
 }
 

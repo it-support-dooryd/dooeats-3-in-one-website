@@ -3,42 +3,10 @@
         <img src="{{ asset('img/spinner.gif') }}" style="width: 500px; height: 500px; object-fit: contain;">
     </div>
 </div>
+
 @include('layouts.welcome_location_modal')
 <!-- Sleek Header Location Search Modal -->
-<div class="modal fade" id="headerLocationModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 20px; border: none; box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
-            <div class="modal-header" style="border: none; padding: 25px 25px 10px;">
-                <h5 class="modal-title font-weight-bold" style="color: var(--primary-text);">Change Delivery Location</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="padding: 20px 25px 35px;">
-                <div class="location-search-wrapper" style="position: relative;">
-                    <div class="input-group" style="background: #F6F8F7; border: 1.5px solid #E3E8E5; border-radius: 14px; overflow: hidden; transition: all 0.3s ease;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="background: transparent; border: none; color: var(--deep-green);"><i class="feather-map-pin"></i></span>
-                        </div>
-                        <input type="text" id="header_location_search_input" class="form-control" style="background: transparent; border: none; padding: 12px 10px; font-weight: 500;" placeholder="Search for your area, street...">
-                    </div>
-                </div>
-                
-                <div class="mt-4" id="headerRecentLocations" style="display: none;">
-                    <h6 class="small text-muted text-uppercase font-weight-bold mb-3" style="letter-spacing: 0.5px;">Recent Locations</h6>
-                    <div class="list-group list-group-flush" id="recent_locations_list">
-                        <!-- Will be populated by JS -->
-                    </div>
-                </div>
 
-                <div class="current-location-item mt-3 py-2" style="cursor: pointer; color: var(--deep-green); display: flex; align-items: center; gap: 10px; font-weight: 600;" onclick="useCurrentLocation()">
-                    <i class="feather-navigation"></i>
-                    <span>Use Current Location</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     $(document).ready(function() {
@@ -240,14 +208,14 @@
 <div class="error-container" id="error-container"></div>
 
 <!-- Location Selection Modal -->
-@include('components.location-popup-modal')
+
 
 <footer class="section-footer border-top bg-dark">
     <div class="footerTemplate"></div>
 </footer>
 
 <!-- Location Modal Styles -->
-<link rel="stylesheet" href="{{ asset('css/location-modal.css') }}">
+
 <script type="text/javascript" src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -770,26 +738,7 @@ use Illuminate\Support\Facades\Route;
     // Set default location to Calabar, Cross River State if no location is set
     // This must run AFTER setCookie is defined
     // If no location is set, prompt user to select one
-    if (!address_name || address_name === '' || address_name === 'null') {
-         jQuery(document).ready(function() {
-             var verify_location = "{{ trans('lang.please_select_location') }}";
-             
-             // Trigger modal
-             $('#locationModal').modal('show');
-             
-             // Optional: Show a small notification using Swal or similar if available, or just rely on the modal opening
-             if (typeof Swal !== 'undefined') {
-                /* Swal.fire({
-                     text: verify_location,
-                     icon: 'info',
-                     toast: true,
-                     position: 'top-end',
-                     showConfirmButton: false,
-                     timer: 3000
-                 }); */
-             }
-        });
-    }
+
 
 
     const BATCH_SIZE = 100;
@@ -2197,3 +2146,7 @@ use Illuminate\Support\Facades\Route;
     }
 </style>
 <?php } ?>
+
+{{-- Zoho SalesIQ Chat Widget --}}
+<script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script>
+<script id="zsiqscript" src="https://salesiq.zohopublic.eu/widget?wc=siq8a463ba1bc960a44a2a81bfd8e85d33268be715d59fc4401c905819620fc59a6" defer></script>

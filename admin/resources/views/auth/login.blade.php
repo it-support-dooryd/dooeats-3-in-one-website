@@ -15,6 +15,7 @@
     <link href="{{ asset('css/auth-styles.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcKSzosAAAAADS4s80I4QKaDK0ub7tkwRuwSrLd"></script>
 </head>
 <body class="auth-body">
     <div class="auth-overlay"></div>
@@ -41,7 +42,7 @@
             @endif
 
             <!-- Login Form -->
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}" id="login-form">
                 @csrf
                 
                 <div class="form-group-auth">
@@ -106,7 +107,50 @@
         }
 
         $(document).ready(function () {
-             // Cookie logic for title/favicon if needed
+             $('#login-form').on('submit', function(e) {
+                if ($(this).data('verified')) {
+                    return true;
+                }
+                
+                e.preventDefault();
+                var $form = $(this);
+                var $btn = $('#login-btn');
+                var originalText = $btn.find('span').text();
+                $btn.find('span').text('Verifying...');
+                $btn.prop('disabled', true);
+
+                grecaptcha.enterprise.ready(async () => {
+                   try {
+                       const token = await grecaptcha.enterprise.execute('6LcKSzosAAAAADS4s80I4QKaDK0ub7tkwRuwSrLd', {action: 'LOGIN'});
+                       $.ajax({
+                            type: 'POST',
+                            url: "{{ route('verify-recaptcha') }}",
+                            data: { token: token, action: 'LOGIN' },
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            success: function(data) {
+                                if (data.success) {
+                                    $form.data('verified', true);
+                                    $form.submit();
+                                } else {
+                                    alert("Security verification failed.");
+                                    $btn.find('span').text(originalText);
+                                    $btn.prop('disabled', false);
+                                }
+                            },
+                            error: function() {
+                                alert("Security check disabled or failed.");
+                                $btn.find('span').text(originalText);
+                                $btn.prop('disabled', false);
+                            }
+                        });
+                   } catch(e) {
+                       console.error(e);
+                       alert("reCAPTCHA Error");
+                       $btn.find('span').text(originalText);
+                       $btn.prop('disabled', false);
+                   }
+                });
+             });
         });
     </script>
 </body>

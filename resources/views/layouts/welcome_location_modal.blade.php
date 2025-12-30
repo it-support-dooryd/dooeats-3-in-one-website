@@ -1,34 +1,49 @@
 <div class="modal fade welcome-location-modal" id="welcomeLocationModal" tabindex="-1" role="dialog" aria-labelledby="welcomeLocationModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="welcomeLocationModalLabel">Setup Your Delivery Location</h5>
-                <p class="header-subtitle">Welcome to Dooeats! Let's find restaurants near you.</p>
-            </div>
-            <div class="modal-body">
-                <div class="welcome-text">
-                    <p>To provide you with the best experience and accurate delivery times, please enter your delivery address below.</p>
-                </div>
+        <div class="modal-content" style="border-radius: 25px; border: 4px solid #D62828; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+            <div class="modal-body text-center d-flex flex-column align-items-center justify-content-center p-0">
                 
-                <div class="location-search-wrapper">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="feather-map-pin"></i></span>
+                <!-- Icon (Chef Hat) -->
+                <div class="mb-3">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="#D62828" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2C8 2 6 5 6 5s-2 0-3 2c-1.5 3 1.5 6 1.5 6H19.5c0 0 3-3 1.5-6-1-2-3-2-3-2s-2-3-6-3z"/>
+                        <rect x="6" y="14" width="12" height="6" rx="1"/>
+                        <line x1="6" y1="17" x2="18" y2="17" stroke="#fff" stroke-width="2"/>
+                     </svg>
+                </div>
+
+                <!-- Title -->
+                <h4 class="font-weight-bold mb-2" style="color: #000; font-size: 26px; line-height: 1.2;">Setup Your Delivery<br>Location</h4>
+                
+                <!-- Subtitle (Red) -->
+                <h6 class="font-weight-bold mb-3" style="color: #D62828; font-size: 16px;">Welcome to DooEats</h6>
+                
+                <!-- Description -->
+                <p class="text-muted mb-4" style="font-size: 14px; max-width: 90%; color: #888;">
+                    To provide the best experience accurate delivery times.
+                </p>
+
+                <!-- Input -->
+                <div class="location-search-wrapper w-100 mb-4" style="position: relative;">
+                    <div class="input-group d-flex align-items-center" style="background: #F3F3F3; border-radius: 12px; padding: 8px 15px;">
+                        <div class="input-group-prepend mr-2">
+                            <span class="text-danger"><i class="feather-map-pin" style="color: #D62828; font-size: 18px;"></i></span>
                         </div>
-                        <input type="text" id="welcome_modal_address" class="form-control location-search-input" placeholder="Enter your delivery address...">
+                        <input type="text" id="welcome_modal_address" class="form-control border-0 bg-transparent location-search-input p-0" placeholder="Enter your delivery address..." style="box-shadow: none; font-size: 15px; color: #333; height: auto;">
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-set-location" id="btn_confirm_location">
-                    <span>Confirm Location</span>
-                    <i class="feather-arrow-right"></i>
+                <!-- Button -->
+                <button type="button" class="btn btn-danger w-100 rounded-pill font-weight-bold py-3 mb-3 shadow-sm" id="btn_confirm_location" style="background-color: #D62828; border-color: #D62828; font-size: 16px;">
+                    Confirm Location
                 </button>
 
-                <div class="current-location-link" onclick="useCurrentLocation()">
-                    <i class="feather-navigation"></i>
-                    <span>Use My Current Location</span>
-                </div>
-                
+                <!-- Link -->
+                <a href="javascript:void(0)" onclick="useCurrentLocation()" class="font-weight-bold mt-2" style="text-decoration: none; color: #D62828; font-size: 15px;">
+                    Use My Current Location
+                </a>
+
+                <!-- Hidden inputs -->
                 <input type="hidden" id="welcome_modal_lat">
                 <input type="hidden" id="welcome_modal_lng">
                 <input type="hidden" id="welcome_modal_address_name">

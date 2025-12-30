@@ -66,16 +66,27 @@
             height: 500px;
             object-fit: contain;
         }
+
+        body {
+            background-image: url('{{ asset("images/bg_new.png") }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
     </style>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEASUREMENT_ID"></script>
+    @if(config('services.google_analytics.measurement_id'))
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.measurement_id') }}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-MEASUREMENT_ID');
+      gtag('config', '{{ config('services.google_analytics.measurement_id') }}');
     </script>
+    @endif
 </head>
 <body class="fixed-bottom-bar">
     <!-- Page Loading Overlay -->

@@ -10,6 +10,7 @@
     <link href="{{ asset('css/auth-styles.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcKSzosAAAAADS4s80I4QKaDK0ub7tkwRuwSrLd"></script>
 </head>
 <body class="auth-body">
     <?php
@@ -368,16 +369,59 @@
                 $("#remember").prop("checked", true);
             }
 
-            $('#login-form').on('submit', function() {
-                if ($("#remember").is(":checked")) {
-                    localStorage.setItem("remember_me", "true");
-                    localStorage.setItem("email", $("#email").val());
-                    localStorage.setItem("password", $("#password").val());
-                } else {
-                    localStorage.removeItem("remember_me");
-                    localStorage.removeItem("email");
-                    localStorage.removeItem("password");
+            $('#login-form').on('submit', function(e) {
+                if ($(this).data('verified')) {
+                    if ($("#remember").is(":checked")) {
+                        localStorage.setItem("remember_me", "true");
+                        localStorage.setItem("email", $("#email").val());
+                        localStorage.setItem("password", $("#password").val());
+                    } else {
+                        localStorage.removeItem("remember_me");
+                        localStorage.removeItem("email");
+                        localStorage.removeItem("password");
+                    }
+                    return true;
                 }
+
+                e.preventDefault();
+                var $form = $(this);
+                var $btn = $('#login_btn');
+                var originalText = $btn.find('span').text();
+                $btn.find('span').text('Verifying...');
+                $btn.prop('disabled', true);
+
+                grecaptcha.enterprise.ready(async () => {
+                    try {
+                        const token = await grecaptcha.enterprise.execute('6LcKSzosAAAAADS4s80I4QKaDK0ub7tkwRuwSrLd', {action: 'LOGIN'});
+                        
+                         $.ajax({
+                            type: 'POST',
+                            url: "{{ route('verify-recaptcha') }}",
+                            data: { token: token, action: 'LOGIN' },
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            success: function(data) {
+                                if (data.success) {
+                                    $form.data('verified', true);
+                                    $form.submit();
+                                } else {
+                                    $('#error').html("Security verification failed.").show();
+                                    $btn.find('span').text(originalText);
+                                    $btn.prop('disabled', false);
+                                }
+                            },
+                            error: function() {
+                                $('#error').html("Security verification error.").show();
+                                $btn.find('span').text(originalText);
+                                $btn.prop('disabled', false);
+                            }
+                        });
+                    } catch(e) {
+                        console.error(e);
+                        $('#error').html("reCAPTCHA Error").show();
+                        $btn.find('span').text(originalText);
+                        $btn.prop('disabled', false);
+                    }
+                });
             });
         });
     </script>
