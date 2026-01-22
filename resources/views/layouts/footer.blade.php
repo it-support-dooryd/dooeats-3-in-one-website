@@ -1,6 +1,6 @@
 <div id="data-table_processing" class="page-overlay" style="display:none;">
-    <div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-        <img src="{{ asset('img/spinner.gif') }}" style="width: 500px; height: 500px; object-fit: contain;">
+    <div class="overlay-text">
+        <img src="{{ asset('img/spinner.gif') }}" class="loading-spinner-img" alt="Loading...">
     </div>
 </div>
 
@@ -43,67 +43,78 @@
 
 
 <script>
-    $(document).ready(function() {
-        // Initialize Google Autocomplete for High-End Modal
-        $('#headerLocationModal').on('shown.bs.modal', function() {
-            loadHeaderRecentLocations();
+    // Wait for jQuery to load before using it
+    (function() {
+        function initHeaderLocationModal() {
+            if (typeof jQuery === 'undefined' || typeof $ === 'undefined') {
+                setTimeout(initHeaderLocationModal, 50);
+                return;
+            }
             
-            if (typeof google !== 'undefined' && google.maps && google.maps.places) {
-                const input = document.getElementById('header_location_search_input');
-                const autocomplete = new google.maps.places.Autocomplete(input);
-                
-                autocomplete.addListener('place_changed', function() {
-                    const place = autocomplete.getPlace();
-                    if (!place.geometry) return;
+            $(document).ready(function() {
+                // Initialize Google Autocomplete for High-End Modal
+                $('#headerLocationModal').on('shown.bs.modal', function() {
+                    loadHeaderRecentLocations();
                     
-                    const lat = place.geometry.location.lat();
-                    const lng = place.geometry.location.lng();
-                    let addressName = place.name || place.formatted_address;
-                    
-                    if (typeof saveLocationAndContinue === 'function') {
-                        saveLocationAndContinue(place.formatted_address, lat, lng, addressName);
+                    if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+                        const input = document.getElementById('header_location_search_input');
+                        const autocomplete = new google.maps.places.Autocomplete(input);
+                        
+                        autocomplete.addListener('place_changed', function() {
+                            const place = autocomplete.getPlace();
+                            if (!place.geometry) return;
+                            
+                            const lat = place.geometry.location.lat();
+                            const lng = place.geometry.location.lng();
+                            let addressName = place.name || place.formatted_address;
+                            
+                            if (typeof saveLocationAndContinue === 'function') {
+                                saveLocationAndContinue(place.formatted_address, lat, lng, addressName);
+                            }
+                        });
                     }
                 });
-            }
-        });
 
-        function loadHeaderRecentLocations() {
-            try {
-                let recent = localStorage.getItem('recent_locations');
-                recent = recent ? JSON.parse(recent) : [];
-                
-                const list = $('#recent_locations_list');
-                const container = $('#headerRecentLocations');
-                
-                if (recent.length > 0) {
-                    list.empty();
-                    recent.forEach(loc => {
-                        const item = $(`
-                            <a href="#" class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center mb-2" style="background: transparent;">
-                                <div style="width: 36px; height: 36px; background: #F6F8F7; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" class="mr-3">
-                                    <i class="feather-clock text-muted"></i>
-                                </div>
-                                <div style="overflow: hidden; flex: 1;">
-                                    <div class="font-weight-600 text-dark text-truncate" style="font-size: 14px;">${loc.name}</div>
-                                    <div class="small text-muted text-truncate">${loc.address}</div>
-                                </div>
-                            </a>
-                        `);
-                        item.on('click', function(e) {
-                            e.preventDefault();
-                            saveLocationAndContinue(loc.address, loc.lat, loc.lng, loc.name);
-                        });
-                        list.append(item);
-                    });
-                    container.show();
-                } else {
-                    container.hide();
+                function loadHeaderRecentLocations() {
+                    try {
+                        let recent = localStorage.getItem('recent_locations');
+                        recent = recent ? JSON.parse(recent) : [];
+                        
+                        const list = $('#recent_locations_list');
+                        const container = $('#headerRecentLocations');
+                        
+                        if (recent.length > 0) {
+                            list.empty();
+                            recent.forEach(loc => {
+                                const item = $(`
+                                    <a href="#" class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center mb-2" style="background: transparent;">
+                                        <div style="width: 36px; height: 36px; background: #F6F8F7; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" class="mr-3">
+                                            <i class="feather-clock text-muted"></i>
+                                        </div>
+                                        <div style="overflow: hidden; flex: 1;">
+                                            <div class="font-weight-600 text-dark text-truncate" style="font-size: 14px;">${loc.name}</div>
+                                            <div class="small text-muted text-truncate">${loc.address}</div>
+                                        </div>
+                                    </a>
+                                `);
+                                item.on('click', function(e) {
+                                    e.preventDefault();
+                                    saveLocationAndContinue(loc.address, loc.lat, loc.lng, loc.name);
+                                });
+                                list.append(item);
+                            });
+                            container.show();
+                        } else {
+                            container.hide();
+                        }
+                    } catch (e) {
+                        console.error('Error loading recent locations', e);
+                    }
                 }
-            } catch (e) {
-                console.error('Error loading recent locations', e);
-            }
+            });
         }
-    });
+        initHeaderLocationModal();
+    })();
 </script>
 <span style="display: none;">
     <button type="button" class="btn btn-primary" id="notification_accepted_order_by_restaurant_id" data-toggle="modal" data-target="#notification_accepted_order_by_restaurant">{{ trans('lang.large_modal') }}</button>
@@ -271,12 +282,24 @@ use Illuminate\Support\Facades\Route;
 <script src="{{ asset('js/crypto-js.js') }}"></script>
 <script src="{{ asset('js/jquery.cookie.js') }}"></script>
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
+
+{{-- Google Maps Loader (must load first) --}}
+<script src="{{ asset('js/google-maps-loader.js') }}"></script>
+
+{{-- Enhanced Location Services --}}
+<script src="{{ asset('js/location-service.js') }}"></script>
+<script src="{{ asset('js/location-error-handler.js') }}"></script>
+<script src="{{ asset('js/location-ui.js') }}"></script>
+<script src="{{ asset('js/location-sync.js') }}"></script>
+<script src="{{ asset('js/location-diagnostics.js') }}"></script>
+<script src="{{ asset('js/location-integration.js') }}"></script>
+<script src="{{ asset('js/location-selector.js') }}" onerror="console.warn('location-selector.js not found, continuing without it');"></script>
 <!-- jQuery UI JavaScript -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="{{ asset('vendor/select2/dist/js/select2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/sweetalert2.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/location-selector.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/order-status-helper.js') }}"></script>
 <script type="text/javascript">
     function setCookie(name, value, days) {
         var expires = "";
@@ -400,6 +423,52 @@ use Illuminate\Support\Facades\Route;
         await database.collection('settings').doc("googleMapKey").get().then(function(googleMapKeySnapshotsHeader) {
             var placeholderImageHeaderData = googleMapKeySnapshotsHeader.data();
             googleMapKey = placeholderImageHeaderData.key;
+            
+            if (placeholderImageHeaderData.googleAnalyticsId) {
+                var gaId = placeholderImageHeaderData.googleAnalyticsId;
+                var gaScript = document.createElement('script');
+                gaScript.async = true;
+                gaScript.src = "https://www.googletagmanager.com/gtag/js?id=" + gaId;
+                document.head.appendChild(gaScript);
+
+                var inlineScript = document.createElement('script');
+                inlineScript.innerHTML = `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaId}');
+                `;
+                document.head.appendChild(inlineScript);
+            }
+
+            if (placeholderImageHeaderData.salesiqChatWidget) {
+                var salesiqWidgetCode = placeholderImageHeaderData.salesiqChatWidget;
+                // Create a temporary container to parse the string into DOM elements
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = salesiqWidgetCode;
+                
+                // Append each child node to the body or head
+                Array.from(tempDiv.childNodes).forEach(node => {
+                     // Check if it's a script tag to ensure it executes
+                    if (node.tagName === 'SCRIPT') {
+                        var script = document.createElement('script');
+                        if (node.src) {
+                            script.src = node.src;
+                            script.async = true; // Best practice for widgets
+                        } else {
+                            script.innerHTML = node.innerHTML;
+                        }
+                        // Copy attributes
+                        Array.from(node.attributes).forEach(attr => {
+                            script.setAttribute(attr.name, attr.value);
+                        });
+                        document.body.appendChild(script);
+                    } else {
+                        document.body.appendChild(node.cloneNode(true));
+                    }
+                });
+            }
+
             const script = document.createElement('script');
             if (mapType == 'google') {
                 script.src = "https://maps.googleapis.com/maps/api/js?key=" + googleMapKey +
@@ -413,6 +482,11 @@ use Illuminate\Support\Facades\Route;
             }
             script.onload = function() {
                 if (mapType == 'google') {
+                    // Notify GoogleMapsLoader that maps are loaded
+                    if (window.GoogleMapsLoader) {
+                        window.GoogleMapsLoader.isLoaded = true;
+                        window.GoogleMapsLoader.notifyListeners();
+                    }
                     initialize();
                 } else {
                     init();

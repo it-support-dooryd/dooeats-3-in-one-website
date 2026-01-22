@@ -283,7 +283,7 @@
                     '</a></p><p class="mb-0"><span class="fa fa-map-marker"></span> ' + val.vendor.location +
                     '</p><p>ORDER ' + val.id + '</p><p class="mb-0 small view-det"><a href="' + view_details +
                     '">View Details</a></p></div><div class="ml-auto ord-com-btn"><p class="bg-success text-white py-1 px-2 rounded small mb-1">' +
-                    val.status +
+                    getCustomerOrderStatus(val.status) +
                     '</p><p class="small font-weight-bold text-center"><i class="feather-clock"></i> ' + val
                     .createdAt.toDate().toDateString() +
                     '</p></div></div><div class="d-flex pt-3 m-d-flex"><div class="small">';
@@ -481,7 +481,7 @@
                     '</a></p><p class="mb-0"><span class="fa fa-map-marker"></span> ' + val.vendor.location +
                     '</p><p>ORDER ' + val.id + '</p><p class="mb-0 small view-det"><a href="' + view_details +
                     '">View Details</a></p></div><div class="ml-auto ord-com-btn"><p class="bg-pending text-white py-1 px-2 rounded small mb-1">' +
-                    val.status +
+                    getCustomerOrderStatus(val.status) +
                     '</p><p class="small font-weight-bold text-center"><i class="feather-clock"></i> ' + val
                     .createdAt.toDate().toDateString() +
                     '</p></div></div><div class="d-flex pt-3 m-d-flex"><div class="small">';
@@ -683,7 +683,7 @@
                     '</a></p><p class="mb-0"><span class="fa fa-map-marker"></span> ' + val.vendor.location +
                     '</p><p>ORDER ' + val.id + '</p><p class="mb-0 small view-det"><a href="' + view_details +
                     '">View Details</a></p></div><div class="ml-auto ord-com-btn"><p class="bg-rejected text-white py-1 px-2 rounded small mb-1">' +
-                    val.status +
+                    getCustomerOrderStatus(val.status) +
                     '</p><p class="small font-weight-bold text-center"><i class="feather-clock"></i> ' + val
                     .createdAt.toDate().toDateString() +
                     '</p></div></div><div class="d-flex pt-3 m-d-flex"><div class="small">';
@@ -880,7 +880,7 @@
                     '</a></p><p class="mb-0"><span class="fa fa-map-marker"></span> ' + val.vendor.location +
                     '</p><p>ORDER ' + val.id + '</p><p class="mb-0 small view-det"><a href="' + view_details +
                     '">View Details</a></p></div><div class="ml-auto ord-com-btn"><p class="bg-rejected text-white py-1 px-2 rounded small mb-1">' +
-                    val.status +
+                    getCustomerOrderStatus(val.status) +
                     '</p><p class="small font-weight-bold text-center"><i class="feather-clock"></i> ' + val
                     .createdAt.toDate().toDateString() +
                     '</p></div></div><div class="d-flex pt-3 m-d-flex"><div class="small">';

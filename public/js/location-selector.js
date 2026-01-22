@@ -62,64 +62,219 @@
   /**
    * Handle current location button click
    */
-  function handleCurrentLocationClick() {
+  async function handleCurrentLocationClick() {
     hideError();
     showLoading(true);
+    LocationUI.setButtonLoading('#useCurrentLocationBtn', true, 'Getting location...');
 
-    if (!navigator.geolocation) {
-      showError(window.locationStrings?.notSupported || 'Geolocation is not supported by your browser');
-      showLoading(false);
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      handleGeolocationSuccess,
-      handleGeolocationError,
-      {
+    try {
+      // Use comprehensive LocationService
+      const result = await LocationService.getCurrentLocation({
         enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
+        timeout: 15000,
+        retries: 3,
+        fallbackToNetwork: true,
+        fallbackToLastKnown: true
+      });
+
+      if (result.success) {
+        handleGeolocationSuccess(result);
+      } else {
+        handleGeolocationError(result);
       }
-    );
+    } catch (error) {
+      console.error('[LocationSelector] Unexpected error:', error);
+      handleGeolocationError({
+        success: false,
+        error: 'UNEXPECTED_ERROR',
+        message: 'An unexpected error occurred. Please try again.'
+      });
+    } finally {
+      showLoading(false);
+      LocationUI.setButtonLoading('#useCurrentLocationBtn', false);
+    }
   }
 
   /**
    * Handle geolocation success
    */
-  function handleGeolocationSuccess(position) {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
+  async function handleGeolocationSuccess(result) {
+    const lat = result.latitude;
+    const lng = result.longitude;
 
-    // Use existing getCurrentLocation function
-    if (typeof getCurrentLocation === 'function') {
-      getCurrentLocation('reload');
-    } else {
-      // Fallback: manually set location
-      setLocationCoordinates(lat, lng);
+    // Show success message
+    if (window.LocationUI) {
+      LocationUI.showSuccess(result, '#locationSuccessContainer');
+    }
+
+    // Reverse geocode to get address
+    try {
+      const addressData = await reverseGeocode(lat, lng);
+      
+      // Sync location across all features
+      if (window.LocationSync) {
+        LocationSync.syncToAllFeatures({
+          latitude: lat,
+          longitude: lng,
+          address_name: addressData.address_name || addressData.formatted_address || '',
+          address_city: addressData.city || '',
+          address_state: addressData.state || '',
+          address_country: addressData.country || '',
+          address_zip: addressData.zip || '',
+          source: result.source
+        });
+      } else {
+        // Fallback to old method
+        setLocationCoordinates(lat, lng);
+      }
+
+      // Reload page after short delay to show success message
+      setTimeout(() => {
+        if (typeof getCurrentLocation === 'function') {
+          getCurrentLocation('reload');
+        } else {
+          window.location.reload();
+        }
+      }, 1000);
+    } catch (error) {
+      console.error('[LocationSelector] Reverse geocode error:', error);
+      // Still save coordinates even if reverse geocode fails
+      if (window.LocationSync) {
+        LocationSync.syncToAllFeatures({
+          latitude: lat,
+          longitude: lng,
+          source: result.source
+        });
+      } else {
+        setLocationCoordinates(lat, lng);
+      }
+      setTimeout(() => window.location.reload(), 1000);
     }
   }
 
   /**
    * Handle geolocation error
    */
-  function handleGeolocationError(error) {
+  function handleGeolocationError(errorResult) {
     showLoading(false);
 
-    let errorMsg = window.locationStrings?.fetchError || 'Unable to fetch your location';
-
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        errorMsg = window.locationStrings?.permissionDenied || 'Location permission denied';
-        break;
-      case error.POSITION_UNAVAILABLE:
-        errorMsg = 'Location information is unavailable';
-        break;
-      case error.TIMEOUT:
-        errorMsg = 'Location request timed out';
-        break;
+    // Use LocationErrorHandler for better error display
+    if (window.LocationErrorHandler) {
+      LocationErrorHandler.showError(errorResult, {
+        container: '#locationErrorAlert',
+        onRetry: () => {
+          handleCurrentLocationClick();
+        },
+        onManual: () => {
+          // Show manual input or map selector
+          if (window.LocationUI) {
+            LocationUI.showMapSelector({
+              onSelect: (location) => {
+                handleGeolocationSuccess({
+                  success: true,
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  source: 'manual'
+                });
+              }
+            });
+          } else {
+            // Fallback: focus on search input
+            $locationSearchInput.focus();
+          }
+        },
+        onSettings: () => {
+          // Open browser settings (if possible)
+          if (navigator.permissions) {
+            navigator.permissions.query({ name: 'geolocation' }).then(result => {
+              alert('Please enable location access in your browser settings and try again.');
+            });
+          } else {
+            alert('Please enable location access in your browser settings and try again.');
+          }
+        },
+        onLastKnown: () => {
+          const lastKnown = LocationService.getLastKnownLocation();
+          if (lastKnown) {
+            handleGeolocationSuccess(lastKnown);
+          } else {
+            alert('No last known location available.');
+          }
+        }
+      });
+    } else {
+      // Fallback to simple error message
+      showError(errorResult.message || 'Unable to fetch your location');
     }
+  }
 
-    showError(errorMsg);
+  /**
+   * Reverse geocode coordinates to address
+   */
+  async function reverseGeocode(lat, lng) {
+    // Wait for Google Maps if it should be available
+    if (typeof mapType !== 'undefined' && mapType === 'google') {
+      if (window.GoogleMapsLoader) {
+        await window.GoogleMapsLoader.waitForGoogleMaps();
+      } else {
+        // Fallback wait
+        let waited = 0;
+        while (waited < 10000 && !(typeof google !== 'undefined' && google.maps && google.maps.Geocoder)) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          waited += 100;
+        }
+      }
+    }
+    
+    if (typeof mapType !== 'undefined' && mapType === 'google' && window.GoogleMapsLoader && window.GoogleMapsLoader.isAvailable()) {
+      return new Promise((resolve, reject) => {
+        const geocoder = new google.maps.Geocoder();
+        const latlng = { lat: lat, lng: lng };
+        
+        geocoder.geocode({ location: latlng }, (results, status) => {
+          if (status === 'OK' && results[0]) {
+            const result = results[0];
+            const addressData = {
+              formatted_address: result.formatted_address,
+              address_name: result.formatted_address
+            };
+            
+            result.address_components.forEach(component => {
+              if (component.types.includes('locality')) {
+                addressData.city = component.long_name;
+              } else if (component.types.includes('administrative_area_level_1')) {
+                addressData.state = component.long_name;
+              } else if (component.types.includes('country')) {
+                addressData.country = component.long_name;
+              } else if (component.types.includes('postal_code')) {
+                addressData.zip = component.long_name;
+              }
+            });
+            
+            resolve(addressData);
+          } else {
+            reject(new Error('Geocoding failed'));
+          }
+        });
+      });
+    } else {
+      // Use OpenStreetMap Nominatim
+      return fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.address) {
+            return {
+              formatted_address: data.display_name,
+              address_name: data.display_name,
+              city: data.address.city || data.address.town || data.address.village || '',
+              state: data.address.state || '',
+              country: data.address.country || '',
+              zip: data.address.postcode || ''
+            };
+          }
+          throw new Error('No address data');
+        });
+    }
   }
 
   /**

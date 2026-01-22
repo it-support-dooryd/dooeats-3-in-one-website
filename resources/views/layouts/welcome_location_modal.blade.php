@@ -1,6 +1,6 @@
 <div class="modal fade welcome-location-modal" id="welcomeLocationModal" tabindex="-1" role="dialog" aria-labelledby="welcomeLocationModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="border-radius: 25px; border: 4px solid #D62828; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+        <div class="modal-content" style="border-radius: 25px; border: 4px solid #D62828; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); width: 552px; height: 600px;">
             <div class="modal-body text-center d-flex flex-column align-items-center justify-content-center p-0">
                 
                 <!-- Icon (Chef Hat) -->

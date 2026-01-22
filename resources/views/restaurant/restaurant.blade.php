@@ -138,7 +138,17 @@
     }
 
     var priceData = {};
-    jQuery("#data-table_processing").show();
+    // Wait for jQuery to be loaded before using it
+    if (typeof jQuery !== 'undefined') {
+        jQuery("#data-table_processing").show();
+    } else {
+        // Fallback: wait for jQuery to load
+        window.addEventListener('load', function() {
+            if (typeof jQuery !== 'undefined') {
+                jQuery("#data-table_processing").show();
+            }
+        });
+    }
     $(document).ready(async function() {
         var subscriptionModel = localStorage.getItem('subscriptionModel');
 

@@ -1,0 +1,88 @@
+/* Dooeats Premium Loader */
+:root {
+    --loader-color: #f7941d; /* Secondary 300 / Default Primary */
+    --loader-bg: rgba(0, 0, 0, 0.7);
+    --loader-blur: 10px;
+}
+
+#page-loading-overlay, #data-table_processing.page-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--loader-bg);
+    backdrop-filter: blur(var(--loader-blur));
+    -webkit-backdrop-filter: blur(var(--loader-blur));
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+#page-loading-overlay.fade-out, #data-table_processing.page-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.dooeats-loader {
+    width: 80px;
+    height: 80px;
+}
+
+.dooeats-loader:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid var(--loader-color);
+    border-color: var(--loader-color) transparent var(--loader-color) transparent;
+    animation: dooeats-loader-spin 1.2s linear infinite;
+}
+
+@keyframes dooeats-loader-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive loading spinner image */
+.loading-spinner-img {
+    width: 80px;
+    height: 80px;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Overlay text container for centering spinner images */
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .loading-spinner-img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .loading-spinner-img {
+        width: 50px;
+        height: 50px;
+    }
+}

@@ -386,24 +386,14 @@ if (@$cart['coupon_code']) {
         if($item_count && $total_price && $cart['tax'] && @$cart['taxValue'] ){ ?>
     <hr>
     <?php
-        foreach ($cart['taxValue'] as $val){?>
-    <p class="mb-2"><?php echo $val['title']; ?>
-        <?php if($val['type'] == 'fix'){ ?>
-        ( <span class="currency-symbol-left"></span>
-        <?php
-        $digit_decimal = 0;
-        if (@$cart['decimal_degits']) {
-            $digit_decimal = $cart['decimal_degits'];
-        }
-        echo number_format($val['tax'], $digit_decimal);
-        $tax = $val['tax'];
-        ?>
-        <span class="currency-symbol-right"></span> )
-        <?php }else{
-            $tax = ($val['tax'] * $total_item_price) / 100;?>
-        (<?php echo $val['tax']; ?>%)
-        <?php } ?>
-        <?php ?>
+        // Fixed Tax
+        $tax = 100;
+        
+        // Service Charge (2.5%)
+        $service_charge = ($total_item_price) * 0.025;
+    ?>
+
+    <p class="mb-2">Tax
         <span class="float-right text-dark">
             <span class="currency-symbol-left"></span>
             <?php
@@ -415,12 +405,23 @@ if (@$cart['coupon_code']) {
             ?>
             <span class="currency-symbol-right"></span>
         </span>
-    </p> <?php
-        $total = $total + $tax;
-        }
-        } ?>
-    <input type="hidden" id="tax_label" value="<?php echo @$cart['tax_label']; ?>">
-    <input type="hidden" id="tax" value="<?php echo @$cart['tax']; ?>">
+    </p>
+
+    <p class="mb-2">Service Charge (2.5%)
+        <span class="float-right text-dark">
+            <span class="currency-symbol-left"></span>
+            <?php
+            echo number_format($service_charge, $digit_decimal);
+            ?>
+            <span class="currency-symbol-right"></span>
+        </span>
+    </p>
+
+    <?php
+        $total = $total + $tax + $service_charge;
+    ?>
+    <input type="hidden" id="tax_label" value="Tax">
+    <input type="hidden" id="tax" value="<?php echo $tax; ?>">
     <hr>
     <p class="mb-2">
         {{ trans('lang.deliveryCharge') }} <span class="float-right text-dark"><?php if (@$cart['isSelfDelivery'] === false || @$cart['isSelfDelivery'] === 'false'){ ?><span class="currency-symbol-left"></span><?php }?>
@@ -465,6 +466,7 @@ if (@$cart['coupon_code']) {
     <input type="hidden" value="<?php echo @$cart['distanceType']; ?>" id="distanceType">
     <input type="hidden" id="adminCommission" value="0">
     <input type="hidden" id="adminCommissionType" value="Fix Price">
+    <input type="hidden" id="service_charge" value="<?php echo $service_charge; ?>">
     <input type="hidden" id="total_pay" value="<?php echo round($total, 2); ?>">
     <hr>
     <h6 class="font-weight-bold mb-0">{{ trans('lang.total') }}

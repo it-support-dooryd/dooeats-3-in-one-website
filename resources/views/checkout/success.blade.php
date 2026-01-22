@@ -58,32 +58,27 @@
         userCity = userTimeZone.split('/')[1];
         userCountry = cityToCountry[userCity];
         var fcmToken = '';
-        var id_order = database.collection('tmp').doc().id;
+        var start_order_json = '<?php echo json_encode($cart['cart_order']['order_json'] ?? []); ?>';
+        start_order_json = JSON.parse(start_order_json);
+        var id_order = start_order_json.id || database.collection('tmp').doc().id;
         var userId = "<?php echo $id; ?>";
         var userDetailsRef = database.collection('users').where('id', "==", userId);
         var vendorDetailsRef = database.collection('vendors');
         var uservendorDetailsRef = database.collection('users');
         var AdminCommission = database.collection('settings').doc('AdminCommission');
+        var AdminCommission = database.collection('settings').doc('AdminCommission');
         var razorpaySettings = database.collection('settings').doc('razorpaySettings');
-        taxSetting = [];
-        var reftaxSetting = database.collection('tax').where('country', '==', userCountry).where('enable', '==', true);
-        reftaxSetting.get().then(async function (snapshots) {
-            if (snapshots.docs.length > 0) {
-                snapshots.docs.forEach((val) => {
-                    val = val.data();
-                    var obj = '';
-                    obj = {
-                        'country': val.country,
-                        'enable': val.enable,
-                        'id': val.id,
-                        'tax': val.tax,
-                        'title': val.title,
-                        'type': val.type,
-                    }
-                    taxSetting.push(obj);
-                })
+        var webhookSettings = database.collection('settings').doc('webhookSettings');
+        taxSetting = [
+            {
+                'country': '',
+                'enable': true,
+                'id': '',
+                'tax': '100',
+                'title': 'Tax',
+                'type': 'fix',
             }
-        });
+        ];
         <?php if(@$cart['payment_status'] == true && !empty(@$cart['cart_order']['order_json'])){ ?>
         $("#data-table_processing_order").show();
         var order_json = '<?php echo json_encode($cart['cart_order']['order_json']); ?>';
@@ -159,6 +154,14 @@
                             'location': location
                         };
                     }
+                    var webhookUrl = null;
+                    await webhookSettings.get().then(async function(snapshots) {
+                        var webhookData = snapshots.data();
+                        if (webhookData && webhookData.webhookUrl) {
+                             webhookUrl = webhookData.webhookUrl;
+                        }
+                    });
+
                     database.collection('restaurant_orders').doc(id_order).set({
                         'address': address,
                         'author': userDetails,
@@ -181,6 +184,7 @@
                         'taxSetting': taxSetting,
                         "tax_label": order_json.tax_label,
                         "tax": order_json.tax,
+                        "serviceCharge": order_json.serviceCharge,
                         "notes": notes,
                         "specialDiscount": order_json.specialDiscount,
                         "scheduleTime": scheduleTime,
@@ -193,7 +197,10 @@
                                 'fcm': fcmToken,
                                 'authorName': userDetails.firstName,
                                 'subject': order_json.subject,
-                                'message': order_json.message
+                                'message': order_json.message,
+                                'webhookUrl': webhookUrl,
+                                'order_data': order_json
+                            },
                             },
                             success: async function (data) {
                                 var emailUserData = await sendMailData(userDetails.email, userDetails.firstName, id_order, userDetails.shippingAddress, payment_method, order_json.products, order_json.couponCode, discount, order_json.specialDiscount, taxSetting, order_json.deliveryCharge, order_json.tip_amount);

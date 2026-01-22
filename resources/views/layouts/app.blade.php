@@ -40,33 +40,8 @@
           rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="{{ asset('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/loader.css')}}" rel="stylesheet">
     <style>
-        /* Page Loading Overlay */
-        #page-loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000000;
-            z-index: 999999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease-out;
-        }
-        
-        #page-loading-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        #page-loading-overlay img {
-            width: 500px;
-            height: 500px;
-            object-fit: contain;
-        }
-
         body {
             background-image: url('{{ asset("images/bg_new.png") }}');
             background-size: cover;
@@ -76,22 +51,12 @@
             min-height: 100vh;
         }
     </style>
-    <!-- Google tag (gtag.js) -->
-    @if(config('services.google_analytics.measurement_id'))
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.measurement_id') }}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', '{{ config('services.google_analytics.measurement_id') }}');
-    </script>
-    @endif
 </head>
 <body class="fixed-bottom-bar">
     <!-- Page Loading Overlay -->
     <div id="page-loading-overlay">
-        <img src="{{ asset('img/spinner.gif') }}" alt="Loading...">
+        <div class="dooeats-loader"></div>
     </div>
 
     <script>

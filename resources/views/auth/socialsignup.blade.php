@@ -1,218 +1,198 @@
-@include('auth.default')
-<?php
-$countries = file_get_contents(public_path('countriesdata.json'));
-$countries = json_decode($countries);
-$countries = (array) $countries;
-$newcountries = array();
-$newcountriesjs = array();
-foreach ($countries as $keycountry => $valuecountry) {
-    $newcountries[$valuecountry->phoneCode] = $valuecountry;
-    $newcountriesjs[$valuecountry->phoneCode] = $valuecountry->code;
-}
-?>
-<link href="{{ asset('vendor/select2/dist/css/select2.min.css')}}" rel="stylesheet">
-<link href="{{ asset('/css/font-awesome.min.css')}}" rel="stylesheet">
-<div class="siddhi-signup login-page vh-100">
-    <div class="d-flex align-items-center justify-content-center py-3">
-        <div class="col-md-6">
-            <div class="col-10 mx-auto card p-3">
-                <h3 class="text-dark my-0 mb-3">{{trans('lang.sign_up_with_us')}}</h3>
-                <p class="text-50">{{trans('lang.sign_up_to_continue')}}</p>
-                <div class="error" style="color: red" id="field_error"></div>
-                <div class="error" id="field_error1" style="color:red;display:none;"></div>
-                <form class="mt-3 mb-4" action="javascript:void(0)" onsubmit="return signupClick()">
-                    <div class="form-group" id="firstName_div">
-                        <label for="firstName" class="text-dark">{{trans('lang.first_name')}}</label>
-                        <input type="text" placeholder="Enter FirstName" value="{{ old('firstName', $firstName) }}" class="form-control" id="firstName" required>
-                        <input type="hidden" id="hidden_fName" />
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Dooeats') }} - Complete Profile</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo-light-icon.png') }}">
+    <link href="{{ asset('css/auth-styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body class="auth-body">
+    <div class="auth-overlay"></div>
+    <div class="auth-container">
+        <div class="auth-card" style="max-width: 550px;">
+            <h4>Complete Profile</h4>
+            <span class="auth-subtitle">Please complete your profile to continue</span>
+            
+            <div id="error_message" class="alert-danger" style="display:none;"></div>
+
+            <form id="social-signup-form" autocomplete="off">
+                <div style="display: flex; gap: 15px; margin-bottom: 1.25rem;">
+                    <div class="form-group-auth" style="flex: 1; margin-bottom: 0;">
+                        <i class="fa fa-user-o input-icon"></i>
+                        <input type="text" id="firstName" class="form-control-auth" placeholder="First Name" value="{{ old('firstName', $firstName) }}" required>
                     </div>
-                    <div class="form-group" id="lastName_div">
-                        <label for="lastName" class="text-dark">{{trans('lang.last_name')}}</label>
-                        <input type="text" placeholder="Enter LastName" value="{{ old('lastName', $lastName) }}" class="form-control" id="lastName" required>
-                        <input type="hidden" id="hidden_lName" />
+                    <div class="form-group-auth" style="flex: 1; margin-bottom: 0;">
+                        <i class="fa fa-user-o input-icon"></i>
+                        <input type="text" id="lastName" class="form-control-auth" placeholder="Last Name" value="{{ old('lastName', $lastName) }}" required>
                     </div>
-                    <div class="form-group" id="email_div">
-                        <label for="email" class="text-dark">{{trans('lang.email_address')}}</label>
-                        <input type="email" placeholder="Enter Email Address" disabled class="form-control" value="{{ old('email', $email) }}" id="email" required
-                            autocomplete="new-password" >
-                    </div>
-                    <div class="form-group" id="phone-box">
-                        <?php
-                        $countryCode = '';
-                        $localNumber = $phoneNumber;
-                        if (preg_match('/^\+(\d{1,3})\s?(\d+)$/', $phoneNumber, $matches)) {
-                            $countryCode = $matches[1];
-                            $localNumber = $matches[2];
-                        }
-                        ?>
-                        <div class="col-xs-12">
-                            <select name="country" id="country_selector">
-                                <?php foreach ($newcountries as $keycy => $valuecy) { ?>
-                                    <?php
-                                    $selected = ($countryCode == $valuecy->phoneCode) ? "selected" : "";
-                                    ?>
-                                    <option <?php echo $selected; ?> code="<?php echo $valuecy->code; ?>"
-                                        value="<?php echo $keycy; ?>">+<?php echo $valuecy->phoneCode; ?>  <?php echo $valuecy->countryName; ?></option>
-                                <?php } ?>
-                            </select>
-                            <input class="form-control" placeholder="{{trans('lang.user_phone')}}" id="mobileNumber"
-                                type="number" name="mobileNumber" value="{{ old('phoneNumber', $localNumber) }}" required
-                                autocomplete="mobileNumber">
+                </div>
+
+                <div class="form-group-auth">
+                    <i class="fa fa-envelope-o input-icon"></i>
+                    <input type="email" id="email" class="form-control-auth" placeholder="Email Address" value="{{ old('email', $email) }}" disabled required style="background-color: #f3f4f6; cursor: not-allowed;">
+                </div>
+
+                <div class="form-group-auth">
+                    <div class="phone-input-group">
+                        <div class="phone-prefix" style="left: 1rem; color: #102A1C; font-weight: 700;">
+                            <img src="{{ asset('flags/120/ng.png') }}" alt="Nigeria" width="18">
+                            <span style="font-size: 14px; margin-left: 4px;">+234</span>
                         </div>
-                        @error('phone')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <input type="tel" id="getphone" class="form-control-auth" placeholder="Phone Number" value="{{ old('phoneNumber', $phoneNumber ?? '') }}" required maxlength="11" style="padding-left: 5.5rem;">
                     </div>
-                    <div class="form-group" id="referral_div">
-                        <label for="referral_code" class="text-dark">{{trans('lang.referral_code')}}
-                            ({{trans('lang.optional')}})</label>
-                        <input type="text" placeholder="Enter Referral Code" class="form-control" id="referral_code">
-                        <input type="hidden" id="hidden_referral" />
+                </div>
+
+                <div class="form-group-auth">
+                    <i class="fa fa-gift input-icon"></i>
+                    <input type="text" id="referral_code" class="form-control-auth" placeholder="Referral Code (Optional)">
+                </div>
+
+                <div class="text-center mb-3">
+                    <small style="color: var(--text-secondary);">
+                        By continuing, you agree to our <a href="{{ url('/terms') }}" class="forgot-password-link">Terms</a> & <a href="{{ url('/privacy') }}" class="forgot-password-link">Privacy Policy</a>.
+                    </small>
+                </div>
+
+                <button type="submit" class="btn-auth-primary" id="btn-signup">
+                    <span>Proceed</span>
+                    <div class="arrow-box">
+                        <i class="fa fa-arrow-right"></i>
                     </div>
-                    <div class="form-group">
-                        <input type="hidden" name="email_valid" id="email_valid" value="1">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-sign-up" id="btn-sign-up">
-                        {{trans('lang.sign_up')}}
-                    </button>
-                </form>
-            </div>
-            <div class="new-acc d-flex align-items-center justify-content-center mt-4 mb-3">
-                <a href="{{url('login')}}">
-                    <p class="text-center m-0"> {{trans('lang.already_an_account')}} {{trans('lang.sign_in')}}</p>
-                </a>
-            </div>
+                </button>
+
+                <div class="text-center mt-4">
+                    <a href="{{ route('login') }}" class="forgot-password-link">Back to Login</a>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{{ asset('vendor/select2/dist/js/select2.min.js') }}"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js"></script>
-<script src="{{ asset('js/crypto-js.js') }}"></script>
-<script src="{{ asset('js/jquery.cookie.js') }}"></script>
-<script src="{{ asset('js/jquery.validate.js') }}"></script>
-<script type="text/javascript">
-    var createdAtman = firebase.firestore.Timestamp.fromDate(new Date());
-    var database = firebase.firestore();
-    async function signupClick() {
-        $(".btn-sign-up").text('Please wait...');
-        var email = $("#email").val();
-        var password = $("#password").val();
-        var countryCode = '+' + jQuery("#country_selector").val();
-        var mobile = jQuery("#mobileNumber").val();
-        var mobileNumber = '+' + jQuery("#country_selector").val() + '' + jQuery("#mobileNumber").val();
-        var firstName = $("#firstName").val();
-        var lastName = $("#lastName").val();
-        var referralCode = $("#referral_code").val();
-        var referralBy = '';
-        if (referralCode) {
-            var referralByRes = getReferralUserId(referralCode);
-            var referralBy = await referralByRes.then(function (refUserId) {
-                return refUserId;
-            });
+
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+
+    <script type="text/javascript">
+        var firebaseConfig = {
+            apiKey: "{{ config('firebase.api_key') }}",
+            authDomain: "{{ config('firebase.auth_domain') }}",
+            databaseURL: "{{ config('firebase.database_url') }}",
+            projectId: "{{ config('firebase.project_id') }}",
+            storageBucket: "{{ str_replace('gs://', '', config('firebase.storage_bucket')) }}",
+            messagingSenderId: "{{ config('firebase.messaging_sender_id') }}",
+            appId: "{{ config('firebase.app_id') }}",
+            measurementId: "{{ config('firebase.measurement_id') }}"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.firestore();
+
+        // Helper to set cookie
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         }
-        var userReferralCode = Math.floor(Math.random() * 899999 + 100000);
-        userReferralCode = userReferralCode.toString();
-        var uuid = "{{$uuid}}";
-                var photourl = "{{$photoURL}}";
-                database.collection("referral").doc(uuid).set({
+
+        async function getReferralUserId(referralCode) {
+            try {
+                const snapshots = await database.collection('referral').where('referralCode', '==', referralCode).get();
+                if (snapshots.docs.length > 0) {
+                    return snapshots.docs[0].data().id;
+                }
+            } catch (e) {
+                console.error("Referral check error", e);
+            }
+            return '';
+        }
+
+        $('#social-signup-form').on('submit', async function(e) {
+            e.preventDefault();
+            const $btn = $('#btn-signup');
+            const firstName = $("#firstName").val();
+            const lastName = $("#lastName").val();
+            const email = $("#email").val();
+            const referralCode = $("#referral_code").val();
+            
+            // Format phone
+            let rawPhone = $("#getphone").val();
+            if(rawPhone.startsWith('0')) {
+                rawPhone = rawPhone.substring(1);
+            }
+            const phone = "+234" + rawPhone;
+
+            $btn.prop('disabled', true).find('span').text('Processing...');
+            $('#error_message').hide();
+
+            try {
+                // Handle Referral
+                let referralBy = '';
+                if (referralCode) {
+                    referralBy = await getReferralUserId(referralCode);
+                }
+                
+                const userReferralCode = Math.floor(Math.random() * 899999 + 100000).toString();
+                const uuid = "{{$uuid}}"; // Passed from controller
+                const photourl = "{{$photoURL}}"; // Passed from controller
+                const createdAt = firebase.firestore.Timestamp.now();
+
+                // Update/Set Referral Doc
+                await database.collection("referral").doc(uuid).set({
                     'id': uuid,
-                    'referralBy': referralBy ? referralBy : '',
+                    'referralBy': referralBy,
                     'referralCode': userReferralCode,
                 });
-                database.collection("users").doc(uuid).set({
-                    'appIdentifier':"web",
+
+                // Update/Set User Doc
+                await database.collection("users").doc(uuid).set({
+                    'appIdentifier': "web",
                     'email': email,
                     'firstName': firstName,
                     'lastName': lastName,
                     'id': uuid,
-                    'countryCode':countryCode,
-                    'phoneNumber': mobile,
+                    'countryCode': '+234',
+                    'phoneNumber': rawPhone, 
+                    'countryCode': '+234',
+                    'phoneNumber': rawPhone, 
                     'role': "customer",
                     'profilePictureURL': photourl,
-                    'provider':'google',
-                    'createdAt': createdAtman,
-                    'active':true
-                }).then(() => {
-                    var url = "{{route('newRegister')}}";
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        data: {
-                            userId: uuid,
-                            email: email,
-                            password: '',
-                            firstName: firstName,
-                            lastName: lastName
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function (data) {
-                            if (data.access) {
-                                setCookie("loginType", "Social");
-                                window.location = "{{url('/')}}";
-                            }
-                        }
-                    })
-                }).catch((error) => {
-                        console.error("Error writing document: ", error);
-                        $("#field_error").html(error);
-                        window.scrollTo(0, 0);
+                    'provider': 'google', // Assumption: social signup implies google/apple etc.
+                    'createdAt': createdAt,
+                    'active': true
                 });
-        return false;
-    }
-    function setCookie(cname, cvalue, exdays) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        let expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-    async function getReferralUserId(referralCode) {
-        var refUserId = database.collection('referral').where('referralCode', '==', referralCode).get().then(async function (snapshots) {
-            if (snapshots.docs.length > 0) {
-                var referralData = snapshots.docs[0].data();
-                return referralData.id;
+
+                // Create Session
+                const sessionResponse = await $.ajax({
+                    type: 'POST',
+                    url: "{{ route('newRegister') }}", // Using newRegister logic for session creation
+                    data: {
+                        userId: uuid,
+                        email: email,
+                        password: '',
+                        firstName: firstName,
+                        lastName: lastName
+                    },
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+                });
+
+                if (sessionResponse.access) {
+                    setCookie("loginType", "Social", 1);
+                    window.location.href = "{{ url('/') }}";
+                } else {
+                    throw new Error("Session creation failed.");
+                }
+
+            } catch (error) {
+                $('#error_message').text(error.message).show();
+                $btn.prop('disabled', false).find('span').text('Complete Registration');
             }
         });
-        return refUserId;
-    }
-    var newcountriesjs = '<?php echo json_encode($newcountriesjs); ?>';
-    var newcountriesjs = JSON.parse(newcountriesjs);
-    function formatState(state) {
-        if (!state.id) {
-            return state.text;
-        }
-        var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/";
-        var $state = $(
-            '<span><img src="' + baseUrl + '/' + newcountriesjs[state.element.value].toLowerCase() + '.png" class="img-flag" /> ' + state.text + '</span>'
-        );
-        return $state;
-    }
-    function formatState2(state) {
-        if (!state.id) {
-            return state.text;
-        }
-        var baseUrl = "<?php echo URL::to('/'); ?>/flags/120/"
-        var $state = $(
-            '<span><img class="img-flag" /> <span></span></span>'
-        );
-        $state.find("span").text(state.text);
-        $state.find("img").attr("src", baseUrl + "/" + newcountriesjs[state.element.value].toLowerCase() + ".png");
-        return $state;
-    }
-    jQuery(document).ready(function () {
-        jQuery("#country_selector").select2({
-            templateResult: formatState,
-            templateSelection: formatState2,
-            placeholder: "Select Country",
-            allowClear: true
-        });
-    });
-</script>
+    </script>
+</body>
+</html>

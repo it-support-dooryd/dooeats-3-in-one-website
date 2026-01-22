@@ -55,28 +55,13 @@
                                 </div>
                             </div>
                             <div class="siddhi-card overflow-hidden checkout-payment-options">
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="paystack_box">
+                                <div class="custom-control custom-radio border-bottom py-2" id="paystack_box">
                                     <input type="radio" name="payment_method" id="paystack" value="paystack" class="custom-control-input" checked>
                                     <label class="custom-control-label" for="paystack">{{ trans('lang.pay_stack') }}</label>
                                     <input type="hidden" id="paystack_isEnabled">
                                     <input type="hidden" id="paystack_isSandbox">
                                     <input type="hidden" id="paystack_public_key">
                                     <input type="hidden" id="paystack_secret_key">
-                                </div>
-
-
-
-
-
-
-
-
-
-
-                                <div class="custom-control custom-radio border-bottom py-2" style="display:none;" id="wallet_box">
-                                    <input type="radio" name="payment_method" disabled id="wallet" value="wallet" class="custom-control-input">
-                                    <label class="custom-control-label" for="wallet">Wallet ( You have <span id="wallet_amount"></span> )</label>
-                                    <input type="hidden" id="user_wallet_amount">
                                 </div>
                             </div>
                         </div>
@@ -111,6 +96,10 @@
                     <div class="form-row">
                         <div class="col-md-12 form-group">
                             <label class="form-label">{{ trans('lang.street_1') }}</label>
+                            <!-- Location UI Containers -->
+                            <div id="checkoutLocationLoading" style="display: none;"></div>
+                            <div id="checkoutLocationSuccess" style="display: none;"></div>
+                            <div id="checkoutLocationError" style="display: none;"></div>
                             <div class="input-group">
                                 <input placeholder="Delivery Area" type="text" id="address_line1" class="form-control">
                                 <div class="input-group-append">
@@ -443,49 +432,6 @@
         });
     });
     async function getUserDetails() {
-        codSettings.get().then(async function(codSettingsSnapshots) {
-            codSettings = codSettingsSnapshots.data();
-            if (codSettings.isEnabled) {
-                $("#cod_box").show();
-            } else {
-                $("#cod_box").remove();
-            }
-        });
-
-
-
-        walletSettings.get().then(async function(walletSettingsSnapshots) {
-            walletSetting = walletSettingsSnapshots.data();
-            if (walletSetting.isEnabled) {
-                var isEnabled = walletSetting.isEnabled;
-                if (isEnabled) {
-                    $("#walletenabled").val(true);
-                } else {
-                    $("#walletenabled").val(false);
-                }
-                $("#wallet_box").show();
-            }
-        });
-        payFastSettings.get().then(async function(payfastSettingsSnapshots) {
-            payFastSetting = payfastSettingsSnapshots.data();
-            if (payFastSetting.isEnable) {
-                var isEnable = payFastSetting.isEnable;
-                $("#payfast_isEnabled").val(isEnable);
-                var isSandboxEnabled = payFastSetting.isSandbox;
-                $("#payfast_isSandbox").val(isSandboxEnabled);
-                var merchant_id = payFastSetting.merchant_id;
-                $("#payfast_merchant_id").val(merchant_id);
-                var merchant_key = payFastSetting.merchant_key;
-                $("#payfast_merchant_key").val(merchant_key);
-                var return_url = payFastSetting.return_url;
-                $("#payfast_return_url").val(return_url);
-                var cancel_url = payFastSetting.cancel_url;
-                $("#payfast_cancel_url").val(cancel_url);
-                var notify_url = payFastSetting.notify_url;
-                $("#payfast_notify_url").val(notify_url);
-                $("#payfast_box").show();
-            }
-        });
         payStackSettings.get().then(async function(payStackSettingsSnapshots) {
             payStackSetting = payStackSettingsSnapshots.data();
             if (payStackSetting.isEnable) {
@@ -498,81 +444,6 @@
                 var secretKey = payStackSetting.secretKey;
                 $("#paystack_secret_key").val(secretKey);
                 $("#paystack_box").show();
-            }
-        });
-        flutterWaveSettings.get().then(async function(flutterWaveSettingsSnapshots) {
-            flutterWaveSetting = flutterWaveSettingsSnapshots.data();
-            if (flutterWaveSetting.isEnable) {
-                var isEnable = flutterWaveSetting.isEnable;
-                $("#flutterWave_isEnabled").val(isEnable);
-                var isSandboxEnabled = flutterWaveSetting.isSandbox;
-                $("#flutterWave_isSandbox").val(isSandboxEnabled);
-                var encryptionKey = flutterWaveSetting.encryptionKey;
-                $("#flutterWave_encryption_key").val(encryptionKey);
-                var secretKey = flutterWaveSetting.secretKey;
-                $("#flutterWave_secret_key").val(secretKey);
-                var publicKey = flutterWaveSetting.publicKey;
-                $("#flutterWave_public_key").val(publicKey);
-                $("#flutterWave_box").show();
-            }
-        });
-        MercadoPagoSettings.get().then(async function(MercadoPagoSettingsSnapshots) {
-            MercadoPagoSetting = MercadoPagoSettingsSnapshots.data();
-            if (MercadoPagoSetting.isEnabled) {
-                var isEnable = MercadoPagoSetting.isEnabled;
-                $("#mercadopago_isEnabled").val(isEnable);
-                var isSandboxEnabled = MercadoPagoSetting.isSandboxEnabled;
-                $("#mercadopago_isSandbox").val(isSandboxEnabled);
-                var PublicKey = MercadoPagoSetting.PublicKey;
-                $("#mercadopago_public_key").val(PublicKey);
-                var AccessToken = MercadoPagoSetting.AccessToken;
-                $("#mercadopago_access_token").val(AccessToken);
-                var AccessToken = MercadoPagoSetting.AccessToken;
-                $("#mercadopago_box").show();
-            }
-        });
-        XenditSettings.get().then(async function(XenditSettingsSnapshots) {
-            XenditSetting = XenditSettingsSnapshots.data();
-            if (XenditSetting.enable) {
-                var enable = XenditSetting.enable;
-                $("#xendit_enable").val(enable);
-                var apiKey = XenditSetting.apiKey;
-                $("#xendit_apiKey").val(apiKey);
-                var image = XenditSetting.image;
-                $("#xendit_image").val(image);
-                var isSandbox = XenditSetting.isSandbox;
-                $("#xendit_isSandbox").val(isSandbox);
-                $("#xendit_box").show();
-            }
-        });
-        Midtrans_settings.get().then(async function(Midtrans_settingsSnapshots) {
-            Midtrans_setting = Midtrans_settingsSnapshots.data();
-            if (Midtrans_setting.enable) {
-                var enable = Midtrans_setting.enable;
-                $("#midtrans_enable").val(enable);
-                var serverKey = Midtrans_setting.serverKey;
-                $("#midtrans_serverKey").val(serverKey);
-                var image = Midtrans_setting.image;
-                $("#midtrans_image").val(image);
-                var isSandbox = Midtrans_setting.isSandbox;
-                $("#midtrans_isSandbox").val(isSandbox);
-                $("#midtrans_box").show();
-            }
-        });
-        OrangePaySettings.get().then(async function(OrangePaySettingsSnapshots) {
-            OrangePaySetting = OrangePaySettingsSnapshots.data();
-            if (OrangePaySetting.enable) {
-                $("#orangepay_enable").val(OrangePaySetting.enable);
-                $("#orangepay_auth").val(OrangePaySetting.auth);
-                $("#orangepay_image").val(OrangePaySetting.image);
-                $("#orangepay_isSandbox").val(OrangePaySetting.isSandbox);
-                $("#orangepay_clientId").val(OrangePaySetting.clientId);
-                $("#orangepay_clientSecret").val(OrangePaySetting.clientSecret);
-                $("#orangepay_merchantKey").val(OrangePaySetting.merchantKey);
-                $("#orangepay_notifyUrl").val(OrangePaySetting.notifyUrl);
-                $("#orangepay_returnUrl").val(OrangePaySetting.returnUrl);
-                $("#orangepay_cancelUrl").val(OrangePaySetting.cancelUrl);
-                $("#orangepay_box").show();
             }
         });
         userDetailsRef.get().then(async function(userSnapshots) {
@@ -768,7 +639,9 @@
                     var adminCommission = $("#adminCommission").val();
                     var adminCommissionType = $("#adminCommissionType").val();
                     var tax_label = $("#tax_label").val();
+                    var tax_label = $("#tax_label").val();
                     var tax = $("#tax").val();
+                    var serviceCharge = $("#service_charge").val();
                     var delivery_option = $('input[name="delivery_option"]').val();
                     var take_away = false;
                     if (delivery_option == "takeaway") {
@@ -808,164 +681,7 @@
                         return false;
                     }
                     //specialDiscount = object;
-                    if (payment_method == "razorpay") {
-                        var razorpayKey = $("#razorpayKey").val();
-                        var razorpaySecret = $("#razorpaySecret").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommissionType: adminCommissionType,
-                            adminCommission: adminCommission,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                razorpaySecret: razorpaySecret,
-                                razorpayKey: razorpayKey,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-
-                    } else if (payment_method == "stripe") {
-                        var stripeKey = $("#stripeKey").val();
-                        var stripeSecret = $("#stripeSecret").val();
-                        var isStripeSandboxEnabled = $("#isStripeSandboxEnabled").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                stripeKey: stripeKey,
-                                stripeSecret: stripeSecret,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                isStripeSandboxEnabled: isStripeSandboxEnabled,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-
-                    } else if (payment_method == "payfast") {
-                        var payfast_merchant_key = $("#payfast_merchant_key").val();
-                        var payfast_merchant_id = $("#payfast_merchant_id").val();
-                        var payfast_return_url = $("#payfast_return_url").val();
-                        var payfast_notify_url = $("#payfast_notify_url").val();
-                        var payfast_cancel_url = $("#payfast_cancel_url").val();
-                        var payfast_isSandbox = $("#payfast_isSandbox").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                payfast_merchant_key: payfast_merchant_key,
-                                payfast_merchant_id: payfast_merchant_id,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                payfast_isSandbox: payfast_isSandbox,
-                                payfast_return_url: payfast_return_url,
-                                payfast_notify_url: payfast_notify_url,
-                                payfast_cancel_url: payfast_cancel_url,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-                    } else if (payment_method == "paystack") {
+                    if (payment_method == "paystack") {
                         var paystack_public_key = $("#paystack_public_key").val();
                         var paystack_secret_key = $("#paystack_secret_key").val();
                         var paystack_isSandbox = $("#paystack_isSandbox").val();
@@ -985,459 +701,59 @@
                             take_away: take_away,
                             tax_label: tax_label,
                             tax: tax,
+                            serviceCharge: serviceCharge,
                             specialDiscount: specialDiscount,
                             scheduleTime: scheduleTime,
                             subject: subject,
                             message: message,
                             address: address
                         };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                paystack_isSandbox: paystack_isSandbox,
-                                paystack_public_key: paystack_public_key,
-                                paystack_secret_key: paystack_secret_key,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-                    } else if (payment_method == "flutterwave") {
-                        var flutterwave_isenabled = $("#flutterWave_isEnabled").val();
-                        var flutterWave_encryption_key = $("#flutterWave_encryption_key")
-                            .val();
-                        var flutterWave_public_key = $("#flutterWave_public_key").val();
-                        var flutterWave_secret_key = $("#flutterWave_secret_key").val();
-                        var flutterWave_isSandbox = $("#flutterWave_isSandbox").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                flutterWave_isSandbox: flutterWave_isSandbox,
-                                flutterWave_public_key: flutterWave_public_key,
-                                flutterWave_secret_key: flutterWave_secret_key,
-                                flutterwave_isenabled: flutterwave_isenabled,
-                                flutterWave_encryption_key: flutterWave_encryption_key,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-                    } else if (payment_method == "xendit") {
-                        if (!['IDR', 'PHP', 'USD', 'VND', 'THB', 'MYR', 'SGD'].includes(
-                                currencyData.code)) {
-                            Swal.fire({
-                                text: "{{ trans('lang.currencu_restriction') }}",
-                                icon: "error"
-                            });
-                            return false;
-                        }
-                        var xendit_enable = $("#xendit_enable").val();
-                        var xendit_apiKey = $("#xendit_apiKey").val();
-                        var xendit_image = $("#xendit_image").val();
-                        var xendit_isSandbox = $("#xendit_isSandbox").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                xendit_enable: xendit_enable,
-                                xendit_apiKey: xendit_apiKey,
-                                xendit_image: xendit_image,
-                                xendit_isSandbox: xendit_isSandbox,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-                    } else if (payment_method == "midtrans") {
-                        var midtrans_enable = $("#midtrans_enable").val();
-                        var midtrans_serverKey = $("#midtrans_serverKey").val();
-                        var midtrans_image = $("#midtrans_image").val();
-                        var midtrans_isSandbox = $("#midtrans_isSandbox").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                midtrans_enable: midtrans_enable,
-                                midtrans_serverKey: midtrans_serverKey,
-                                midtrans_image: midtrans_image,
-                                midtrans_isSandbox: midtrans_isSandbox,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-                    } else if (payment_method == "orangepay") {
-                        var orangepay_enable = $("#orangepay_enable").val();
-                        var orangepay_auth = $("#orangepay_auth").val();
-                        var orangepay_image = $("#orangepay_image").val();
-                        var orangepay_isSandbox = $("#orangepay_isSandbox").val();
-                        var orangepay_clientId = $("#orangepay_clientId").val();
-                        var orangepay_clientSecret = $("#orangepay_clientSecret").val();
-                        var orangepay_merchantKey = $("#orangepay_merchantKey").val();
-                        var orangepay_notifyUrl = $("#orangepay_notifyUrl").val();
-                        var orangepay_returnUrl = $("#orangepay_returnUrl").val();
-                        var orangepay_cancelUrl = $("#orangepay_cancelUrl").val();
-                        var order_json = {
-                            authorID: authorID,
-                            couponCode: couponCode,
-                            couponId: couponId,
-                            discount: discount,
-                            id: id_order,
-                            products: products,
-                            status: status,
-                            vendorID: vendorDetails.id,
-                            deliveryCharge: deliveryCharge,
-                            tip_amount: tip_amount,
-                            adminCommission: adminCommission,
-                            adminCommissionType: adminCommissionType,
-                            take_away: take_away,
-                            tax_label: tax_label,
-                            tax: tax,
-                            specialDiscount: specialDiscount,
-                            scheduleTime: scheduleTime,
-                            subject: subject,
-                            message: message,
-                            address: address
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?php echo route('order-proccessing'); ?>",
-                            data: {
-                                _token: '<?php echo csrf_token(); ?>',
-                                order_json: order_json,
-                                payment_method: payment_method,
-                                authorName: authorName,
-                                total_pay: total_pay,
-                                orangepay_enable: orangepay_enable,
-                                orangepay_auth: orangepay_auth,
-                                orangepay_image: orangepay_image,
-                                orangepay_isSandbox: orangepay_isSandbox,
-                                orangepay_clientId: orangepay_clientId,
-                                orangepay_clientSecret: orangepay_clientSecret,
-                                orangepay_merchantKey: orangepay_merchantKey,
-                                orangepay_notifyUrl: orangepay_notifyUrl,
-                                orangepay_returnUrl: orangepay_returnUrl,
-                                orangepay_cancelUrl: orangepay_cancelUrl,
-                                address_line1: $("#address_line1").val(),
-                                address_line2: $("#address_line2").val(),
-                                address_zipcode: $("#address_zipcode").val(),
-                                address_city: $("#address_city").val(),
-                                address_country: $("#address_country").val(),
-                                currencyData: currencyData
-                            },
-                            success: function(data) {
-                                data = JSON.parse(data);
-                                $('#cart_list').html(data.html);
-                                loadcurrencynew();
-                                window.location.href = "<?php echo route('pay'); ?>";
-                            }
-                        });
-                    } else {
-                        if (payment_method == "wallet") {
-                            payment_method = "wallet";
-                            if (wallet_amount < total_pay) {
-                                Swal.fire({
-                                    text: "{{ trans('lang.invalid_balance') }}",
-                                    icon: "error"
-                                });
-                                return false;
-                            }
-                        } else {
-                            payment_method = "cod";
-                        }
-                        if (take_away == 'true') {
-                            take_away = true;
-                        }
-                        if (take_away == 'false') {
-                            take_away = false;
-                        }
-                        for (var n = 0; n < products.length; n++) {
-                            if (products[n].photo == null && products[n].photo == "") {
-                                products[n].photo = "";
-                            }
-                            if (products[n].size == null) {
-                                products[n].size = "";
-                            }
-                            products[n].quantity = parseInt(products[n].quantity);
-                        }
-                        if (scheduleTime == "") {
-                            scheduleTime = null;
-                        }
-                        if (address == "") {
-                            var location = {
-                                'latitude': parseFloat(getCookie('address_lat')),
-                                'longitude': parseFloat(getCookie('address_lng'))
-                            };
-                            var address = {
-                                'address': null,
-                                'addressAs': null,
-                                'id': null,
-                                'isDefault': null,
-                                'landmark': null,
-                                'locality': getCookie('address_name'),
-                                'location': location
-                            };
-                        }
-                        database.collection('restaurant_orders').doc(id_order).set({
-                            'address': address,
-                            'author': author,
-                            'authorID': authorID,
-                            'couponCode': couponCode,
-                            'couponId': couponId,
-                            'couponId': couponId,
-                            'discount': parseFloat(discount),
-                            "createdAt": createdAt,
-                            'id': id_order,
-                            'products': products,
-                            'status': status,
-                            'vendor': vendorDetails,
-                            'vendorID': vendorDetails.id,
-                            'deliveryCharge': deliveryCharge,
-                            'tip_amount': tip_amount,
-                            'adminCommission': adminCommission,
-                            'adminCommissionType': adminCommissionType,
-                            'payment_method': payment_method,
-                            'takeAway': take_away,
-                            "taxSetting": taxSetting,
-                            "tax_label": tax_label,
-                            "tax": tax,
-                            "notes": notes,
-                            "specialDiscount": specialDiscount,
-                            scheduleTime: scheduleTime,
-                        }).then(function(result) {
-                            var sendnotification = "<?php echo url('/'); ?>";
+                        // Pre-save order as Payment Pending to avoid loss if browser closed
+                        var pending_order_json = Object.assign({}, order_json);
+                        pending_order_json.status = "Payment Pending";
+                        
+                        database.collection('restaurant_orders').doc(id_order).set(pending_order_json).then(function() {
                             $.ajax({
                                 type: 'POST',
-                                url: "<?php echo route('order-complete'); ?>",
+                                url: "<?php echo route('order-proccessing'); ?>",
                                 data: {
                                     _token: '<?php echo csrf_token(); ?>',
-                                    'fcm': fcmToken,
-                                    'authorName': authorName,
-                                    'subject': subject,
-                                    'message': message
+                                    order_json: order_json,
+                                    payment_method: payment_method,
+                                    authorName: authorName,
+                                    total_pay: total_pay,
+                                    paystack_isSandbox: paystack_isSandbox,
+                                    paystack_public_key: paystack_public_key,
+                                    paystack_secret_key: paystack_secret_key,
+                                    address_line1: $("#address_line1").val(),
+                                    address_line2: $("#address_line2").val(),
+                                    address_zipcode: $("#address_zipcode").val(),
+                                    address_city: $("#address_city").val(),
+                                    address_country: $("#address_country").val(),
+                                    currencyData: currencyData
                                 },
-                                success: async function(data) {
-                                    if (payment_method == "wallet") {
-                                        wallet_amount = wallet_amount - total_pay;
-                                        database.collection('users').doc(userId).update({
-                                            'wallet_amount': wallet_amount
-                                        }).then(async function(
-                                            result) {
-                                            walletId = database.collection("tmp").doc().id;
-                                            database.collection('wallet').doc(walletId).set({
-                                                'amount': parseFloat(total_pay),
-                                                'date': createdAt,
-                                                'id': walletId,
-                                                'isTopUp': false,
-                                                'order_id': id_order,
-                                                'payment_method': "Wallet",
-                                                'payment_status': 'success',
-                                                'serviceType': '',
-                                                'user_id': authorID
-                                            }).then(
-                                                async function(result) {
-                                                    $('#cart_list').html(data.html);
-                                                    loadcurrencynew();
-                                                    var emailUserData =
-                                                        await sendMailData(
-                                                            authorEmail,
-                                                            authorName,
-                                                            id_order,
-                                                            address,
-                                                            payment_method,
-                                                            products,
-                                                            couponCode,
-                                                            discount,
-                                                            specialDiscount,
-                                                            taxSetting,
-                                                            deliveryCharge,
-                                                            tip_amount
-                                                        );
-                                                    if (vendorUser && vendorUser != undefined) {
-                                                        var emailVendorData =
-                                                            await sendMailData(
-                                                                vendorUser
-                                                                .email,
-                                                                vendorUser
-                                                                .firstName +
-                                                                ' ' +
-                                                                vendorUser
-                                                                .lastName,
-                                                                id_order,
-                                                                address,
-                                                                payment_method,
-                                                                products,
-                                                                couponCode,
-                                                                discount,
-                                                                specialDiscount,
-                                                                taxSetting,
-                                                                deliveryCharge,
-                                                                tip_amount
-                                                            );
-                                                    }
-                                                    window.location.href = "<?php echo url('success'); ?>";
-                                                });
-                                        });
-                                    } else {
-                                        $('#cart_list').html(data.html);
-                                        var emailUserData =
-                                            await sendMailData(
-                                                authorEmail, authorName,
-                                                id_order, address,
-                                                payment_method,
-                                                products, couponCode,
-                                                discount,
-                                                specialDiscount,
-                                                taxSetting,
-                                                deliveryCharge,
-                                                tip_amount);
-                                        if (vendorUser && vendorUser != undefined) {
-                                            var emailVendorData =
-                                                await sendMailData(
-                                                    vendorUser.email,
-                                                    vendorUser
-                                                    .firstName + ' ' +
-                                                    vendorUser.lastName,
-                                                    id_order, address,
-                                                    payment_method,
-                                                    products,
-                                                    couponCode,
-                                                    discount,
-                                                    specialDiscount,
-                                                    taxSetting,
-                                                    deliveryCharge,
-                                                    tip_amount);
-                                        }
-                                        window.location.href = "<?php echo url('success'); ?>";
-                                    }
+                                success: function(data) {
+                                    data = JSON.parse(data);
+                                    $('#cart_list').html(data.html);
+                                    loadcurrencynew();
+                                    window.location.href = "<?php echo route('pay'); ?>";
                                 }
                             });
+                        }).catch(function(error) {
+                            console.error("Error saving pending order:", error);
+                            Swal.fire({
+                                text: "Network Error: Could not initiate payment security check.",
+                                icon: "error"
+                            });
                         });
+                    } else {
+                        Swal.fire({
+                            text: "Please select Paystack as payment method.",
+                            icon: "error"
+                        });
+                        return false;
                     }
+
                 }
             });
         });

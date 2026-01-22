@@ -28,7 +28,7 @@
             <div class="container-fluid">
                 <div id="data-table_processing" class="page-overlay" style="display:none;">
                     <div class="overlay-text">
-                        <img src="{{ asset('images/spinner.gif') }}">
+                        <img src="{{ asset('images/spinner.gif') }}" class="loading-spinner-img" alt="Loading...">
                     </div>
                 </div>
                 <div class="col-lg-11 ml-lg-auto mr-lg-auto">

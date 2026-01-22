@@ -35,6 +35,10 @@
                                        class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
+                                <!-- Location UI Containers -->
+                                <div id="addressLocationLoading" style="display: none;"></div>
+                                <div id="addressLocationSuccess" style="display: none;"></div>
+                                <div id="addressLocationError" style="display: none;"></div>
                                 <div class="input-group">
                                     <input placeholder="Area/Sector/Locality *" type="text" id="locality"
                                            class="form-control">

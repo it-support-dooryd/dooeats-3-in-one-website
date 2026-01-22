@@ -196,6 +196,14 @@
                                         <textarea name="admin_note_bank" class="form-control" id="adminNoteBank" cols="5" rows="5"></textarea>
                                     </div>
                                 </div>
+
+                                <div class="form-group row width-100">
+                                    <label class="col-12 control-label">{{ trans('lang.receipt_image') }}</label> 
+                                    <div class="col-12">
+                                        <input type="file" id="receipt_image" class="form-control">
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </form>
@@ -881,11 +889,39 @@
             var user = await getUserData(auth);
             var amount = $(this).data('amount');
             var admin_note = $("#adminNoteBank").val();
+            
+            var receiptFile = $("#receipt_image")[0].files[0];
+            var proofUrl = null;
+
             jQuery("#data-table_processing").show();
-            database.collection('payouts').doc(id).update({
+
+            if (receiptFile) {
+                try {
+                     var storageRef = firebase.storage().ref('payment_proofs/' + id);
+                     var uploadTask = await storageRef.put(receiptFile);
+                     proofUrl = await uploadTask.ref.getDownloadURL();
+                } catch (error) {
+                    console.error("Error uploading receipt:", error);
+                    alert("Failed to upload receipt image. Please try again.");
+                     $(this).prop('disabled', false).css({
+                        'cursor': 'pointer',
+                        'opacity': '1'
+                    });
+                     jQuery("#data-table_processing").hide();
+                    return;
+                }
+            }
+
+            var updateData = {
                 'paymentStatus': 'Success',
                 'adminNote': admin_note
-            }).then(async function(result) {
+            };
+            
+            if (proofUrl) {
+                updateData['proof_image'] = proofUrl;
+            }
+
+            database.collection('payouts').doc(id).update(updateData).then(async function(result) {
                 if (user && user != undefined) {
                     var emailData = await sendMailToRestaurant(user, id, 'Approved', amount);
                     if (emailData) {

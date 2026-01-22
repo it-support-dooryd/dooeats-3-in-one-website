@@ -505,3 +505,5 @@ Route::middleware(['permission:deliveryman,deliveryman'])->group(function () {
     Route::get('restaurant/deliveryman/{id}', [App\Http\Controllers\DeliverymanController::class, 'index'])->name('restaurants.deliveryman');
 });
 Route::post('/send-ad-notification', [App\Http\Controllers\AdvertisementsController::class, 'sendNotification'])->name('advertisement.sendnotification');
+
+Route::post('/send-webhook-test', [App\Http\Controllers\SettingsController::class, 'sendWebhookTest'])->name('send-webhook-test');

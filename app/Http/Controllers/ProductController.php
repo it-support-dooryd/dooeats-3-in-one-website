@@ -4,8 +4,10 @@ use App\Models\VendorUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Google\Client as Google_Client;
+use GuzzleHttp\Client;
 class ProductController extends Controller
 {
     /**
@@ -747,9 +749,127 @@ class ProductController extends Controller
             $response['success'] = false;
             $response['message'] = 'Firebase credentials file not found.';
         }
+        
+        $webhookUrl = $this->resolveWebhookUrl($request);
+        $orderData = $this->normalizeOrderData($request->order_data);
+        $this->dispatchOrderWebhook($webhookUrl, $orderData);
+
         Session::save();
         $order_response = array('status' => true, 'order_complete' => true, 'html' => view('restaurant.cart_item', ['cart' => $cart, 'order_complete' => true, 'is_checkout' => 1])->render(), 'response' => $response);
         return response()->json($order_response);
+    }
+
+    private function resolveWebhookUrl(Request $request): ?string
+    {
+        $configuredUrl = env('WEBHOOK_URL');
+        $candidate = $configuredUrl ?: $request->input('webhookUrl');
+        if (!is_string($candidate)) {
+            return null;
+        }
+        $candidate = trim($candidate);
+        return $candidate !== '' ? $candidate : null;
+    }
+
+    private function normalizeOrderData($orderData): ?array
+    {
+        if (is_array($orderData)) {
+            return $orderData;
+        }
+        if (is_string($orderData)) {
+            $decoded = json_decode($orderData, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return $decoded;
+            }
+        }
+        return null;
+    }
+
+    private function dispatchOrderWebhook(?string $webhookUrl, ?array $orderData): void
+    {
+        if (!$webhookUrl || !$orderData) {
+            return;
+        }
+
+        if (!$this->isSafeWebhookUrl($webhookUrl)) {
+            Log::warning('Blocked webhook URL during order completion.', [
+                'webhook_url' => $webhookUrl,
+            ]);
+            return;
+        }
+
+        $payload = json_encode($orderData);
+        if ($payload === false) {
+            Log::warning('Failed to encode order payload for webhook dispatch.');
+            return;
+        }
+
+        $headers = [
+            'Content-Type' => 'application/json',
+        ];
+        $secret = env('WEBHOOK_SECRET');
+        if ($secret) {
+            $headers['X-Webhook-Signature'] = hash_hmac('sha256', $payload, $secret);
+        }
+
+        $client = new Client([
+            'timeout' => 5,
+            'connect_timeout' => 3,
+        ]);
+
+        $attempts = 3;
+        for ($attempt = 1; $attempt <= $attempts; $attempt++) {
+            try {
+                $client->post($webhookUrl, [
+                    'headers' => $headers,
+                    'body' => $payload,
+                ]);
+                return;
+            } catch (\Exception $e) {
+                Log::warning('Webhook dispatch failed.', [
+                    'attempt' => $attempt,
+                    'webhook_url' => $webhookUrl,
+                    'error' => $e->getMessage(),
+                ]);
+                usleep(200000 * $attempt);
+            }
+        }
+    }
+
+    private function isSafeWebhookUrl(string $webhookUrl): bool
+    {
+        $parts = parse_url($webhookUrl);
+        if (!$parts || empty($parts['scheme']) || empty($parts['host'])) {
+            return false;
+        }
+        $scheme = strtolower($parts['scheme']);
+        if (!in_array($scheme, ['http', 'https'], true)) {
+            return false;
+        }
+
+        $host = $parts['host'];
+        if (filter_var($host, FILTER_VALIDATE_IP)) {
+            return $this->isPublicIp($host);
+        }
+
+        $resolvedIps = gethostbynamel($host);
+        if ($resolvedIps === false) {
+            return false;
+        }
+        foreach ($resolvedIps as $ip) {
+            if (!$this->isPublicIp($ip)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function isPublicIp(string $ip): bool
+    {
+        return filter_var(
+            $ip,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+        ) !== false;
     }
     /**
      * Write code on Method

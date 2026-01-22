@@ -23,7 +23,7 @@ class LoginController extends Controller
         if (\Auth::check()) {
             return redirect(route('profile'));
         } else {
-            return view('auth.loginuser');
+            return view('auth.login');
         }
     }
 
@@ -32,7 +32,7 @@ class LoginController extends Controller
         if (\Auth::check()) {
             return redirect(route('profile'));
         } else {
-            return view('auth.signup');
+            return view('auth.register');
         }
     }
 

@@ -25,44 +25,45 @@ class AjaxController extends Controller
 
     public function setToken(Request $request)
     {
-
-        $isSubscribed = $request->isSubscribed;
         $uuid = $request->id;
         $password = $request->password;
-        $exist = VendorUsers::where('email', $request->email)->get();
-        $data = $exist->isEmpty();
-       
-        if ($exist->isEmpty()) {
+        $email = $request->email;
+        $isSubscribed = $request->isSubscribed;
+
+        // Check if VendorUser exists
+        $vendorUser = VendorUsers::where('email', $email)->first();
+        
+        if (!$vendorUser) {
+            // Check if User exists to avoid duplicate entry error
+            $user = User::where('email', $email)->first();
             
-            $user = User::create([
-                'name' => $request->email,
-                'email' => $request->email,
-                'password' => Hash::make($password),
-                'isSubscribed'=> $request->isSubscribed
-            ]);
+            if (!$user) {
+                $user = User::create([
+                    'name' => $email, // Default name as email
+                    'email' => $email,
+                    'password' => Hash::make($password),
+                    'isSubscribed' => $isSubscribed
+                ]);
+            } else {
+                 // Update subscription if needed
+                 $user->update(['isSubscribed' => $isSubscribed]);
+            }
 
             DB::table('vendor_users')->insert([
                 'user_id' => $user->id,
                 'uuid' => $uuid,
-                'email' => $request->email,
+                'email' => $email,
             ]);
-
+        } else {
+             User::where('email', $email)->update([
+                'isSubscribed' => ($isSubscribed == null) ? '' : $isSubscribed
+            ]);
         }
-        User::where('email', $request->email)->update([
-            'isSubscribed' => ($request->isSubscribed==null) ? '' : $request->isSubscribed
-        ]);
 
-        $user = User::where('email', $request->email)->first();
-
+        $user = User::where('email', $email)->first();
         Auth::login($user, true);
-        $data = array();
-        if (Auth::check()) {
-
-            $data['access'] = true;
-        }
-
-
-        return $data;
+        
+        return ['access' => Auth::check()];
     }
     public function setSubcriptionFlag(Request $request)
     {
@@ -98,6 +99,5 @@ class AjaxController extends Controller
         }
         return $data1;
     }
-
 
 }

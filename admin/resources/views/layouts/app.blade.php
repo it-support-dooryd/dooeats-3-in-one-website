@@ -221,14 +221,31 @@
                 display: block;
             }
         }
+    <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
+</head>
 <body>
+    <!-- Page Loading Overlay -->
+    <div id="page-loading-overlay">
+        <div class="dooeats-loader"></div>
+    </div>
+
+    <script>
+        // Hide loading overlay when page is fully loaded
+        window.addEventListener('load', function() {
+            const overlay = document.getElementById('page-loading-overlay');
+            if (overlay) {
+                overlay.classList.add('fade-out');
+                setTimeout(function() {
+                    overlay.style.display = 'none';
+                }, 500); // Match transition duration
+            }
+        });
+    </script>
 
 <div id="app" class="fix-header fix-sidebar card-no-border">
     <div id="main-wrapper">
-        <div id="data-table_processing" class="page-overlay" style="display:block; background: #000; position: fixed; width: 100%; height: 100%; z-index: 9999; top: 0; left: 0; opacity: 1; align-items: center; justify-content: center;">
-            <div class="overlay-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                <img src="{{asset('images/spinner.gif')}}" style="width: 500px; height: 500px; object-fit: contain;">
-            </div>
+        <div id="data-table_processing" class="page-overlay" style="display:none;">
+            <div class="dooeats-loader"></div>
         </div>
         <header class="topbar">
 
@@ -285,7 +302,10 @@
     });
     
     jQuery(window).on('load', function() {
-        jQuery("#data-table_processing").fadeOut(500);
+        jQuery("#data-table_processing").addClass("fade-out");
+        setTimeout(function() {
+            jQuery("#data-table_processing").hide();
+        }, 500);
     });
 
 </script>

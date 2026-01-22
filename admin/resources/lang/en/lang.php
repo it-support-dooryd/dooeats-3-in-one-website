@@ -36,6 +36,8 @@ return [
 
     "google_map_api_key_title" => "Google Map API Key (App Usage)",
 
+    'google_analytics_id' => 'Google Analytics ID',
+
     'app_setting_app_name' => 'Application Name',
 
     'app_setting_app_name_help' => 'The application name appear in title',
@@ -2104,7 +2106,7 @@ return [
 
     'withdraw_setting_enable_paystack_help'=>'Enable this option to allow Paystack as a payment method for restaurant/driver withdrawals.',
 
-    option to allow Mercadopago as a payment method for restaurant/driver withdrawals.',
+    'withdraw_setting_enable_mercadopago_help'=>'Enable this option to allow Mercadopago as a payment method for restaurant/driver withdrawals.',
 
     'withdraw_method'=>'Withdraw Method',
 
@@ -2256,6 +2258,11 @@ return [
     'restaurant_subscription_model'=>'Restaurant Subscription Model',
     'subscription_model'=>'Subscription Model',
     'subscriptionplan_error'=>'Please Select Subscription Plan!',
+    'third_party_settings' => 'Third Party Settings',
+    'salesiq_chat_widget' => 'SalesIQ Chat Widget Code',
+    'salesiq_chat_widget_help' => 'Paste the SalesIQ widget code here to enable live chat.',
+    'mobile_analytics_id' => 'Mobile Analytics ID',
+    'mobile_analytics_id_help' => 'Enter the ID for mobile app analytics.',
     'profile'=>'Profile',
     'restaurant'=>'Restaurant',
     'vendor_subscription_history_plural'=>'Vendor Subscription History',

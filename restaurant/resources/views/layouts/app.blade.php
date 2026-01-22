@@ -295,16 +295,32 @@
             var cuser_id = '<?php echo $id; ?>';
         </script>
 
+        <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
     </head>
 
     <body>
+        <!-- Page Loading Overlay -->
+        <div id="page-loading-overlay">
+            <div class="dooeats-loader"></div>
+        </div>
+
+        <script>
+            // Hide loading overlay when page is fully loaded
+            window.addEventListener('load', function() {
+                const overlay = document.getElementById('page-loading-overlay');
+                if (overlay) {
+                    overlay.classList.add('fade-out');
+                    setTimeout(function() {
+                        overlay.style.display = 'none';
+                    }, 500); // Match transition duration
+                }
+            });
+        </script>
 
         <div id="app" class="fix-header fix-sidebar card-no-border">
             <div id="main-wrapper">
                 <div id="data-table_processing" class="page-overlay" style="display:none;">
-                    <div class="overlay-text">
-                        <img src="{{ asset('images/spinner.gif') }}">
-                    </div>
+                    <div class="dooeats-loader"></div>
                 </div>
                 <header class="topbar">
                     <nav class="navbar top-navbar navbar-expand-md navbar-light">
@@ -514,6 +530,13 @@
                     jQuery("body").addClass("sticky");
                 }
             });
+
+            jQuery(window).on('load', function() {
+                jQuery("#data-table_processing").addClass("fade-out");
+                setTimeout(function() {
+                    jQuery("#data-table_processing").hide();
+                }, 500);
+            });
         </script>
         <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
@@ -527,6 +550,7 @@
         <script src="{{ asset('js/jquery.validate.js') }}"></script>
         <script src="{{ asset('js/chosen.jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap-tagsinput.js') }}"></script>
+        <script src="{{ asset('js/order-status-helper.js') }}"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>

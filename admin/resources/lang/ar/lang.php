@@ -2104,7 +2104,7 @@ return [
 
     'withdraw_setting_enable_paystack_help'=>'Enable this option to allow Paystack as a payment method for restaurant/driver withdrawals.',
 
-    option to allow Mercadopago as a payment method for restaurant/driver withdrawals.',
+    'withdraw_setting_enable_mercadopago_help'=>'Enable this option to allow Mercadopago as a payment method for restaurant/driver withdrawals.',
 
     'withdraw_method'=>'Withdraw Method',
 

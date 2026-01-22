@@ -28,6 +28,12 @@
                             </div>
                         </div>
                         <div class="form-group row width-100">
+                            <label class="col-5 control-label">Global URL</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control application_url">
+                            </div>
+                        </div>
+                        <div class="form-group row width-100">
                             <label class="col-5 control-label">{{ trans('lang.app_setting_meta_title') }}</label>
                             <div class="col-7">
                                 <input type="text" class="form-control meta_title">
@@ -101,6 +107,39 @@
                             <label class="col-3 control-label">{{ trans('lang.google_map_api_key') }}</label>
                             <div class="col-7">
                                 <input type="password" class="form-control address_line1" name="map_key" id="map_key">
+                            </div>
+                        </div>
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{ trans('lang.google_analytics_id') }}</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" name="google_analytics_id" id="google_analytics_id" placeholder="G-XXXXXXXXXX">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>{{ trans('lang.zoho_salesiq_settings') }}</legend>
+                        <div class="form-group row width-50">
+                            <label class="col-3 control-label">{{ trans('lang.zoho_android_app_key') }}</label>
+                            <div class="col-7">
+                                <input type="password" class="form-control" name="zoho_android_app_key" id="zoho_android_app_key">
+                            </div>
+                        </div>
+                        <div class="form-group row width-50">
+                            <label class="col-3 control-label">{{ trans('lang.zoho_android_access_key') }}</label>
+                            <div class="col-7">
+                                <input type="password" class="form-control" name="zoho_android_access_key" id="zoho_android_access_key">
+                            </div>
+                        </div>
+                        <div class="form-group row width-50">
+                            <label class="col-3 control-label">{{ trans('lang.zoho_ios_app_key') }}</label>
+                            <div class="col-7">
+                                <input type="password" class="form-control" name="zoho_ios_app_key" id="zoho_ios_app_key">
+                            </div>
+                        </div>
+                        <div class="form-group row width-50">
+                            <label class="col-3 control-label">{{ trans('lang.zoho_ios_access_key') }}</label>
+                            <div class="col-7">
+                                <input type="password" class="form-control" name="zoho_ios_access_key" id="zoho_ios_access_key">
                             </div>
                         </div>
                     </fieldset>
@@ -251,6 +290,22 @@
                             </div>
                         </div>
 
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><i class="mr-3 mdi mdi-webhook"></i>{{ trans('lang.webhook_settings') }}</legend>
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{ trans('lang.webhook_url') }}</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control webhook_url">
+                                <div class="form-text text-muted">
+                                    {{ trans("lang.webhook_url_help") }}
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-primary" id="test_webhook_btn">{{trans('lang.send_test_data')}}</button>
+                            </div>
+                        </div>
                     </fieldset>
 
                     <fieldset>
@@ -411,6 +466,8 @@
         var refEmailSetting = database.collection('settings').doc("emailSetting");
         var homepagethemeRef = database.collection('settings').doc("home_page_theme");
         var refNotificationSetting = database.collection('settings').doc("notification_setting");
+        var refWebhookSettings = database.collection('settings').doc("webhookSettings");
+        var zohoSettings = database.collection('settings').doc("zohoSettings");
         var theme_1_url = "{!! url('images/app_homepage_theme_1.png') !!}";
         var theme_2_url = "{!! url('images/app_homepage_theme_2.png') !!}";
         var photo = "";
@@ -443,6 +500,7 @@
                 }
                 try {
                     $(".application_name").val(globalSettings.applicationName);
+                    jQuery(".application_url").val(globalSettings.application_url);
                     $(".meta_title").val(globalSettings.meta_title)
                     $("#website_color").val(globalSettings.website_color);
                     $("#admin_color").val(globalSettings.admin_panel_color);
@@ -565,6 +623,15 @@
                 }
                 try {
                     $('#map_key').val(key.key);
+                    if (key.googleAnalyticsId) {
+                        $('#google_analytics_id').val(key.googleAnalyticsId);
+                    }
+                    if (key.salesiqChatWidget) {
+                        $('.salesiq_chat_widget_code').val(key.salesiqChatWidget);
+                    }
+                    if (key.mobileAnalyticsId) {
+                        $('.mobile_analytics_id').val(key.mobileAnalyticsId);
+                    }
                 } catch (error) {}
             });
             DriverNearByRef.get().then(async function(snapshots) {
@@ -638,6 +705,35 @@
                     $("#app_homepage_theme_2").prop('checked', true);
                 }
             });
+            refWebhookSettings.get().then(async function(snapshots) {
+                var webhookSettings = snapshots.data();
+                if (webhookSettings == undefined) {
+                    database.collection('settings').doc('webhookSettings').set({});
+                } else {
+                    if (webhookSettings.webhookUrl) {
+                        $('.webhook_url').val(webhookSettings.webhookUrl);
+                    }
+                }
+            });
+            zohoSettings.get().then(async function(snapshots) {
+                var zohoData = snapshots.data();
+                if (zohoData == undefined) {
+                    database.collection('settings').doc('zohoSettings').set({});
+                } else {
+                    if (zohoData.androidAppKey) {
+                        $('#zoho_android_app_key').val(zohoData.androidAppKey);
+                    }
+                    if (zohoData.androidAccessKey) {
+                        $('#zoho_android_access_key').val(zohoData.androidAccessKey);
+                    }
+                    if (zohoData.iosAppKey) {
+                        $('#zoho_ios_app_key').val(zohoData.iosAppKey);
+                    }
+                    if (zohoData.iosAccessKey) {
+                        $('#zoho_ios_access_key').val(zohoData.iosAccessKey);
+                    }
+                }
+            });
         });
         $(".edit-setting-btn").click(function() {
             var website_color = $("#website_color").val();
@@ -646,6 +742,7 @@
             var driver_app_color = $("#driver_app_color").val();
             var restaurant_app_color = $("#restaurant_app_color").val();
             var googleApiKey = $("#map_key").val();
+            var googleAnalyticsId = $("#google_analytics_id").val();
             var store_color = $("#store_color").val();
             var contact_us_address = $('.contact_us_address').val();
             var contact_us_email = $('.contact_us_email').val();
@@ -669,10 +766,16 @@
             var port = $('.port').val();
             var userName = $('.user_name').val();
             var password = $('.password').val();
+            var webhookUrl = $('.webhook_url').val();
+            var zohoAndroidAppKey = $('#zoho_android_app_key').val();
+            var zohoAndroidAccessKey = $('#zoho_android_access_key').val();
+            var zohoIosAppKey = $('#zoho_ios_app_key').val();
+            var zohoIosAccessKey = $('#zoho_ios_access_key').val();
             if (admin_color != null) {
                 setCookie('admin_panel_color', admin_color, 365);
             }
             var applicationName = $(".application_name").val();
+            var application_url = $(".application_url").val();
             var meta_title = $(".meta_title").val();
             var selectedMapType = $("#selectedMapType").val();
             var map_type = $('#map_type').val();
@@ -744,6 +847,7 @@
                             'app_driver_color': driver_app_color,
                             'app_restaurant_color': restaurant_app_color,
                             'applicationName': applicationName,
+                            'application_url': application_url,
                             'meta_title': meta_title,
                             'appLogo': IMG.photo,
                             'favicon': IMG.favicon,
@@ -753,6 +857,12 @@
                         });
                         database.collection('settings').doc('placeHolderImage').update({
                             'image': IMG.placeholderphoto
+                        });
+                        database.collection('settings').doc("zohoSettings").update({
+                            'androidAppKey': zohoAndroidAppKey,
+                            'androidAccessKey': zohoAndroidAccessKey,
+                            'iosAppKey': zohoIosAppKey,
+                            'iosAccessKey': zohoIosAccessKey
                         });
                         database.collection('settings').doc("ContactUs").update({
                             'Address': contact_us_address,
@@ -776,6 +886,7 @@
                         });
                         database.collection('settings').doc("googleMapKey").update({
                             'key': googleApiKey,
+                            'googleAnalyticsId': googleAnalyticsId,
                         });
                         database.collection('settings').doc("DriverNearBy").update({
                             'minimumDepositToRideAccept': minimumDepositToRideAccept,
@@ -802,10 +913,18 @@
                             'port': port,
                             'userName': userName,
                             'password': password,
-                            'mailMethod': "smtp",
-                            'mailEncryptionType': "ssl",
+                            'mailEncryptionType': 'ssl',
+                        });
+                        database.collection('settings').doc('webhookSettings').update({
+                             'webhookUrl': webhookUrl
+                        });
+                        database.collection('settings').doc("googleMapKey").update({
+                            'key': googleApiKey,
+                            'googleAnalyticsId': googleAnalyticsId,
+                            'salesiqChatWidget': salesiqChatWidget,
+                            'mobileAnalyticsId': mobileAnalyticsId
                         }).then(function(result) {
-                            window.location.href = "{{ url('settings/app/globals') }}";
+                            window.location.href = '{{ url("settings/globals") }}';
                         });
                     }).catch(err => {
                         jQuery("#data-table_processing").hide();
@@ -1124,5 +1243,64 @@
                 type: contentType
             });
         }
+        
+        $("#test_webhook_btn").click(function() {
+            var webhookUrl = $(".webhook_url").val();
+            if(!webhookUrl){
+                 alert("Please enter a webhook URL first.");
+                 return;
+            }
+            
+            var testOrderData = {
+                "id": "TEST_ORDER_12345",
+                "author": {
+                    "firstName": "Test",
+                    "lastName": "User",
+                    "email": "test@example.com",
+                    "phoneNumber": "+1234567890"
+                },
+                "products": [
+                    {
+                        "name": "Test Product",
+                        "price": "100",
+                        "quantity": 1,
+                        "image": "https://via.placeholder.com/150",
+                        "size": "Medium"
+                    }
+                ],
+                "vendor": {
+                    "title": "Test Restaurant",
+                    "location": "Test Location"
+                },
+                "total_pay": "100",
+                "address": {
+                   "line1": "123 Test St",
+                   "city": "Test City"
+                },
+                "payment_method": "Test Payment",
+                "status": "Order Placed"
+            };
+
+            $.ajax({
+                url: '/send-webhook-test', 
+                method: 'POST',
+                data: {
+                    webhookUrl: webhookUrl,
+                    order_data: testOrderData,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert("Test data sent successfully!");
+                },
+                error: function(xhr, status, error) {
+                     alert("Failed to send test data. Check console for details.");
+                     console.error(error);
+                }
+            });
+            
+            // Fallback: Using direct fetch if the server-side proxy isn't set up yet, 
+            // though CORS might block this from the browser. 
+            // The preferred way is to route this through your server (ProductController or similar).
+        });
     </script>
 @endsection

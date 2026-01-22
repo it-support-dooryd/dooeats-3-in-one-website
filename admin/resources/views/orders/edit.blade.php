@@ -1012,72 +1012,21 @@
                     }
 
                     database.collection('restaurant_orders').doc(id).update(updatedData).then(async function(result) {
-
-                        var wId = database.collection('temp').doc().id;
-                        database.collection('wallet').doc(wId).set({
-                            'amount': parseFloat(basePrice),
-                            'date': date,
-                            'id': wId,
-                            'isTopUp': true,
-                            'order_id': "<?php echo $id; ?>",
-                            'payment_method': 'Wallet',
-                            'payment_status': 'success',
-                            'transactionUser': 'vendor',
-                            'note': 'Order Amount credited',
-                            'user_id': vendorAuthor
-                        }).then(async function(result) {
-                            var vendorAmount = basePrice;
-                            if (total_tax_amount != 0 || total_tax_amount != '') {
-                                var wId = database.collection('temp').doc().id;
-                                database.collection('wallet').doc(wId).set({
-                                    'amount': parseFloat(total_tax_amount),
-                                    'date': date,
-                                    'id': wId,
-                                    'isTopUp': true,
-                                    'order_id': "<?php echo $id; ?>",
-                                    'payment_method': 'tax',
-                                    'payment_status': 'success',
-                                    'transactionUser': 'vendor',
-                                    'user_id': vendorAuthor,
-                                    'note': 'Order Tax credited'
-                                }).then(async function(result) {})
-                            }
-                            database.collection('users').where('id', '==', vendorAuthor)
-                                .get().then(async function(snapshotsnew) {
-                                    var vendordata = snapshotsnew.docs[0]
-                                        .data();
-                                    if (vendordata) {
-
-                                        if (parseInt(subscriptionTotalOrders) != -1) {
-                                            subscriptionTotalOrders = parseInt(subscriptionTotalOrders) - 1;
-                                            await database.collection('vendors').doc(vendordata.vendorID).update({
-                                                'subscriptionTotalOrders': subscriptionTotalOrders.toString()
-                                            })
-                                        }
-
-
-
-                                        if (isNaN(vendordata.wallet_amount) ||
-                                            vendordata.wallet_amount ==
-                                            undefined) {
-                                            vendorWallet = 0;
-                                        } else {
-                                            vendorWallet = parseFloat(vendordata
-                                                .wallet_amount);
-                                        }
-                                        newVendorWallet = vendorWallet + vendorAmount + parseFloat(total_tax_amount);
-                                        database.collection('users').doc(
-                                            vendorAuthor).update({
-                                            'wallet_amount': parseFloat(
-                                                newVendorWallet)
-                                        }).then(async function(result) {
-                                            callAjax();
+                        database.collection('users').where('id', '==', vendorAuthor)
+                            .get().then(async function(snapshotsnew) {
+                                var vendordata = snapshotsnew.docs[0].data();
+                                if (vendordata) {
+                                    if (parseInt(subscriptionTotalOrders) != -1) {
+                                        subscriptionTotalOrders = parseInt(subscriptionTotalOrders) - 1;
+                                        await database.collection('vendors').doc(vendordata.vendorID).update({
+                                            'subscriptionTotalOrders': subscriptionTotalOrders.toString()
                                         })
-                                    } else {
-                                        callAjax();
                                     }
-                                });
-                        });
+                                    callAjax();
+                                } else {
+                                    callAjax();
+                                }
+                            });
                     });
                 }
             });
@@ -1203,6 +1152,51 @@
                             if (orderStatus != orderPreviousStatus && payment_shared ==
                                 false) {
                                 if (orderStatus == 'Order Completed') {
+                                    if (vendorShare > 0) {
+                                        var wId = database.collection('temp').doc().id;
+                                        database.collection('wallet').doc(wId).set({
+                                            'amount': parseFloat(vendorShare),
+                                            'date': firebase.firestore.FieldValue.serverTimestamp(),
+                                            'id': wId,
+                                            'isTopUp': true,
+                                            'order_id': id,
+                                            'payment_method': 'Wallet',
+                                            'payment_status': 'success',
+                                            'transactionUser': 'vendor',
+                                            'note': 'Order Amount credited',
+                                            'user_id': vendorAuthor
+                                        }).then(async function(result) {
+                                            database.collection('users').where('id', '==', vendorAuthor).get().then(async function(snapshotsnew) {
+                                                var vendordata = snapshotsnew.docs[0].data();
+                                                if (vendordata) {
+                                                    var vendorWallet = 0;
+                                                    if (vendordata.wallet_amount != undefined && !isNaN(vendordata.wallet_amount)) {
+                                                        vendorWallet = parseFloat(vendordata.wallet_amount);
+                                                    }
+                                                    var newVendorWallet = vendorWallet + parseFloat(vendorShare);
+                                                    await database.collection('users').doc(vendorAuthor).update({
+                                                        'wallet_amount': parseFloat(newVendorWallet)
+                                                    });
+                                                }
+                                            });
+                                        });
+
+                                        // Admin Settlement Transaction
+                                        var adminShare = parseFloat(adminCommission) + parseFloat(total_tax_amount);
+                                        var adminWalletId = database.collection('temp').doc().id;
+                                        database.collection('wallet').doc(adminWalletId).set({
+                                            'amount': adminShare,
+                                            'date': firebase.firestore.FieldValue.serverTimestamp(),
+                                            'id': adminWalletId,
+                                            'isTopUp': true,
+                                            'order_id': id,
+                                            'payment_method': 'Wallet',
+                                            'payment_status': 'success',
+                                            'transactionUser': 'admin',
+                                            'note': 'Order Commission & Taxes credited',
+                                            'user_id': 'admin'
+                                        });
+                                    }
                                     driverAmount = parseFloat(deliveryCharge) + parseFloat(
                                         tip_amount);
                                     if (driverId && driverAmount) {
@@ -1467,7 +1461,7 @@
                     if (orderData.payment_method !== 'cod') {
                         deliveryCharge = parseFloat(orderData.deliveryCharge || 0);
                         tipAmount = parseFloat(orderData.tip_amount || 0);
-                        customerAmount = deliveryCharge + tipAmount + vendorAmount+adminCommission;
+                        customerAmount = deliveryCharge + tipAmount + vendorAmount + adminCommission + total_tax_amount;
 
                         const customerDoc = await database.collection('users').doc(customerId).get();
                         if (customerDoc.exists) {
@@ -1726,6 +1720,8 @@
             var products = snapshotsProducts.products;
             deliveryCharge = snapshotsProducts.deliveryCharge;
             var specialDiscount = snapshotsProducts.specialDiscount;
+            var serviceCharge = snapshotsProducts.serviceCharge;
+            var mainDishFee = snapshotsProducts.mainDishFee;
             var intRegex = /^\d+$/;
             var floatRegex = /^((\d+(\.\d *)?)|((\d*\.)?\d+))$/;
             if (products) {
@@ -1776,6 +1772,9 @@
                 html = html + '<tr><td class="label">{{ trans('lang.special_offer') }} {{ trans('lang.discount') }}' +
                     special_html + '</td><td class="special_discount text-danger">(-' + special_discount_val + ')</td></tr>';
             }
+            vendorNetRevenue = parseFloat(total_price);
+            vendorShare = vendorNetRevenue * 0.88; 
+
             var tax = 0;
             taxlabel = '';
             taxlabeltype = '';
@@ -1861,15 +1860,9 @@
             html = html +
                 '<tr class="grand-total"><td class="label">{{ trans('lang.total_amount') }}</td><td class="total_price_val " id="greenColor">' +
                 total_price_val + '</td></tr>';
-            var adminCommHtml = "";
-            if (adminCommissionType == "Percent") {
-                basePrice = (priceWithCommision / (1 + (parseFloat(adminCommissionValue) / 100)));
-                adminCommission = parseFloat(priceWithCommision - basePrice);
-                adminCommHtml = "(" + adminCommissionValue + "%)";
-            } else {
-                basePrice = priceWithCommision - adminCommissionValue;
-                adminCommission = parseFloat(priceWithCommision - basePrice);
-            }
+            adminCommission = (vendorNetRevenue * 0.12) + parseFloat(mainDishFee || 0) + parseFloat(serviceCharge || 0);
+            adminCommHtml = "(12% Platform + Fees)";
+            
             if (currencyAtRight) {
                 adminCommission_val = parseFloat(adminCommission).toFixed(decimal_degits) + "" + currentCurrency;
             } else {

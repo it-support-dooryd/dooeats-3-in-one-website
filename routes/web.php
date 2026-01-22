@@ -139,8 +139,6 @@ Route::post('logout', [App\Http\Controllers\Auth\AjaxController::class, 'logout'
 
 Route::post('newRegister', [App\Http\Controllers\Auth\AjaxController::class, 'newRegister'])->name('newRegister');
 
-Route::post('verify-recaptcha', [App\Http\Controllers\Auth\AjaxController::class, 'verifyRecaptcha'])->name('verify-recaptcha');
-
 Route::post('checkEmail', [App\Http\Controllers\Auth\AjaxController::class, 'checkEmail'])->name('checkEmail');
 
 Route::post('sendemail/send', [App\Http\Controllers\SendEmailController::class, 'send'])->name('sendContactUsMail');

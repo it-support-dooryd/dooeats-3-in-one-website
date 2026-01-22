@@ -4,84 +4,89 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Dooeats') }} - Login</title>
-    <link rel="icon" type="image/x-xicon" href="{{ asset('images/logo-light-icon.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="{{ asset('css/login-styles.css') }}" rel="stylesheet">
+    <title>{{ config('app.name', 'Dooeats') }} - Premium Login</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo-light-icon.png') }}">
+    <link href="{{ asset('css/auth-styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body class="login-body">
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-logo">
+<body class="auth-body">
+    <div class="auth-overlay"></div>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo Section -->
+            <div class="auth-logo">
                 <img src="{{ asset('images/logo_web.png') }}" alt="Dooeats Logo">
             </div>
 
             <!-- Tab Bar -->
-            <div class="login-tabs">
-                <a href="{{ route('login') }}" class="login-tab-link active">Customer</a>
-                <a href="http://127.0.0.1:8002/login" class="login-tab-link">Restaurant</a>
+            <div class="auth-tabs">
+                <a href="{{ route('login') }}" class="auth-tab-link active">Customer</a>
+                <a href="{{ url('/restaurant/login') }}" class="auth-tab-link">Restaurant</a>
             </div>
 
-            <h4 class="text-center mb-4" style="font-weight: 600; color: #333;">{{trans('lang.sign_in')}}</h4>
+            <h4>Welcome Back</h4>
+            <span class="auth-subtitle">Sign in to your account</span>
             
-            <div class="error" style="color: red; text-align: center;" id="field_error"></div>
-            <div class="error" id="field_error1" style="color:red; display:none; text-align: center;"></div>
+            <div id="error_message" class="alert-danger" style="display:none;"></div>
 
-            <form class="login-form" action="javascript:void(0)" onsubmit="return loginClick()">
-                
-                <div id="login-fields">
-                    <div class="form-group-login" id="email_div">
-                        <input type="email" class="form-control-login" id="email" placeholder="Enter Email Address" autocomplete="email" required>
-                        <input type="hidden" id="hidden_email" />
-                    </div>
+            <form id="login-form" autocomplete="off">
+                <div class="form-group-auth">
+                    <i class="fa fa-envelope-o input-icon"></i>
+                    <input type="email" id="email" class="form-control-auth" placeholder="Email Address" required autofocus>
+                </div>
 
-                    <div class="form-group-login" id="pass_div">
-                        <div class="password-input-group">
-                            <input type="password" class="form-control-login" id="password" placeholder="Enter Password" minlength="8" required autocomplete="current-password">
-                            <div class="password-toggle-icon" onclick="togglePassword()">
-                                <i class="fa fa-eye"></i>
-                            </div>
+                <div class="form-group-auth">
+                    <div class="password-input-group">
+                        <i class="fa fa-lock input-icon"></i>
+                        <input type="password" id="password" class="form-control-auth" placeholder="Password" required>
+                        <div class="password-toggle-icon" onclick="togglePassword()">
+                            <i class="fa fa-eye" id="password-icon"></i>
                         </div>
-                    </div>
-
-                    <div class="remember-me-group">
-                        <label class="custom-switch-login">
-                            <input type="checkbox" id="remember_me">
-                            <span class="slider-login"></span>
-                            Remember me
-                        </label>
-                        <a href="{{ route('password.request') }}" class="forgot-password-link">Forgot Password?</a>
                     </div>
                 </div>
 
-                <div id="recaptcha-container" style="display:none;"></div>
+                <div class="remember-me-group">
+                    <label class="custom-switch-auth">
+                        <input type="checkbox" id="remember_me">
+                        <span class="slider-auth"></span>
+                        Remember me
+                    </label>
+                    <a href="{{ route('forgot-password') }}" class="forgot-password-link">Forgot Password?</a>
+                </div>
 
-                <button type="submit" class="btn-login-primary btn-login" id="btn-login">{{trans('lang.sign_in')}}</button>
-                
+                <button type="submit" class="btn-auth-primary" id="btn-login">
+                    <span>Login</span>
+                    <div class="arrow-box">
+                        <i class="fa fa-arrow-right"></i>
+                    </div>
+                </button>
+
                 <div class="or-divider">
-                    <span>OR</span>
+                    <span>or</span>
                 </div>
 
                 <div class="social-login-group">
-                    <div class="social-btn google-btn" onclick="loginWithGoogle()" title="Sign in with Google">
-                        <img src="{{ asset('images/google-icon.png') }}" alt="Google Icon" class="social-icon">
-                        <span class="social-text">Sign in with Google</span>
+                    <div class="social-btn" onclick="loginWithGoogle()">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20">
+                        <span>Sign in with Google</span>
                     </div>
                 </div>
 
-                 <div class="text-center mt-3">
-                    <span style="color:#666; font-size:14px;">{{trans('lang.dont_have_account')}} </span>
-                    <a href="{{url('signup')}}" class="forgot-password-link">{{trans('lang.sign_up')}}</a>
+                <div class="text-center mt-4">
+                    <span style="color:var(--text-secondary); font-size:14px;">Didn't have an account? </span>
+                    <a href="{{ url('signup') }}" class="forgot-password-link">Sign up</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+
     <script type="text/javascript">
         var firebaseConfig = {
             apiKey: "{{ config('firebase.api_key') }}",
@@ -94,168 +99,106 @@
             measurementId: "{{ config('firebase.measurement_id') }}"
         };
         
-        var firebaseInitialized = false;
-        var database;
-        try {
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-            database = firebase.firestore();
-            firebaseInitialized = true;
-        } catch (error) {
-            console.error("Firebase init error:", error);
-             jQuery(document).ready(function() {
-                 $("#field_error").html("System error: Failed to connect to services. Please try again later.").show();
-                 $(".btn-login").prop('disabled', true);
-             });
-        }
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.firestore();
 
         function togglePassword() {
             var x = document.getElementById("password");
-            var iconContainer = document.querySelector(".password-toggle-icon");
+            var icon = document.getElementById("password-icon");
             if (x.type === "password") {
                 x.type = "text";
-                iconContainer.classList.add("active");
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
             } else {
                 x.type = "password";
-                iconContainer.classList.remove("active");
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
             }
         }
 
-        async function loginClick() {
-            $(".btn-login").text('Please wait...');
-            var email = $("#email").val();
-            var password = $("#password").val();
+        $('#login-form').on('submit', async function(e) {
+            e.preventDefault();
+            const email = $("#email").val();
+            const password = $("#password").val();
+            const $btn = $('#btn-login');
+            const originalText = $btn.find('span').text();
+
+            $btn.prop('disabled', true).find('span').text('Authenticating...');
+            $('#error_message').hide();
 
             try {
-                await new Promise((resolve, reject) => {
-                    grecaptcha.enterprise.ready(async () => {
-                        try {
-                            const token = await grecaptcha.enterprise.execute('6LcKSzosAAAAADS4s80I4QKaDK0ub7tkwRuwSrLd', {action: 'LOGIN'});
-                            
-                            $.ajax({
-                                type: 'POST',
-                                url: "{{ route('verify-recaptcha') }}",
-                                data: { token: token, action: 'LOGIN' },
-                                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                                success: function(data) {
-                                    if (data.success) {
-                                        resolve(true); 
-                                    } else {
-                                        console.error('reCAPTCHA Failed:', data);
-                                        reject('Security verification failed. Please try again.');
-                                    }
-                                },
-                                error: function(err) {
-                                    console.error('reCAPTCHA Error:', err);
-                                    reject('Unable to verify security token.');
-                                }
-                            });
-                        } catch(e) {
-                            reject(e);
-                        }
+                // Firebase Auth
+                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+                const uuid = userCredential.user.uid;
+
+                // Check role
+                const doc = await database.collection("users").doc(uuid).get();
+                if (doc.exists && doc.data().role === "customer") {
+                    // Create Session
+                    const sessionResponse = await $.ajax({
+                        type: 'POST',
+                        url: "{{ route('setToken') }}",
+                        data: { userId: uuid, email: email, password: password },
+                        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
                     });
-                });
-            } catch (err) {
-                $("#field_error").html(err).show();
-                $(".btn-login").text("{{trans('lang.sign_in')}}");
-                return false;
+
+                    if (sessionResponse.access) {
+                        window.location.href = "{{ url('/') }}";
+                    } else {
+                        throw new Error("Session creation failed.");
+                    }
+                } else {
+                    firebase.auth().signOut();
+                    throw new Error("This account is not a customer account.");
+                }
+
+            } catch (error) {
+                $('#error_message').text(error.message).show();
+                $btn.prop('disabled', false).find('span').text(originalText);
             }
-            
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    var uuid = userCredential.user.uid;
-                    
-                    database.collection("users").doc(uuid).get().then((doc) => {
-                        if (doc.exists) {
-                            var userData = doc.data();
-                            if (userData.role === "customer") {
-                                var url = "{{route('newLogin')}}";
-                                $.ajax({
-                                    type: 'POST',
-                                    url: url,
-                                    data: {
-                                        userId: uuid,
-                                        email: email,
-                                        password: password
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (data) {
-                                        if (data.access) {
-                                            window.location = "{{url('/')}}";
-                                        }
-                                    },
-                                    error: function() {
-                                        $("#field_error").html("Login failed. Please try again.").show();
-                                        $(".btn-login").text("{{trans('lang.sign_in')}}");
-                                    }
-                                });
-                            } else {
-                                $("#field_error").html("This account is not a customer account.").show();
-                                $(".btn-login").text("{{trans('lang.sign_in')}}");
-                                firebase.auth().signOut();
-                            }
-                        } else {
-                            $("#field_error").html("User not found.").show();
-                            $(".btn-login").text("{{trans('lang.sign_in')}}");
-                        }
-                    });
-                })
-                .catch((error) => {
-                    var errorMessage = error.message;
-                    $("#field_error").html(errorMessage).show();
-                    window.scrollTo(0, 0);
-                    $(".btn-login").text("{{trans('lang.sign_in')}}");
-                });
-            return false;
-        }
+        });
 
         function loginWithGoogle() {
             var provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider)
-                .then((result) => {
-                    var user = result.user;
-                    database.collection("users").doc(user.uid).get().then((doc) => {
-                        if (doc.exists) {
-                            var userData = doc.data();
-                            if (userData.role === "customer") {
-                                var url = "{{route('newLogin')}}";
-                                $.ajax({
-                                    type: 'POST',
-                                    url: url,
-                                    data: {
-                                        userId: user.uid,
-                                        email: user.email,
-                                        password: ""
-                                    },
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    success: function (data) {
-                                        if (data.access) {
-                                            window.location = "{{url('/')}}";
-                                        }
-                                    },
-                                    error: function() {
-                                        $("#field_error").html("Login failed. Please try again.").show();
-                                    }
-                                });
-                            } else {
-                                $("#field_error").html("This account is not a customer account.").show();
-                                firebase.auth().signOut();
-                            }
-                        } else {
-                            $("#field_error").html("User not found.").show();
+            firebase.auth().signInWithPopup(provider).then(async (result) => {
+                const user = result.user;
+                const doc = await database.collection("users").doc(user.uid).get();
+                
+                if (doc.exists) {
+                    if (doc.data().role === "customer") {
+                        const sessionResponse = await $.ajax({
+                            type: 'POST',
+                            url: "{{ route('setToken') }}",
+                            data: { userId: user.uid, email: user.email, password: "" },
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+                        });
+                        if (sessionResponse.access) {
+                            window.location.href = "{{ url('/') }}";
                         }
+                    } else {
+                        firebase.auth().signOut();
+                        alert("This Google account is associated with a different role. Please use a customer account.");
+                    }
+                } else {
+                    // New User - Redirect to social signup to complete profile
+                    const nameParts = (user.displayName || "User").split(" ");
+                    const firstName = nameParts[0] || "";
+                    const lastName = nameParts.slice(1).join(" ") || "";
+                    
+                    const params = new URLSearchParams({
+                        uuid: user.uid,
+                        email: user.email || "",
+                        firstName: firstName,
+                        lastName: lastName,
+                        photoURL: user.photoURL || ""
                     });
-                })
-                .catch((error) => {
-                    var errorMessage = error.message;
-                    $("#field_error").html(errorMessage).show();
-                    window.scrollTo(0, 0);
-                });
+                    
+                    window.location.href = "{{ url('socialsignup') }}?" + params.toString();
+                }
+            }).catch(error => {
+                console.error("Google Auth Error:", error);
+                alert(error.message);
+            });
         }
     </script>
 </body>

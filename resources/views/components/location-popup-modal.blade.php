@@ -12,6 +12,21 @@
                 </button>
             </div>
             <div class="modal-body px-4">
+                <!-- Loading Container -->
+                <div id="locationLoadingContainer" style="display: none;"></div>
+
+                <!-- Success Container -->
+                <div id="locationSuccessContainer" style="display: none;"></div>
+
+                <!-- Error Container -->
+                <div id="locationErrorContainer" style="display: none;"></div>
+
+                <!-- Fallback Container -->
+                <div id="locationFallbackContainer" style="display: none;"></div>
+
+                <!-- Permission Prompt Container -->
+                <div id="locationPermissionPrompt" style="display: none;"></div>
+
                 <!-- Current Location Button -->
                 <button type="button" class="btn btn-primary btn-block mb-3 use-current-location-btn" id="useCurrentLocationBtn">
                     <i class="feather-navigation mr-2"></i>
@@ -55,7 +70,7 @@
                     </div>
                 </div>
 
-                <!-- Error Message -->
+                <!-- Error Message (Legacy - kept for backward compatibility) -->
                 <div class="alert alert-danger mt-3 d-none" id="locationErrorAlert" role="alert">
                     <i class="feather-alert-circle mr-2"></i>
                     <span id="locationErrorMessage"></span>
